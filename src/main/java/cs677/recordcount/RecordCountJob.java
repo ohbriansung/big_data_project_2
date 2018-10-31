@@ -1,4 +1,3 @@
 package cs677.recordcount;
 
-public class RecordCountJob {
-}
+public class RecordCountJob {}
