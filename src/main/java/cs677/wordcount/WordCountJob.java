@@ -1,5 +1,6 @@
 package cs677.wordcount;
 
+import cs677.misc.FileCreator;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -48,7 +49,7 @@ public class WordCountJob {
       /* Job output path in HDFS. NOTE: if the output path already exists
        * and you try to create it, the job will fail. You may want to
        * automate the creation of new output directories here */
-      FileOutputFormat.setOutputPath(job, new Path(args[1]));
+      FileOutputFormat.setOutputPath(job, FileCreator.findEmptyPath(conf, args[1]));
 
       /* Wait (block) for the job to complete... */
       System.exit(job.waitForCompletion(true) ? 0 : 1);
