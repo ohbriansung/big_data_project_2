@@ -1,4 +1,4 @@
-package edu.usfca.cs.mr.wordcount;
+package cs677.wordcount;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
