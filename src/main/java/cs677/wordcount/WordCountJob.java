@@ -46,9 +46,7 @@ public class WordCountJob {
       /* Job input path in HDFS */
       FileInputFormat.addInputPath(job, new Path(args[0]));
 
-      /* Job output path in HDFS. NOTE: if the output path already exists
-       * and you try to create it, the job will fail. You may want to
-       * automate the creation of new output directories here */
+      /* Job output path in HDFS. */
       FileOutputFormat.setOutputPath(job, FileCreator.findEmptyPath(conf, args[1]));
 
       /* Wait (block) for the job to complete... */
