@@ -21,14 +21,16 @@
 
     <developers>
         <developer>
-            <name>Your Name Here</name>
-            <email>Email@email.com</email>
-            <url>Your website, github profile, etc</url>
+            <name>Matthew Domingo</name>
+            <email>mcdomingo@dons.usfca.edu</email>
+            <url>https://github.com/mcdomingo</url>
             <organization>University of San Francisco</organization>
         </developer>
     </developers>
 
     <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <jdk.version>1.8</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -37,16 +39,24 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.0</version>
                 <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
+                    <!-- <source>${jdk.version}</source> -->
+                    <!-- <target>${jdk.version}</target> -->
 
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
