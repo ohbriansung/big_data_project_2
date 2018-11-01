@@ -9,6 +9,7 @@ import org.apache.hadoop.fs.RemoteIterator;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 
 public class RecordCountPost {
 
@@ -24,7 +25,7 @@ public class RecordCountPost {
   protected static void parseOutput(Configuration conf, Path path) throws IOException {
     FileSystem fs = path.getFileSystem(conf);
     RemoteIterator<LocatedFileStatus> fileStatusListIterator = fs.listFiles(path, false);
-    int total_count = 0;
+    BigInteger total_count = BigInteger.ZERO;
     int subreddit_count = 0;
     while (fileStatusListIterator.hasNext()) {
       LocatedFileStatus fileStatus = fileStatusListIterator.next();
@@ -35,8 +36,8 @@ public class RecordCountPost {
         while (line != null) {
           //          JSONObject obj = new JSONObject(line);
           //          int post_count = Integer.parseInt(obj.getString("value"));
-          int post_count = Integer.parseInt(line.split("\\s+", 2)[1]);
-          total_count += post_count;
+          BigInteger post_count = new BigInteger((line.split("\\s+", 2)[1]));
+          total_count = total_count.add(post_count);
           subreddit_count += 1;
           line = br.readLine();
         }
