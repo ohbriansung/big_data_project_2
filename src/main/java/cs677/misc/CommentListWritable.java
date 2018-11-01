@@ -13,9 +13,6 @@ public class CommentListWritable implements Writable {
   private int count = 0;
   private final CommentWritable[] comments = new CommentWritable[3];
 
-  private IntWritable countWritable = new IntWritable(0);
-  private ArrayWritable commentsWritable = new ArrayWritable(CommentWritable.class);
-
   public CommentListWritable() {}
 
   public void addComment(CommentWritable commentWritable) {
