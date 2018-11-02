@@ -2,6 +2,7 @@ package cs677.commentcount;
 
 import cs677.misc.FileCreator;
 import cs677.recordcount.RecordCountJob;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -75,7 +76,7 @@ public class UserJob {
 
       JSONObject post = new JSONObject(value.toString());
       int ups = post.getInt("ups");
-      String body = post.getString("body");
+      String body = StringEscapeUtils.escapeJson(post.getString("body"));
       context.write(new IntWritable(ups), new Text(body));
     }
   }
