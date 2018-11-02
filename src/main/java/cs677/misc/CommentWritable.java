@@ -10,17 +10,15 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class CommentWritable implements WritableComparable<CommentWritable> {
-  private Text comment;
-  private IntWritable upvotes;
+  private Text comment = new Text();
+  private IntWritable upvotes = new IntWritable();
 
   public CommentWritable() {
-    this.comment = new Text();
-    this.upvotes = new IntWritable();
   }
 
   public CommentWritable(String comment, int upvotes) {
-    this.comment = new Text(comment);
-    this.upvotes = new IntWritable(upvotes);
+    this.comment.set(comment);
+    this.upvotes.set(upvotes);
   }
 
   @Override
