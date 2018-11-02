@@ -21,6 +21,11 @@ public class YearMonthWritable implements WritableComparable<YearMonthWritable> 
   private IntWritable year;
   private IntWritable month;
 
+  public YearMonthWritable() {
+    this.year = new IntWritable(0);
+    this.month = new IntWritable(0);
+  }
+
   public YearMonthWritable(int year, int month) {
     this.year = new IntWritable(year);
     this.month = new IntWritable(month);

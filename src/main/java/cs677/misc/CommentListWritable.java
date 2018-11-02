@@ -11,20 +11,19 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class CommentListWritable implements WritableComparable<CommentListWritable> {
-  private int count = 0;
+  private IntWritable count = new IntWritable(0);
   private final CommentWritable[] comments = new CommentWritable[3];
 
   public CommentListWritable() {}
 
   public void addComment(CommentWritable commentWritable) {
-    count += 1;
+    count = new IntWritable(count.get() + 1);
     CommentWritable tmp;
     for (int i = 0; i < comments.length; i++) {
       if (comments[i] == null) {
         comments[i] = commentWritable;
         return;
       }
-      if (commentWritable.equals(comments[i])) continue;
       if (commentWritable.compareTo(comments[i]) > 0) {
         tmp = comments[i];
         comments[i] = commentWritable;
@@ -54,29 +53,23 @@ public class CommentListWritable implements WritableComparable<CommentListWritab
 
   @Override
   public void write(DataOutput dataOutput) throws IOException {
-    new IntWritable(count).write(dataOutput);
+    count.write(dataOutput);
     new ArrayWritable(CommentWritable.class, comments).write(dataOutput);
   }
 
   @Override
   public int compareTo(CommentListWritable other) {
-    return this.count - other.count;
+    if (other == null) return 1;
+    return this.count.compareTo(other.count);
   }
 
   @Override
   public void readFields(DataInput dataInput) throws IOException {
-    IntWritable intWritable = new IntWritable();
-    intWritable.readFields(dataInput);
-    count = intWritable.get();
-    ArrayWritable me = new ArrayWritable(CommentWritable.class);
-    int counter = 0;
-    for (Writable writable : me.get()) { // iterate
-      CommentWritable comment = (CommentWritable) writable; // cast
-      comments[counter] = comment;
-      counter += 1;
-      if (counter >= 3) {
-        return;
-      }
+    count.readFields(dataInput);
+    ArrayWritable arr = new ArrayWritable(CommentWritable.class);
+    for (Writable writable : arr.get()) { // iterate
+      CommentWritable comment = (CommentWritable) writable;
+      addComment(comment);
     }
   }
 
