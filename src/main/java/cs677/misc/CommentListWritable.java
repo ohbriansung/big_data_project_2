@@ -3,13 +3,14 @@ package cs677.misc;
 import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class CommentListWritable implements Writable {
+public class CommentListWritable implements WritableComparable<CommentListWritable> {
   private int count = 0;
   private final CommentWritable[] comments = new CommentWritable[3];
 
@@ -57,6 +58,11 @@ public class CommentListWritable implements Writable {
   }
 
   @Override
+  public int compareTo(CommentListWritable other) {
+    return this.count - other.count;
+  }
+
+  @Override
   public void readFields(DataInput dataInput) throws IOException {
     IntWritable intWritable = new IntWritable();
     intWritable.readFields(dataInput);
@@ -80,8 +86,10 @@ public class CommentListWritable implements Writable {
     sb.append(count);
     sb.append(", \"comments\": [");
     for (CommentWritable commentWritable : comments) {
-      sb.append(commentWritable.toString());
-      sb.append(", ");
+      if (commentWritable != null) {
+        sb.append(commentWritable.toString());
+        sb.append(", ");
+      }
     }
     sb.append("]}");
     return sb.toString();

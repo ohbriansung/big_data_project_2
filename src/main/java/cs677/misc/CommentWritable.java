@@ -12,6 +12,11 @@ public class CommentWritable implements WritableComparable<CommentWritable> {
   private Text comment;
   private IntWritable upvotes;
 
+  public CommentWritable() {
+    this.comment = new Text();
+    this.upvotes = new IntWritable();
+  }
+
   public CommentWritable(String comment, int upvotes) {
     this.comment = new Text(comment);
     this.upvotes = new IntWritable(upvotes);
@@ -55,6 +60,6 @@ public class CommentWritable implements WritableComparable<CommentWritable> {
   @Override
   public String toString() {
     return String.format(
-        "{\"comment\": \"%s\", \"upvotes\": %s}", comment.toString(), upvotes.toString());
+        "{\"comment\": \"%s\", \"upvotes\": %s}", comment, upvotes.toString());
   }
 }
