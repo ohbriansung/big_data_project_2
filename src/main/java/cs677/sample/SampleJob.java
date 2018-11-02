@@ -14,6 +14,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneOffset;
 import java.util.Random;
 
 public class SampleJob {
@@ -50,7 +53,8 @@ public class SampleJob {
     }
   }
 
-  private class SampleMapper extends Mapper<LongWritable, Text, LongWritable, NullWritable> {
+  private class SampleMapper extends Mapper<LongWritable, Text, Text, NullWritable> {
+    private NullWritable out = NullWritable.get();
     private Random rand = new Random();
 
     @Override
@@ -63,11 +67,14 @@ public class SampleJob {
       }
 
       JSONObject obj = new JSONObject(value.toString());
-      String author = obj.getString("author");
-      int ups = obj.getInt("ups");
-      String body = obj.getString("body");
+      String timeString = obj.getString("created_utc");
+      long seconds = Long.parseLong(timeString);
+      LocalDateTime dateTime = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
 
-      context.write(key, NullWritable.get());
+      if (dateTime.getMonth() != Month.FEBRUARY) return;
+      if (dateTime.getDayOfMonth() != 22) return;
+
+      context.write(value, out);
     }
   }
 }
