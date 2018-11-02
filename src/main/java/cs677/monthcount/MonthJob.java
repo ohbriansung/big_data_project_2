@@ -1,41 +1,40 @@
-package cs677.mostcomments;
+package cs677.monthcount;
 
-import cs677.misc.CommentListWritable;
-import cs677.misc.CommentWritable;
 import cs677.misc.FileCreator;
+import cs677.misc.YearMonthWritable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.time.Instant;
 
-public class MCCountJob {
+public class MonthJob {
+
   public static void main(String[] args) {
     try {
       Configuration conf = new Configuration();
 
       /* Job Name. You'll see this in the YARN webapp */
-      Job job = Job.getInstance(conf, "mc count job");
+      Job job = Job.getInstance(conf, "month mapper job");
+
       /* Current class */
-      job.setJarByClass(MCCountJob.class);
+      job.setJarByClass(MonthJob.class);
 
-      /* Mapper class */
-      job.setMapperClass(MCCountMapper.class);
+      /* Mapper */
+      job.setMapperClass(MonthMapper.class);
+      job.setMapOutputKeyClass(YearMonthWritable.class);
+      job.setMapOutputValueClass(LongWritable.class);
 
-      /* Reducer class */
-      job.setReducerClass(MCCountReducer.class);
+      /* Combiner */
+      job.setCombinerClass(MonthReducer.class);
 
-      /* Outputs from the Mapper. */
-      job.setMapOutputKeyClass(Text.class);
-      job.setMapOutputValueClass(CommentWritable.class);
-
-      /* Outputs from the Reducer */
-      job.setOutputKeyClass(Text.class);
-      job.setOutputValueClass(CommentListWritable.class);
+      /* Reducer */
+      job.setReducerClass(MonthReducer.class);
+      job.setOutputKeyClass(YearMonthWritable.class);
+      job.setOutputValueClass(LongWritable.class);
 
       /* Job input path in HDFS */
       FileInputFormat.addInputPath(job, new Path(args[0]));
@@ -46,9 +45,6 @@ public class MCCountJob {
 
       /* Wait (block) for the job to complete... */
       boolean completed = job.waitForCompletion(true);
-      if (completed) {
-        MCCountPost.parseOutput(conf, outPath);
-      }
       System.out.println(Instant.now());
       System.exit(completed ? 0 : 1);
 

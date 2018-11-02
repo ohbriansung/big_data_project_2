@@ -1,7 +1,6 @@
-package cs677.monthstudies;
+package cs677.monthcount;
 
 import cs677.misc.YearMonthWritable;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
