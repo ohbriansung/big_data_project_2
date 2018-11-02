@@ -1,5 +1,6 @@
 package cs677.monthcount;
 
+import cs677.common.Constants;
 import cs677.misc.YearMonthWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -19,11 +20,11 @@ public class MonthMapper extends Mapper<LongWritable, Text, YearMonthWritable, L
     JSONObject obj = new JSONObject(value.toString());
     long seconds;
     try {
-      String timeString = obj.getString("created_utc");
+      String timeString = obj.getString(Constants.CREATED_UTC);
       seconds = Long.parseLong(timeString);
     } catch (JSONException e) {
       try {
-        seconds = obj.getLong("created_utc");
+        seconds = obj.getLong(Constants.CREATED_UTC);
       } catch (JSONException err) {
         System.out.println(e.getMessage());
         System.out.println(value.toString());

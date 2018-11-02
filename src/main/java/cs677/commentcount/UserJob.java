@@ -1,5 +1,6 @@
 package cs677.commentcount;
 
+import cs677.common.Constants;
 import cs677.misc.FileCreator;
 import cs677.recordcount.RecordCountJob;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -28,7 +29,7 @@ public class UserJob {
     try {
       Configuration conf = new Configuration();
 
-      conf.setStrings("author", args[3]);
+      conf.setStrings(Constants.AUTHOR, args[3]);
 
       Job job = Job.getInstance(conf, "user upvotes job");
       job.setJarByClass(RecordCountJob.class);
@@ -69,7 +70,7 @@ public class UserJob {
     @Override
     protected void setup(Context context) {
       Configuration conf = context.getConfiguration();
-      author = conf.get("author", "");
+      author = conf.get(Constants.AUTHOR, "");
     }
 
     @Override
@@ -77,8 +78,8 @@ public class UserJob {
         throws IOException, InterruptedException {
 
       JSONObject post = new JSONObject(value.toString());
-      int ups = post.getInt("ups");
-      String body = StringEscapeUtils.escapeJson(post.getString("body"));
+      int ups = post.getInt(Constants.UPS);
+      String body = StringEscapeUtils.escapeJson(post.getString(Constants.BODY));
       context.write(new IntWritable(ups), new Text(body));
     }
   }

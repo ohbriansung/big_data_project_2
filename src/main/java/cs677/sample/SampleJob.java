@@ -1,5 +1,6 @@
 package cs677.sample;
 
+import cs677.common.Constants;
 import cs677.misc.FileCreator;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -74,11 +75,11 @@ public class SampleJob {
       JSONObject obj = new JSONObject(value.toString());
       long seconds;
       try {
-        String timeString = obj.getString("created_utc");
+        String timeString = obj.getString(Constants.CREATED_UTC);
         seconds = Long.parseLong(timeString);
       } catch (JSONException e) {
         try {
-          seconds = obj.getLong("created_utc");
+          seconds = obj.getLong(Constants.CREATED_UTC);
         } catch (JSONException err) {
           System.out.println(e.getMessage());
           System.out.println(value.toString());
