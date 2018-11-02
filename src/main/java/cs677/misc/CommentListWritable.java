@@ -24,7 +24,8 @@ public class CommentListWritable implements WritableComparable<CommentListWritab
         comments[i] = commentWritable;
         return;
       }
-      if (comments[i].compareTo(commentWritable) > 0) {
+      if (commentWritable.equals(comments[i])) continue;
+      if (commentWritable.compareTo(comments[i]) > 0) {
         tmp = comments[i];
         comments[i] = commentWritable;
         commentWritable = tmp;

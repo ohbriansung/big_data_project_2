@@ -1,19 +1,22 @@
-package cs677.mostcomments;
+package cs677.sample;
 
-import cs677.misc.CommentListWritable;
-import cs677.misc.CommentWritable;
 import cs677.misc.FileCreator;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.time.Instant;
+import java.util.Random;
 
-public class MCCountJob {
+public class SampleJob {
   public static void main(String[] args) {
     try {
       Configuration conf = new Configuration();
@@ -21,21 +24,14 @@ public class MCCountJob {
       /* Job Name. You'll see this in the YARN webapp */
       Job job = Job.getInstance(conf, "record count job");
       /* Current class */
-      job.setJarByClass(MCCountJob.class);
+      job.setJarByClass(SampleJob.class);
 
       /* Mapper class */
-      job.setMapperClass(MCCountMapper.class);
-
-      /* Reducer class */
-      job.setReducerClass(MCCountReducer.class);
+      job.setMapperClass(SampleMapper.class);
 
       /* Outputs from the Mapper. */
-      job.setMapOutputKeyClass(Text.class);
-      job.setMapOutputValueClass(CommentWritable.class);
-
-      /* Outputs from the Reducer */
-      job.setOutputKeyClass(Text.class);
-      job.setOutputValueClass(CommentListWritable.class);
+      job.setMapOutputKeyClass(NullWritable.class);
+      job.setMapOutputValueClass(Text.class);
 
       /* Job input path in HDFS */
       FileInputFormat.addInputPath(job, new Path(args[0]));
@@ -46,14 +42,32 @@ public class MCCountJob {
 
       /* Wait (block) for the job to complete... */
       boolean completed = job.waitForCompletion(true);
-      if (completed) {
-        MCCountPost.parseOutput(conf, outPath);
-      }
       System.out.println(Instant.now());
       System.exit(completed ? 0 : 1);
 
     } catch (Exception e) {
       System.err.println(e.getMessage());
+    }
+  }
+
+  private class SampleMapper extends Mapper<LongWritable, Text, LongWritable, NullWritable> {
+    private Random rand = new Random();
+
+    @Override
+    protected void map(LongWritable key, Text value, Context context)
+        throws IOException, InterruptedException {
+      float chance = rand.nextFloat();
+
+      if (chance >= 0.05) {
+        return;
+      }
+
+      JSONObject obj = new JSONObject(value.toString());
+      String author = obj.getString("author");
+      int ups = obj.getInt("ups");
+      String body = obj.getString("body");
+
+      context.write(key, NullWritable.get());
     }
   }
 }

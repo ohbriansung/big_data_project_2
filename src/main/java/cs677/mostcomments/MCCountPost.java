@@ -10,12 +10,9 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class MCCountPost {
-    //todo: test
   public static void main(String[] args) {
     try {
       Configuration conf = new Configuration();
@@ -28,9 +25,8 @@ public class MCCountPost {
   protected static void parseOutput(Configuration conf, Path path) throws IOException {
     FileSystem fs = path.getFileSystem(conf);
     RemoteIterator<LocatedFileStatus> fileStatusListIterator = fs.listFiles(path, false);
-    BigInteger total_count = BigInteger.ZERO;
-    int subreddit_count = 0;
-    PriorityQueue<JSONObject> jsonObjectPriorityQueue = new PriorityQueue<>(25, new JsonCompare());
+    PriorityQueue<CommentKeeper> priorityQueue = new PriorityQueue<>(25);
+    CommentKeeper nextComment;
     while (fileStatusListIterator.hasNext()) {
       LocatedFileStatus fileStatus = fileStatusListIterator.next();
       if (fileStatus.isFile()) {
@@ -38,23 +34,53 @@ public class MCCountPost {
             new BufferedReader(new InputStreamReader(fs.open(fileStatus.getPath())));
         String line = br.readLine();
         while (line != null) {
-          JSONObject obj = new JSONObject(line.split("\\s+", 2)[1]);
-          jsonObjectPriorityQueue.add(obj);
-          if (jsonObjectPriorityQueue.size() > 20) {
-              jsonObjectPriorityQueue.poll();
+          String[] splitLine = line.split("\\s+", 2);
+          JSONObject obj = new JSONObject(splitLine[1]);
+          nextComment =
+              new CommentKeeper(
+                  splitLine[0], obj.getInt("count"), obj.getJSONArray("comments").toString());
+          if (priorityQueue.size() >= 25 && nextComment.compareTo(priorityQueue.peek()) > 0) {
+            priorityQueue.poll();
+            priorityQueue.add(nextComment);
+          }
+          if (priorityQueue.size() < 25) {
+            priorityQueue.add(nextComment);
           }
           line = br.readLine();
         }
       }
     }
-    System.out.println(String.format("Number of subreddits: %d", subreddit_count));
-    System.out.println(String.format("Total number of entries: %d", total_count));
+    while (priorityQueue.size() > 0) {
+      System.out.println(priorityQueue.poll().toString());
+    }
   }
 
-  private static class JsonCompare implements Comparator<JSONObject> {
+  private static class CommentKeeper implements Comparable<CommentKeeper> {
+    int count;
+    String comments;
+    String user;
+
+    private CommentKeeper(String user, int count, String comments) {
+      this.user = user;
+      this.count = count;
+      this.comments = comments;
+    }
+
     @Override
-    public int compare(JSONObject jsonObject, JSONObject t1) {
-      return t1.getInt("count") - jsonObject.getInt("count");
+    public int compareTo(CommentKeeper other) {
+      return this.count - other.count;
+    }
+
+    public String toString() {
+      StringBuilder sb = new StringBuilder();
+      sb.append("{\"user\": ");
+      sb.append(user);
+      sb.append(", \"count\": ");
+      sb.append(count);
+      sb.append(", \"comments\": ");
+      sb.append(comments);
+      sb.append("}");
+      return sb.toString();
     }
   }
 }

@@ -43,7 +43,9 @@ public class CommentWritable implements WritableComparable<CommentWritable> {
 
   @Override
   public int compareTo(CommentWritable that) {
-    return that.upvotes.compareTo(this.upvotes);
+    if (that == null) return 1;
+    if (this.upvotes == null) return that.upvotes == null ? 0 : -1;
+    return this.upvotes.compareTo(that.upvotes);
   }
 
   @Override
