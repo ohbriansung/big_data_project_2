@@ -1,13 +1,15 @@
-package cs677.sample;
+package cs677.monthstudies;
 
 import cs677.misc.FileCreator;
+import cs677.misc.YearMonthWritable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.json.JSONObject;
@@ -15,26 +17,33 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.ZoneOffset;
-import java.util.Random;
 
-public class SampleJob {
+public class MonthJob {
+
   public static void main(String[] args) {
     try {
       Configuration conf = new Configuration();
 
       /* Job Name. You'll see this in the YARN webapp */
-      Job job = Job.getInstance(conf, "sample job");
+      Job job = Job.getInstance(conf, "month mapper job");
+
       /* Current class */
-      job.setJarByClass(SampleJob.class);
+      job.setJarByClass(MonthJob.class);
 
       /* Mapper class */
-      job.setMapperClass(SampleMapper.class);
+      job.setMapperClass(MonthMapper.class);
+
+      /* Reducer class */
+      job.setReducerClass(MonthReducer.class);
 
       /* Outputs from the Mapper. */
-      job.setMapOutputKeyClass(Text.class);
-      job.setMapOutputValueClass(NullWritable.class);
+      job.setMapOutputKeyClass(YearMonthWritable.class);
+      job.setMapOutputValueClass(IntWritable.class);
+
+      /* Outputs from the Reducer */
+      job.setOutputKeyClass(YearMonthWritable.class);
+      job.setOutputValueClass(LongWritable.class);
 
       /* Job input path in HDFS */
       FileInputFormat.addInputPath(job, new Path(args[0]));
@@ -53,28 +62,34 @@ public class SampleJob {
     }
   }
 
-  private class SampleMapper extends Mapper<LongWritable, Text, Text, NullWritable> {
-    private NullWritable out = NullWritable.get();
-    private Random rand = new Random();
-
+  private class MonthMapper extends Mapper<LongWritable, Text, YearMonthWritable, IntWritable> {
     @Override
     protected void map(LongWritable key, Text value, Context context)
         throws IOException, InterruptedException {
-      float chance = rand.nextFloat();
-
-      if (chance >= 0.05) {
-        return;
-      }
 
       JSONObject obj = new JSONObject(value.toString());
       String timeString = obj.getString("created_utc");
       long seconds = Long.parseLong(timeString);
       LocalDateTime dateTime = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
 
-      if (dateTime.getMonth() != Month.FEBRUARY) return;
-      if (dateTime.getDayOfMonth() != 22) return;
+      YearMonthWritable out_key =
+          new YearMonthWritable(dateTime.getYear(), dateTime.getMonthValue());
 
-      context.write(value, out);
+      context.write(out_key, new IntWritable(1));
+    }
+  }
+
+  private class MonthReducer
+      extends Reducer<YearMonthWritable, IntWritable, YearMonthWritable, LongWritable> {
+    @Override
+    protected void reduce(YearMonthWritable key, Iterable<IntWritable> values, Context context)
+        throws IOException, InterruptedException {
+      long count = 0;
+      // calculate the total count
+      for (IntWritable val : values) {
+        count += val.get();
+      }
+      context.write(key, new LongWritable(count));
     }
   }
 }

@@ -19,7 +19,7 @@ public class MCCountJob {
       Configuration conf = new Configuration();
 
       /* Job Name. You'll see this in the YARN webapp */
-      Job job = Job.getInstance(conf, "record count job");
+      Job job = Job.getInstance(conf, "mc count job");
       /* Current class */
       job.setJarByClass(MCCountJob.class);
 
