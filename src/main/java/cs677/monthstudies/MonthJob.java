@@ -4,7 +4,6 @@ import cs677.misc.FileCreator;
 import cs677.misc.YearMonthWritable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -27,7 +26,10 @@ public class MonthJob {
       /* Mapper */
       job.setMapperClass(MonthMapper.class);
       job.setMapOutputKeyClass(YearMonthWritable.class);
-      job.setMapOutputValueClass(IntWritable.class);
+      job.setMapOutputValueClass(LongWritable.class);
+
+      /* Combiner */
+      job.setCombinerClass(MonthReducer.class);
 
       /* Reducer */
       job.setReducerClass(MonthReducer.class);

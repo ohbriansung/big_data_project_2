@@ -8,13 +8,13 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 
 public class MonthReducer
-    extends Reducer<YearMonthWritable, IntWritable, YearMonthWritable, LongWritable> {
+    extends Reducer<YearMonthWritable, LongWritable, YearMonthWritable, LongWritable> {
   @Override
-  protected void reduce(YearMonthWritable key, Iterable<IntWritable> values, Context context)
+  protected void reduce(YearMonthWritable key, Iterable<LongWritable> values, Context context)
       throws IOException, InterruptedException {
     long count = 0;
     // calculate the total count
-    for (IntWritable val : values) {
+    for (LongWritable val : values) {
       count += val.get();
     }
     context.write(key, new LongWritable(count));

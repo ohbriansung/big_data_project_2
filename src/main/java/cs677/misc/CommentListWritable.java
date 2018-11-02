@@ -8,28 +8,25 @@ import org.apache.hadoop.io.WritableComparable;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.TreeSet;
 
 public class CommentListWritable implements WritableComparable<CommentListWritable> {
   private IntWritable count = new IntWritable(0);
-  private final CommentWritable[] comments = new CommentWritable[3];
+  private TreeSet<CommentWritable> comments = new TreeSet<>();
 
   public CommentListWritable() {}
 
   public void addComment(CommentWritable commentWritable) {
+    if (commentWritable == null) return;
     count = new IntWritable(count.get() + 1);
-    CommentWritable tmp;
-    for (int i = 0; i < comments.length; i++) {
-      if (comments[i] == null) {
-        comments[i] = commentWritable;
-        return;
+    if (comments.size() >= 3) {
+      if (commentWritable.compareTo(comments.first()) > 0) {
+        comments.pollFirst();
+        comments.add(commentWritable);
       }
-      if (commentWritable.compareTo(comments[i]) > 0) {
-        tmp = comments[i];
-        comments[i] = commentWritable;
-        commentWritable = tmp;
-      }
+      return;
     }
+    comments.add(commentWritable);
   }
 
   public void addComment(String comment, int upvotes) {
@@ -43,23 +40,27 @@ public class CommentListWritable implements WritableComparable<CommentListWritab
 
     CommentListWritable that = (CommentListWritable) o;
 
-    return Arrays.equals(this.comments, that.comments);
+    return this.comments.equals(that.comments);
   }
 
   @Override
   public int hashCode() {
-    return Arrays.hashCode(comments);
+    return comments.hashCode();
   }
 
   @Override
   public void write(DataOutput dataOutput) throws IOException {
     count.write(dataOutput);
-    new ArrayWritable(CommentWritable.class, comments).write(dataOutput);
+    CommentWritable[] commentArray = new CommentWritable[comments.size()];
+    new ArrayWritable(CommentWritable.class, comments.descendingSet().toArray(commentArray))
+        .write(dataOutput);
   }
 
   @Override
   public int compareTo(CommentListWritable other) {
     if (other == null) return 1;
+    if (this.count == null && other.count == null) return 0;
+    if (this.count == null) return -1;
     return this.count.compareTo(other.count);
   }
 

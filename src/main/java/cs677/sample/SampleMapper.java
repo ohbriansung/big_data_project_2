@@ -4,6 +4,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -26,8 +27,19 @@ public class SampleMapper extends Mapper<LongWritable, Text, Text, NullWritable>
     }
 
     JSONObject obj = new JSONObject(value.toString());
-    String timeString = obj.getString("created_utc");
-    long seconds = Long.parseLong(timeString);
+    long seconds;
+    try {
+      String timeString = obj.getString("created_utc");
+      seconds = Long.parseLong(timeString);
+    } catch (JSONException e) {
+      try {
+        seconds = obj.getLong("created_utc");
+      } catch (JSONException err) {
+        System.out.println(e.getMessage());
+        System.out.println(value.toString());
+        return;
+      }
+    }
     LocalDateTime dateTime = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
 
     if (dateTime.getMonth() != Month.FEBRUARY) return;

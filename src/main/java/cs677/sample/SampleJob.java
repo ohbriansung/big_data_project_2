@@ -27,6 +27,8 @@ public class SampleJob {
 
       /* Reducer */
       job.setNumReduceTasks(0);
+      job.setOutputKeyClass(Text.class);
+      job.setOutputValueClass(NullWritable.class);
 
       /* Input path */
       FileInputFormat.addInputPath(job, new Path(args[0]));
