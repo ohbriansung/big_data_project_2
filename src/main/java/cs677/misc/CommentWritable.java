@@ -1,5 +1,6 @@
 package cs677.misc;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableComparable;
@@ -60,6 +61,7 @@ public class CommentWritable implements WritableComparable<CommentWritable> {
   @Override
   public String toString() {
     return String.format(
-        "{\"comment\": \"%s\", \"upvotes\": %s}", comment, upvotes.toString());
+        "{\"comment\": \"%s\", \"upvotes\": %s}",
+        StringEscapeUtils.escapeJava(comment.toString()), upvotes.toString());
   }
 }

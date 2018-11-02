@@ -18,6 +18,8 @@ public class MCCountMapper extends Mapper<LongWritable, Text, Text, CommentWrita
     int ups = obj.getInt("ups");
     String body = obj.getString("body");
 
-    context.write(new Text(author), new CommentWritable(body, ups));
+    context.write(
+        new Text(author),
+        new CommentWritable(body.substring(0, Math.min(100, body.length())), ups));
   }
 }
