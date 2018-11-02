@@ -25,7 +25,7 @@ public class RecordCountJob {
       job.setMapperClass(RecordCountMapper.class);
 
       /* Combiner class */
-      //      job.setCombinerClass(RecordCountReducer.class);
+      job.setCombinerClass(RecordCountReducer.class);
 
       /* Reducer class */
       job.setReducerClass(RecordCountReducer.class);
