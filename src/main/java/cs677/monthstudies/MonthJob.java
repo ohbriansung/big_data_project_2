@@ -6,18 +6,11 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.json.JSONObject;
 
-import java.io.IOException;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 public class MonthJob {
 
@@ -31,17 +24,13 @@ public class MonthJob {
       /* Current class */
       job.setJarByClass(MonthJob.class);
 
-      /* Mapper class */
+      /* Mapper */
       job.setMapperClass(MonthMapper.class);
-
-      /* Reducer class */
-      job.setReducerClass(MonthReducer.class);
-
-      /* Outputs from the Mapper. */
       job.setMapOutputKeyClass(YearMonthWritable.class);
       job.setMapOutputValueClass(IntWritable.class);
 
-      /* Outputs from the Reducer */
+      /* Reducer */
+      job.setReducerClass(MonthReducer.class);
       job.setOutputKeyClass(YearMonthWritable.class);
       job.setOutputValueClass(LongWritable.class);
 
@@ -59,37 +48,6 @@ public class MonthJob {
 
     } catch (Exception e) {
       System.err.println(e.getMessage());
-    }
-  }
-
-  private class MonthMapper extends Mapper<LongWritable, Text, YearMonthWritable, IntWritable> {
-    @Override
-    protected void map(LongWritable key, Text value, Context context)
-        throws IOException, InterruptedException {
-
-      JSONObject obj = new JSONObject(value.toString());
-      String timeString = obj.getString("created_utc");
-      long seconds = Long.parseLong(timeString);
-      LocalDateTime dateTime = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
-
-      YearMonthWritable out_key =
-          new YearMonthWritable(dateTime.getYear(), dateTime.getMonthValue());
-
-      context.write(out_key, new IntWritable(1));
-    }
-  }
-
-  private class MonthReducer
-      extends Reducer<YearMonthWritable, IntWritable, YearMonthWritable, LongWritable> {
-    @Override
-    protected void reduce(YearMonthWritable key, Iterable<IntWritable> values, Context context)
-        throws IOException, InterruptedException {
-      long count = 0;
-      // calculate the total count
-      for (IntWritable val : values) {
-        count += val.get();
-      }
-      context.write(key, new LongWritable(count));
     }
   }
 }

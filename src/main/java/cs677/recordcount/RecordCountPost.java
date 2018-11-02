@@ -34,8 +34,6 @@ public class RecordCountPost {
             new BufferedReader(new InputStreamReader(fs.open(fileStatus.getPath())));
         String line = br.readLine();
         while (line != null) {
-          //          JSONObject obj = new JSONObject(line);
-          //          int post_count = Integer.parseInt(obj.getString("value"));
           BigInteger post_count = new BigInteger((line.split("\\s+", 2)[1]));
           total_count = total_count.add(post_count);
           subreddit_count += 1;

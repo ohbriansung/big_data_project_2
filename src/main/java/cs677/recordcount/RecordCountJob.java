@@ -37,7 +37,6 @@ public class RecordCountJob {
       /* Outputs from the Reducer */
       job.setOutputKeyClass(Text.class);
       job.setOutputValueClass(IntWritable.class);
-//      job.setOutputFormatClass(JsonOutputFormat.class);
 
       /* Job input path in HDFS */
       FileInputFormat.addInputPath(job, new Path(args[0]));
