@@ -61,8 +61,10 @@ public class UserJob {
     }
   }
 
-  private class UpsCountMapper extends Mapper<LongWritable, Text, IntWritable, Text> {
+  private static class UpsCountMapper extends Mapper<LongWritable, Text, IntWritable, Text> {
     String author;
+
+    public UpsCountMapper() {}
 
     @Override
     protected void setup(Context context) {
@@ -81,7 +83,9 @@ public class UserJob {
     }
   }
 
-  private class UpsCountReducer extends Reducer<IntWritable, Text, Text, IntWritable> {
+  private static class UpsCountReducer extends Reducer<IntWritable, Text, Text, IntWritable> {
+    public UpsCountReducer() {}
+
     @Override
     protected void reduce(IntWritable key, Iterable<Text> values, Context context)
         throws IOException, InterruptedException {
