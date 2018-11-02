@@ -1,6 +1,5 @@
 package cs677.mostcomments;
 
-import cs677.misc.CommentListWritable;
 import cs677.misc.CommentWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
