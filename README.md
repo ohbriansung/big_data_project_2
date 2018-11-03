@@ -46,7 +46,7 @@ Elapsed Time: 3:32:02 (Solved using same map reduce as records)
 Number of subreddits: 417834
 
 #### [0.5 pt] What user wrote the most comments in July of 2012? What was the user’s top three most-upvoted comments?
-Elapsed Time: 18:51
+Elapsed Time: ~0:21:14
 
 | upvotes | post body |
 |---------|------|
@@ -68,8 +68,9 @@ Elapsed Time: 18:51
 | tweet_poster        	| 3980    	|
 
 #### [1 pt] Choose a day of significance to you (e.g., your birthday), and retrieve a 5% sample of the comments posted on this particular day across all 5 years of the dataset.
+Elapsed Time: ~0:43:00
 Done.
 #### [1 pt] The number of comments posted per year will likely trend upward over time as more users join Reddit. Use feature scaling to normalize the number of comments per month from 0.0 to 1.0 and plot the values for each year. This way, we can isolate the proportion of comments across months. Do you notice any patterns?
-
+Elapsed Time: ~5:22:00
 
 The project specification defines several questions that you will answer with MapReduce jobs. You should edit this document (README.md) with your answers as you find them, including figures, references, etc.

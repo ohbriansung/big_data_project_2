@@ -1,4 +1,4 @@
-package cs677.recordcount;
+package cs677.subredditscount;
 
 import cs677.common.StringIntReducer;
 import cs677.misc.FileCreator;
@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /** This is the main class. Hadoop will invoke the main method of this class. */
-public class RecordCountJob {
+public class SubredditsJob {
   public static void main(String[] args) {
     try {
       Configuration conf = new Configuration();
@@ -20,10 +20,10 @@ public class RecordCountJob {
       Job job = Job.getInstance(conf, "record count job");
 
       /* Current class */
-      job.setJarByClass(RecordCountJob.class);
+      job.setJarByClass(SubredditsJob.class);
 
       /* Mapper class */
-      job.setMapperClass(RecordCountMapper.class);
+      job.setMapperClass(SubredditsCountMapper.class);
 
       /* Combiner class */
       job.setCombinerClass(StringIntReducer.class);
@@ -39,17 +39,17 @@ public class RecordCountJob {
       job.setOutputKeyClass(Text.class);
       job.setOutputValueClass(IntWritable.class);
 
-      /* Job input path in HDFS */
+      /* Input path */
       FileInputFormat.addInputPath(job, new Path(args[0]));
 
-      /* Job output path in HDFS. */
+      /* Output path */
       Path outPath = FileCreator.findEmptyPath(conf, args[1]);
       FileOutputFormat.setOutputPath(job, outPath);
 
       /* Wait (block) for the job to complete... */
       boolean completed = job.waitForCompletion(true);
       if (completed) {
-        RecordCountPost.parseOutput(conf, outPath);
+        SubredditsCountPost.parseOutput(conf, outPath);
       }
       System.exit(completed ? 0 : 1);
 

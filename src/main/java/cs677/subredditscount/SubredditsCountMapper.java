@@ -1,4 +1,4 @@
-package cs677.recordcount;
+package cs677.subredditscount;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class RecordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+public class SubredditsCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
   @Override
   protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {

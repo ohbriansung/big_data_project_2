@@ -18,7 +18,7 @@ public class MonthJob {
       Configuration conf = new Configuration();
 
       /* Job Name. You'll see this in the YARN webapp */
-      Job job = Job.getInstance(conf, "month mapper job");
+      Job job = Job.getInstance(conf, "month job");
 
       /* Current class */
       job.setJarByClass(MonthJob.class);
@@ -36,11 +36,13 @@ public class MonthJob {
       job.setOutputKeyClass(YearMonthWritable.class);
       job.setOutputValueClass(LongWritable.class);
 
-      /* Job input path in HDFS */
+      /* Input path */
       FileInputFormat.addInputPath(job, new Path(args[0]));
+      System.out.println("Input path: " + args[0]);
 
-      /* Job output path in HDFS. */
+      /* Output path */
       Path outPath = FileCreator.findEmptyPath(conf, args[1]);
+      System.out.println("Output path: " + outPath.toString());
       FileOutputFormat.setOutputPath(job, outPath);
 
       /* Wait (block) for the job to complete... */

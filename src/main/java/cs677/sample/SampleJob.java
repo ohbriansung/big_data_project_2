@@ -42,9 +42,11 @@ public class SampleJob {
 
       /* Input path */
       FileInputFormat.addInputPath(job, new Path(args[0]));
+      System.out.println("Input path: " + args[0]);
 
       /* Output path */
       Path outPath = FileCreator.findEmptyPath(conf, args[1]);
+      System.out.println("Output path: " + outPath.toString());
       FileOutputFormat.setOutputPath(job, outPath);
 
       /* Wait job to complete */

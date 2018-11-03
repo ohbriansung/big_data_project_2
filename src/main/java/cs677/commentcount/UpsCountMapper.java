@@ -27,6 +27,9 @@ public class UpsCountMapper extends Mapper<LongWritable, Text, IntWritable, Text
       throws IOException, InterruptedException {
 
     JSONObject post = new JSONObject(value.toString());
+
+    if (!post.getString(Constants.AUTHOR).equals(author)) return;
+
     int ups = post.getInt(Constants.UPS);
     String body = StringEscapeUtils.escapeJson(post.getString(Constants.BODY));
     context.write(new IntWritable(ups), new Text(body));

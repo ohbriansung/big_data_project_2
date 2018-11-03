@@ -1,4 +1,4 @@
-package cs677.recordcount;
+package cs677.subredditscount;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 
-public class RecordCountPost {
+public class SubredditsCountPost {
 
   public static void main(String[] args) {
     try {

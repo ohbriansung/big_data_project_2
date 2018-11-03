@@ -24,8 +24,9 @@ public class UpsJob {
       Configuration conf = new Configuration();
 
       conf.setStrings(Constants.AUTHOR, args[2]);
+      System.out.println("Author: " + args[2]);
 
-      Job job = Job.getInstance(conf, "user_ups_and_comments");
+      Job job = Job.getInstance(conf, "ups job");
       job.setJarByClass(UpsJob.class);
 
       /* Mapper */
@@ -40,11 +41,13 @@ public class UpsJob {
       job.setOutputKeyClass(Text.class);
       job.setOutputValueClass(IntWritable.class);
 
-      /* Job input path in HDFS */
+      /* Input path */
       FileInputFormat.addInputPath(job, new Path(args[0]));
+      System.out.println("Input path: " + args[0]);
 
-      /* Job output path in HDFS. */
+      /* Output path */
       Path outPath = FileCreator.findEmptyPath(conf, args[1]);
+      System.out.println("Output path: " + outPath.toString());
       FileOutputFormat.setOutputPath(job, outPath);
 
       /* Wait (block) for the job to complete... */

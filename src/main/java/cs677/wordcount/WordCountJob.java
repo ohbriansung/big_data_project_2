@@ -1,5 +1,6 @@
 package cs677.wordcount;
 
+import cs677.common.StringIntReducer;
 import cs677.misc.FileCreator;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -24,16 +25,11 @@ public class WordCountJob {
       /* Mapper class */
       job.setMapperClass(WordCountMapper.class);
 
-      /* Combiner class. Combiners are run between the Map and Reduce
-       * phases to reduce the amount of output that must be transmitted.
-       * In some situations, we can actually use the Reducer as a Combiner
-       * but ONLY if its inputs and ouputs match up correctly. The
-       * combiner is disabled here, but the following can be uncommented
-       * for this particular job:
-      //job.setCombinerClass(WordCountReducer.class);
+      /* Combiner */
+      job.setCombinerClass(StringIntReducer.class);
 
-      /* Reducer class */
-      job.setReducerClass(WordCountReducer.class);
+      /* Reducer */
+      job.setReducerClass(StringIntReducer.class);
 
       /* Outputs from the Mapper. */
       job.setMapOutputKeyClass(Text.class);
@@ -43,11 +39,14 @@ public class WordCountJob {
       job.setOutputKeyClass(Text.class);
       job.setOutputValueClass(IntWritable.class);
 
-      /* Job input path in HDFS */
+      /* Input path */
       FileInputFormat.addInputPath(job, new Path(args[0]));
+      System.out.println("Input path: " + args[0]);
 
-      /* Job output path in HDFS. */
-      FileOutputFormat.setOutputPath(job, FileCreator.findEmptyPath(conf, args[1]));
+      /* Output path */
+      Path outPath = FileCreator.findEmptyPath(conf, args[1]);
+      System.out.println("Output path: " + outPath.toString());
+      FileOutputFormat.setOutputPath(job, outPath);
 
       /* Wait (block) for the job to complete... */
       System.exit(job.waitForCompletion(true) ? 0 : 1);
