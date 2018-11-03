@@ -1,4 +1,4 @@
-package cs677.misc;
+package cs677.common;
 
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;

@@ -1,7 +1,7 @@
 package cs677.commentcount;
 
 import cs677.common.Constants;
-import cs677.misc.FileCreator;
+import cs677.common.FileCreator;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;

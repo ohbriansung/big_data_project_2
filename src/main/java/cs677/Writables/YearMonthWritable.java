@@ -1,4 +1,4 @@
-package cs677.misc;
+package cs677.Writables;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.WritableComparable;
@@ -7,6 +7,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Container for year-month pairs, output in the format YYYY-MM. This class demonstrates how to make
@@ -18,21 +19,22 @@ import java.time.LocalDate;
  */
 public class YearMonthWritable implements WritableComparable<YearMonthWritable> {
 
-  private IntWritable year;
-  private IntWritable month;
+  private IntWritable year = new IntWritable(0);
+  private IntWritable month = new IntWritable(0);
 
-  public YearMonthWritable() {
-    this.year = new IntWritable(0);
-    this.month = new IntWritable(0);
-  }
+  public YearMonthWritable() {}
 
   public YearMonthWritable(int year, int month) {
-    this.year = new IntWritable(year);
-    this.month = new IntWritable(month);
+    this.year.set(year);
+    this.month.set(month);
   }
 
   public YearMonthWritable(LocalDate date) {
     this(date.getYear(), date.getMonthValue());
+  }
+
+  public YearMonthWritable(LocalDateTime dateTime) {
+    this(dateTime.getYear(), dateTime.getMonthValue());
   }
 
   @Override
@@ -42,24 +44,27 @@ public class YearMonthWritable implements WritableComparable<YearMonthWritable> 
 
     YearMonthWritable that = (YearMonthWritable) o;
 
-    if (year != null ? !year.equals(that.year) : that.year != null) return false;
-    return month != null ? month.equals(that.month) : that.month == null;
+    if (year == null) return that.year == null;
+    if (!year.equals(that.year)) return false;
+    if (month == null) return that.month == null;
+    return month.equals(that.month);
   }
 
   @Override
   public int hashCode() {
-    int result = year != null ? year.hashCode() : 0;
-    result = 31 * result + (month != null ? month.hashCode() : 0);
+    int result = year != null ? year.get() : 0;
+    result = 13 * result + (month != null ? month.get() : 0);
     return result;
   }
 
   @Override
   public int compareTo(YearMonthWritable that) {
-    if (that.year != this.year) {
-      return that.year.compareTo(this.year);
+    int yearCompare = this.year.compareTo(that.year);
+    if (yearCompare != 0) {
+      return yearCompare;
     }
 
-    return that.month.compareTo(this.month);
+    return this.month.compareTo(that.month);
   }
 
   @Override

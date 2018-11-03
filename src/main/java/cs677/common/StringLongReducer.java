@@ -1,15 +1,15 @@
-package cs677.monthcount;
+package cs677.common;
 
-import cs677.misc.YearMonthWritable;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class MonthReducer
-    extends Reducer<YearMonthWritable, LongWritable, YearMonthWritable, LongWritable> {
+public class StringLongReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
+
   @Override
-  protected void reduce(YearMonthWritable key, Iterable<LongWritable> values, Context context)
+  protected void reduce(Text key, Iterable<LongWritable> values, Context context)
       throws IOException, InterruptedException {
     long count = 0;
     // calculate the total count

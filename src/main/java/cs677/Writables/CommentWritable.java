@@ -1,4 +1,4 @@
-package cs677.misc;
+package cs677.Writables;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.hadoop.io.IntWritable;

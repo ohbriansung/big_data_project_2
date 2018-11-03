@@ -1,7 +1,6 @@
 package cs677.monthcount;
 
 import cs677.common.Constants;
-import cs677.misc.YearMonthWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -12,7 +11,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-public class MonthMapper extends Mapper<LongWritable, Text, YearMonthWritable, LongWritable> {
+public class MonthMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
+  private LongWritable out_value = new LongWritable(1);
+
   @Override
   protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
@@ -33,8 +34,8 @@ public class MonthMapper extends Mapper<LongWritable, Text, YearMonthWritable, L
     }
     LocalDateTime dateTime = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
 
-    YearMonthWritable out_key = new YearMonthWritable(dateTime.getYear(), dateTime.getMonthValue());
+    Text out_key = new Text(String.format("%04d-%02d", dateTime.getYear(), dateTime.getMonthValue()));
 
-    context.write(out_key, new LongWritable(1));
+    context.write(out_key, out_value);
   }
 }

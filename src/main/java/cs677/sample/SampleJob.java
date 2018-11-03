@@ -1,7 +1,7 @@
 package cs677.sample;
 
 import cs677.common.Constants;
-import cs677.misc.FileCreator;
+import cs677.common.FileCreator;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
@@ -21,13 +21,20 @@ import java.time.Month;
 import java.time.ZoneOffset;
 import java.util.Random;
 
+/**
+ * Use
+ * https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/FileSystemShell.html#getmerge
+ * to merge the outputs
+ *
+ * <p>getmerge example hadoop fs -getmerge [-nl] <src> <localdst>
+ */
 public class SampleJob {
   public static void main(String[] args) {
     try {
       Configuration conf = new Configuration();
 
       /* Setup */
-      Job job = Job.getInstance(conf, "sample job");
+      Job job = Job.getInstance(conf, "birthday sample job");
       job.setJarByClass(SampleJob.class);
 
       /* Mapper */
@@ -52,6 +59,9 @@ public class SampleJob {
       /* Wait job to complete */
       boolean completed = job.waitForCompletion(true);
       System.out.println(Instant.now());
+      System.out.println("Input path: " + args[0]);
+      System.out.println("Output path: " + outPath.toString());
+
       System.exit(completed ? 0 : 1);
 
     } catch (Exception e) {
