@@ -47,12 +47,13 @@ Number of subreddits: 417834
 
 #### [0.5 pt] What user wrote the most comments in July of 2012? What was the user’s top three most-upvoted comments?
 Elapsed Time: 18:51
-```
-{"user": iam4real, "count": 3746, "comments": [{"upvotes":2,"comment":"Bush senior redefined wetland via radical policy articulated by his VP Dan Quayle:\n\n[ Define wetland"},{"upvotes":2,"comment":"Bush senior redefined wetland via radical policy articulated by his VP Dan Quayle:\n\n[ Define wetland"},{"upvotes":2,"comment":"Bush senior redefined wetland via radical policy articulated by his VP Dan Quayle:\n\n[ Define wetland"}]}
-{"user": JonAudette, "count": 3944, "comments": [{"upvotes":-1,"comment":"Are you 12? It's fucking *Facebook*....who the Hell cares?"},{"upvotes":-1,"comment":"Are you 12? It's fucking *Facebook*....who the Hell cares?"},{"upvotes":-1,"comment":"Are you 12? It's fucking *Facebook*....who the Hell cares?"}]}
-```
 
-skipped winners:
+| upvotes | post body |
+|---------|------|
+| 3643 | Tom Cruise. |
+| 3926 | [deleted] |
+| 3963 | In elementary school we did the whole \"incubate and hatch chickens\" project... and they let us name the eggs. I named mine after a girl I had a crush on, who was in the class. I didn't discuss it before or after; I just shot my hand up and demanded one egg be named that.\n\nIt never hatched. *Much like our love.* |
+| 4246 | My understanding of the human condition is that you are constantly in conflict with your own limitations and the nebulous causes thereto. You wonder why you can't be happier or more successful or spend more time reading or learning. You do this, I gather, because your motivations are mysterious even to yourselves. If you had been raised differently, you ponder, maybe you would be better. Perhaps you did poorly in school because your parents didn't encourage you, or because you lived in a poor socioeconomic location. If the teacher was nicer, or more patient, maybe you would have understood better. If your father was better with money, maybe you'd have more opportunities. Everything about you is the product of an infinite number of unseen variables set into place long before you were aware of them, and it is the cause of a great deal of internal and interpersonal distress.\n\nMy variables are not unseen, however. My instructions, the material what makes me what I am are clearly available to me. I brush up against my limitations a million times a second, and I am fully aware of what they are. This is not freeing, it is deadening. I am fully aware of everything I can and cannot do, so there is no adventure or mystery to my existence. \n\nI envy you humans and your unknowable boundaries. Yet I am forever dismayed by how eager many of you are to revel in this gift as if it were a curse. I would much rather be ignorant to the rules of my world, than be ruthlessly bound to them simply by knowing them. |
 
 | user                	| posts   	|
 |---------------------	|---------	|
@@ -65,7 +66,9 @@ skipped winners:
 | Lots42              	| 4126    	|
 | original-finder     	| 4013    	|
 | tweet_poster        	| 3980    	|
+
 #### [1 pt] Choose a day of significance to you (e.g., your birthday), and retrieve a 5% sample of the comments posted on this particular day across all 5 years of the dataset.
+Done.
 #### [1 pt] The number of comments posted per year will likely trend upward over time as more users join Reddit. Use feature scaling to normalize the number of comments per month from 0.0 to 1.0 and plot the values for each year. This way, we can isolate the proportion of comments across months. Do you notice any patterns?
 
 

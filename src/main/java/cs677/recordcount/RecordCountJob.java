@@ -1,7 +1,7 @@
 package cs677.recordcount;
 
+import cs677.common.StringIntReducer;
 import cs677.misc.FileCreator;
-import cs677.misc.JsonOutputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -18,6 +18,7 @@ public class RecordCountJob {
 
       /* Job Name. You'll see this in the YARN webapp */
       Job job = Job.getInstance(conf, "record count job");
+
       /* Current class */
       job.setJarByClass(RecordCountJob.class);
 
@@ -25,10 +26,10 @@ public class RecordCountJob {
       job.setMapperClass(RecordCountMapper.class);
 
       /* Combiner class */
-      job.setCombinerClass(RecordCountReducer.class);
+      job.setCombinerClass(StringIntReducer.class);
 
       /* Reducer class */
-      job.setReducerClass(RecordCountReducer.class);
+      job.setReducerClass(StringIntReducer.class);
 
       /* Outputs from the Mapper. */
       job.setMapOutputKeyClass(Text.class);
