@@ -1,5 +1,8 @@
 package cs677.common;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 /**
  * All info taken from
  * {
@@ -27,25 +30,49 @@ package cs677.common;
  * }
  */
 public class Constants {
-  public static final String EDITED = "edited";
+  public static final String ARCHIVED = "archived";
+  public static final String AUTHOR = "author";
+  public static final String AUTHOR_FLAIR_CSS_CLASS = "author_flair_css_class";
+  public static final String AUTHOR_FLAIR_TEXT = "author_flair_text";
+  public static final String BODY = "body";
   public static final String CREATED_UTC = "created_utc";
   public static final String CONTROVERSIALITY = "controversiality";
-  public static final String BODY = "body";
-  public static final String SUBREDDIT_ID = "subreddit_id";
-  public static final String PARENT_ID = "parent_id";
-  public static final String AUTHOR_FLAIR_TEXT = "author_flair_text";
-  public static final String ID = "id";
-  public static final String SCORE = "score";
-  public static final String AUTHOR_FLAIR_CASS_CLASS = "author_flair_css_class";
-  public static final String GILDED = "gilded";
-  public static final String AUTHOR = "author";
-  public static final String SCORE_HIDDEN = "score_hidden";
-  public static final String RETRIEVED_ON = "retrieved_on";
-  public static final String UPS = "ups";
-  public static final String DOWNS = "downs";
-  public static final String NAME = "name";
   public static final String DISTINGUISHED = "distinguished";
-  public static final String SUBREDDIT = "subreddit";
-  public static final String ARCHIVED = "archived";
+  public static final String DOWNS = "downs";
+  public static final String EDITED = "edited";
+  public static final String GILDED = "gilded";
+  public static final String ID = "id";
   public static final String LINK_ID = "link_id";
-}
+  public static final String NAME = "name";
+  public static final String PARENT_ID = "parent_id";
+  public static final String RETRIEVED_ON = "retrieved_on";
+  public static final String SCORE = "score";
+  public static final String SUBREDDIT = "subreddit";
+  public static final String SUBREDDIT_ID = "subreddit_id";
+  public static final String SCORE_HIDDEN = "score_hidden";
+  public static final String UPS = "ups";
+
+  public static final HashSet<String> VALID_KEYS =
+          new HashSet<>(
+                  Arrays.asList(
+                          ARCHIVED,
+                          AUTHOR,
+                          AUTHOR_FLAIR_CSS_CLASS,
+                          AUTHOR_FLAIR_TEXT,
+                          BODY,
+                          CREATED_UTC,
+                          CONTROVERSIALITY,
+                          DISTINGUISHED,
+                          DOWNS,
+                          EDITED,
+                          GILDED,
+                          ID,
+                          LINK_ID,
+                          NAME,
+                          PARENT_ID,
+                          RETRIEVED_ON,
+                          SCORE,
+                          SUBREDDIT,
+                          SUBREDDIT_ID,
+                          SCORE_HIDDEN,
+                          UPS));}

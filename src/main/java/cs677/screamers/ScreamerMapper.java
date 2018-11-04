@@ -2,57 +2,46 @@ package cs677.screamers;
 
 import cs677.Writables.CountTotalWritable;
 import cs677.common.Constants;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Random;
 
 public class ScreamerMapper extends Mapper<LongWritable, Text, Text, CountTotalWritable> {
 
-  private static final String screamString = "ABCDEFGHJIKLMNOPQRSTUVWXYZ!";
-  private static final String normalString = "abcdefghijklmnopqrstuvwxyz.";
-
-  private static final HashSet<Character> screamCharSet =
-      new HashSet<>(toCharacterList(screamString));
-  private static final HashSet<Character> normalCharSet =
-      new HashSet<>(toCharacterList(normalString));
-
-  private static List<Character> toCharacterList(String str) {
-    if (str == null) {
-      return new ArrayList<>();
-    }
-    char[] chars = str.toCharArray();
-    Character[] characters = new Character[chars.length];
-    for (int i = 0; i < chars.length; i++) {
-      characters[i] = chars[i];
-    }
-    return Arrays.asList(characters);
-  }
+  private Random random = new Random();
 
   @Override
   protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
+
+    if (random.nextFloat() > 0.01) return;
+
     JSONObject obj = new JSONObject(value.toString());
-    String author = obj.getString(Constants.AUTHOR);
+
+    Configuration conf = context.getConfiguration();
+    String jsonKey = conf.get(ScreamerJob.JSON_KEY);
+    String filterKey = obj.getString(jsonKey);
+
     String body = obj.getString(Constants.BODY);
-    Text out_key = new Text(author);
     long count = 0;
     long total = 0;
-    for (Character chr : body.toCharArray()) {
-      if (screamCharSet.contains(chr)) {
-        count += 1;
+    // https://www.programiz.com/java-programming/examples/alphabet
+    for (char c : body.toCharArray()) {
+      if (c >= 'a' && c <= 'z') {
+        // lowercase
         total += 1;
       }
-      if (normalCharSet.contains(chr)) {
+      if (c >= 'A' && c <= 'Z') {
+        // uppercase
         total += 1;
+        count += 1;
       }
     }
-    context.write(out_key, new CountTotalWritable(count, total));
+    if (total > 0) context.write(new Text(filterKey), new CountTotalWritable(count, total));
   }
 }

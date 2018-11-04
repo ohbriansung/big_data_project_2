@@ -1,11 +1,9 @@
 package cs677.screamers;
 
 import cs677.Writables.CountTotalWritable;
-import cs677.common.CountTotalReducer;
-import cs677.common.DoubleComparator;
-import cs677.common.FileCreator;
-import cs677.common.TimerStuff;
+import cs677.common.*;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
@@ -15,75 +13,116 @@ import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.jobcontrol.ControlledJob;
 import org.apache.hadoop.mapreduce.lib.jobcontrol.JobControl;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class ScreamerJob {
-  public static void main(String[] args) {
+// yarn jar P2-1.0.jar cs677.screamers.ScreamerJob /data/2* /out/screamer_a author
+// yarn jar P2-1.0.jar cs677.screamers.ScreamerJob /data/2* /out/screamer_s subreddit
+public class ScreamerJob extends Configured implements Tool {
+
+  static final String JSON_KEY = "jsonKey";
+
+  private static final DateTimeFormatter DATE_TIME_FORMATTER =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss,SSS");
+
+  @Override
+  public int run(String[] args) throws Exception {
     System.out.println("Input Args: {\"args\": [");
     for (String arg : args) {
       System.out.println("\"" + arg + "\", ");
     }
     System.out.println("]}");
-    if (args.length != 2) {
-      System.out.println("required args: <input_path> <output_path>");
+    if (args.length != 3) {
+      System.out.println("required args: <input_path> <output_path> <json_key>");
+      System.exit(-1);
+    }
+    String jsonKey = args[2];
+    if (!isValidJsonKey(jsonKey)) {
+      System.out.println("Only valid json keys: " + Constants.AUTHOR + ", " + Constants.SUBREDDIT);
+      System.exit(-1);
+    }
+
+    Instant t1 = Instant.now();
+
+    /* Paths Setup */
+    Configuration countConf = getConf();
+
+    Path outPath = FileCreator.findEmptyPath(countConf, args[1]);
+    String outPathTmp = outPath.toString() + "/tmp";
+    String outPathFinal = outPath.toString() + "/final";
+
+    JobControl jobControl = new JobControl("JobController");
+
+    /* Job 1 */
+    countConf.set(JSON_KEY, jsonKey);
+
+    Job countJob = screamCountJob(countConf, args[0], outPathTmp);
+
+    ControlledJob controlledCountJob = new ControlledJob(countConf);
+    controlledCountJob.setJob(countJob);
+
+    jobControl.addJob(controlledCountJob);
+
+    /* Job 2 */
+    Configuration flipConf = getConf();
+    Job flipJob = flipperJob(flipConf, outPathTmp, outPathFinal);
+    flipJob.setInputFormatClass(KeyValueTextInputFormat.class);
+
+    ControlledJob controlledFlipJob = new ControlledJob(flipConf);
+    controlledFlipJob.setJob(flipJob);
+    controlledFlipJob.addDependingJob(controlledCountJob);
+    jobControl.addJob(controlledFlipJob);
+
+    /* Run */
+    Thread jobRunnerThread = new Thread(jobControl);
+    jobRunnerThread.start();
+
+    while (!jobControl.allFinished()) {
+      System.out.println(
+          String.format(
+              "%s: {\"waiting\": %d, \"ready\": %d, \"running\": %d, \"success\": %d, \"failed\": %d}",
+              LocalDateTime.now().format(DATE_TIME_FORMATTER),
+              jobControl.getWaitingJobList().size(),
+              jobControl.getReadyJobsList().size(),
+              jobControl.getRunningJobList().size(),
+              jobControl.getSuccessfulJobList().size(),
+              jobControl.getFailedJobList().size()));
+      try {
+        Thread.sleep(30000);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    Instant t2 = Instant.now();
+    System.out.println("Time Taken: " + TimerStuff.formatDuration(Duration.between(t1, t2)));
+    jobControl.stop();
+    System.exit(0);
+    return (countJob.waitForCompletion(true) ? 0 : 1);
+  }
+
+  public static void main(String[] args) {
+    if (args.length != 3) {
+      System.out.println("required args: <input_path> <output_path> <json_key>");
       System.exit(-1);
     }
     try {
-      Instant t1 = Instant.now();
-
-      JobControl jobControl = new JobControl("screamer controller");
-
-      /* Paths Setup */
-
-      Configuration conf = new Configuration();
-
-      Path outPath = FileCreator.findEmptyPath(conf, args[1]);
-      String outPathTmp = outPath.toString() + "/tmp";
-      String outPathFinal = outPath.toString() + "/final";
-
-      /* Job 1 */
-      Configuration conf1 = new Configuration();
-      Job countJob = screamCountJob(conf1, args[0], outPathTmp);
-
-      ControlledJob cCountJob = new ControlledJob(conf1);
-      cCountJob.setJob(countJob);
-      jobControl.addJob(cCountJob);
-
-      /* Job 2 */
-      Configuration conf2 = new Configuration();
-
-      Job flipJob = flipperJob(conf2, outPathTmp, outPathFinal);
-      flipJob.setInputFormatClass(KeyValueTextInputFormat.class);
-
-      ControlledJob cFlipJob = new ControlledJob(conf2);
-      cFlipJob.setJob(flipJob);
-      jobControl.addJob(cFlipJob);
-      cFlipJob.addDependingJob(cFlipJob);
-
-      /* Run */
-
-      Thread jobControlThread = new Thread(jobControl);
-      jobControlThread.start();
-
-      while (!jobControl.allFinished()) {
-        System.out.println("Jobs in waiting state: " + jobControl.getWaitingJobList().size());
-        System.out.println("Jobs in ready state: " + jobControl.getReadyJobsList().size());
-        System.out.println("Jobs in running state: " + jobControl.getRunningJobList().size());
-        System.out.println("Jobs in success state: " + jobControl.getSuccessfulJobList().size());
-        System.out.println("Jobs in failed state: " + jobControl.getFailedJobList().size());
-        Thread.sleep(5000);
-      }
-
-      Instant t2 = Instant.now();
-      System.out.println("Time Taken: " + TimerStuff.formatDuration(Duration.between(t1, t2)));
-      System.exit(0);
-
+      int exitStatus = ToolRunner.run(new Configuration(), new ScreamerJob(), args);
+      System.exit(exitStatus);
     } catch (Exception e) {
-      System.err.println(e.getMessage());
+      e.printStackTrace();
+      System.exit(-1);
     }
+  }
+
+  private static boolean isValidJsonKey(String key) {
+    return key.equals(Constants.AUTHOR) || key.equals(Constants.SUBREDDIT);
   }
 
   private static Job screamCountJob(Configuration conf, String input, String output)
