@@ -92,6 +92,9 @@ Elapsed Time: ~5:22:00
 It is well known that WRITING IN ALL CAPS ONLINE IS A SUBSTITUTE FOR SCREAMING… OR YELLING. *cough!* Write a job to find users that scream a lot, and provide a screamer score (a highly-technical metric expressed as the percentage of uppercase letters used in their comments).
 * For future reference (when we really want to get something off our chest), what are the top 5 subreddits for scream-y comments?
 
+For my metric, I used the ratio of upper case letters and "!" to lower case letters and ".". It turns out there are a lot of users who have only posted upper case.
+
+
 #### [3 pt] Readability
 Write a job that computes Gunning Fog Index and Flesch-Kincaid Readability (both reading ease and grade level) of user comments.
 * Choose a subreddit and plot the distribution of these scores using a histogram.

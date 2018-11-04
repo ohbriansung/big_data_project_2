@@ -20,6 +20,18 @@ public class SenWorSylWritable implements Writable {
     this.syllables.set(syllables);
   }
 
+  public long getSentences() {
+    return sentences.get();
+  }
+
+  public long getWords() {
+    return words.get();
+  }
+
+  public long getSyllables() {
+    return syllables.get();
+  }
+
   @Override
   public void write(DataOutput dataOutput) throws IOException {
     this.sentences.write(dataOutput);

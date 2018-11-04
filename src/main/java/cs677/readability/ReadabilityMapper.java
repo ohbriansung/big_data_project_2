@@ -23,10 +23,11 @@ public class ReadabilityMapper extends Mapper<LongWritable, Text, Text, SenWorSy
     JSONObject obj = new JSONObject(value.toString());
 
     Configuration conf = context.getConfiguration();
+    boolean allSubs = conf.getBoolean(ReadabilityJob.ALL_SUBS_KEY, false);
     String subToParse = conf.get(ReadabilityJob.SUB_PARSING_KEY);
     String subreddit = obj.getString(Constants.SUBREDDIT);
 
-    if (!subToParse.equals(subreddit)) return;
+    if (allSubs || !subToParse.equals(subreddit)) return;
 
     String body = obj.getString(Constants.BODY).toLowerCase();
 
