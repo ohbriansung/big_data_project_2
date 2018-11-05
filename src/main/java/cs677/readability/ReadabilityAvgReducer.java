@@ -6,7 +6,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-public class ReadaiblityAvgMapper extends Reducer<Text, SenWorSylWritable, Text, FleschWritable> {
+public class ReadabilityAvgReducer extends Reducer<Text, SenWorSylWritable, Text, FleschWritable> {
   @Override
   protected void reduce(Text key, Iterable<SenWorSylWritable> values, Context context)
       throws InterruptedException, IOException {
@@ -23,6 +23,7 @@ public class ReadaiblityAvgMapper extends Reducer<Text, SenWorSylWritable, Text,
     }
     grade = grade.divide(new BigDecimal(count), BigDecimal.ROUND_HALF_EVEN);
     ease = ease.divide(new BigDecimal(count), BigDecimal.ROUND_HALF_EVEN);
-    new FleschWritable(ease.doubleValue(), grade.doubleValue());
+    FleschWritable fleschWritable = new FleschWritable(ease.doubleValue(), grade.doubleValue());
+    context.write(key, fleschWritable);
   }
 }

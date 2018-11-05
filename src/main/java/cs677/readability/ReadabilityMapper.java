@@ -18,7 +18,7 @@ public class ReadabilityMapper extends Mapper<LongWritable, Text, Text, SenWorSy
   protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
 
-    if (random.nextFloat() > 0.05) return;
+    if (random.nextFloat() > 0.01) return;
 
     JSONObject obj = new JSONObject(value.toString());
 
@@ -27,7 +27,7 @@ public class ReadabilityMapper extends Mapper<LongWritable, Text, Text, SenWorSy
     String subToParse = conf.get(ReadabilityJob.SUB_PARSING_KEY);
     String subreddit = obj.getString(Constants.SUBREDDIT);
 
-    if (allSubs || !subToParse.equals(subreddit)) return;
+    if (!allSubs && !subToParse.equals(subreddit)) return;
 
     String body = obj.getString(Constants.BODY).toLowerCase();
 

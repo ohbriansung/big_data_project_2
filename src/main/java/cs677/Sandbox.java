@@ -24,9 +24,10 @@ public class Sandbox {
     //    randTest();
     //        localDateTimeTest();
     //    durationTest();
-    String str = createBigString();
-    System.out.println("big string made");
-    charSequenceStream(str);
+    //    String str = createBigString();
+    //    System.out.println("big string made");
+    //    charSequenceStream(str);
+    senWorSylCount();
   }
 
   private void itemizeString() {
@@ -133,6 +134,90 @@ public class Sandbox {
       sb.append(str);
     }
     return sb.toString();
+  }
+
+  private void senWorSylCount() {
+    String body =
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tincidunt lorem non convallis varius. Nulla facilisi. Nulla nec elementum velit, aliquet viverra neque. Fusce non mauris tempus, pretium orci ac, ullamcorper ex. Pellentesque in volutpat velit. Vestibulum pharetra, sapien id consectetur tincidunt, dui leo varius justo, ac varius orci risus et nibh. Morbi in leo ac elit vehicula lacinia. Integer viverra sapien nunc, vel bibendum sem faucibus a. Nullam at varius leo. Proin ante eros, volutpat volutpat venenatis ac, placerat pretium ante. Aliquam consectetur egestas metus. Phasellus placerat diam et lorem lobortis auctor.\n"
+            + "\n"
+            + "Mauris ante quam, tempus at accumsan vel, tempus viverra nibh. Quisque euismod at eros id finibus. Fusce quis tristique felis, in convallis dolor. Suspendisse a diam vel orci mollis faucibus. Quisque eleifend, odio ut hendrerit molestie, nibh lacus faucibus lorem, non mollis.";
+
+    // https://www.programiz.com/java-programming/examples/alphabet
+    char[] chars = body.toCharArray();
+    long sylCount = 0;
+    long worCount = 0;
+    long senCount = 0;
+    boolean inWord = false;
+    for (int i = 0; i < chars.length; i++) {
+      if (i == chars.length - 1) {
+        switch (chars[i]) {
+          case 'a':
+            sylCount += 1;
+            break;
+          case 'e':
+            sylCount += 1;
+            break;
+          case 'i':
+            sylCount += 1;
+            break;
+          case 'o':
+            sylCount += 1;
+            break;
+          case 'u':
+            sylCount += 1;
+            break;
+          case 'y':
+            sylCount += 1;
+            break;
+          default:
+            break;
+        }
+        worCount += 1;
+        senCount += 1;
+      } else {
+        if (isPunct(chars[i])) {
+          if (inWord) worCount += 1;
+          inWord = false;
+          if (!isPunct(chars[i + 1])) senCount += 1;
+        }
+        if (Character.isWhitespace(chars[i])) {
+          if (inWord) worCount += 1;
+          inWord = false;
+        }
+        if (Character.isAlphabetic(chars[i])) {
+          inWord = true;
+          switch (chars[i]) {
+            case 'a':
+              if (chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
+              break;
+            case 'e':
+              if (chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
+              break;
+            case 'i':
+              sylCount += 1;
+              break;
+            case 'o':
+              if (chars[i + 1] != 'i' || chars[i + 1] != 'u' || chars[i + 1] != 'y') sylCount += 1;
+              break;
+            case 'u':
+              sylCount += 1;
+              break;
+            case 'y':
+              sylCount += 1;
+              break;
+            default:
+              break;
+          }
+        }
+      }
+    }
+    System.out.println(senCount);
+    System.out.println(worCount);
+    System.out.println(sylCount);
+  }
+
+  private boolean isPunct(char chr) {
+    return chr == '.' || chr == '!' || chr == '?' || chr == '~';
   }
 
   class Averager implements IntConsumer {
