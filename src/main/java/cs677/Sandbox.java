@@ -1,5 +1,7 @@
 package cs677;
 
+import cs677.Writables.TextCountArrayWritable;
+import cs677.Writables.TextCountWritable;
 import org.apache.hadoop.io.Text;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,9 +10,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Random;
+import java.util.*;
 import java.util.function.IntConsumer;
 
 public class Sandbox {
@@ -29,8 +29,9 @@ public class Sandbox {
     //    String str = createBigString();
     //    System.out.println("big string made");
     //    charSequenceStream(str);
-//    senWorSylCount();
-    textIsEqual();
+    //    senWorSylCount();
+    //    textIsEqual();
+    jsonReadKeys();
   }
 
   private void itemizeString() {
@@ -234,6 +235,14 @@ public class Sandbox {
 
     for (Text text : hashSet) {
       System.out.println("\"" + text + "\"");
+    }
+  }
+
+  private void jsonReadKeys() {
+    String jsonString = "{\"a\": 1, \"b\": 2}";
+    JSONObject jsonObject = new JSONObject(jsonString);
+    for (String key : jsonObject.keySet()) {
+      System.out.println(jsonObject.get(key));
     }
   }
 

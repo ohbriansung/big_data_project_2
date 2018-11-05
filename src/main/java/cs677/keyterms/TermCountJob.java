@@ -5,7 +5,6 @@ import cs677.common.FileCreator;
 import cs677.common.TimerStuff;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -13,7 +12,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.time.Duration;
 import java.time.Instant;
-
+// yarn jar P2-1.0.jar cs677.keyterms.TermCountJob /samples/20* /test/termcount
 public class TermCountJob {
   public static void main(String[] args) {
     if (args.length != 2) {
@@ -51,7 +50,7 @@ public class TermCountJob {
       /* Reducer */
       job.setReducerClass(TermCountReducer.class);
       job.setOutputKeyClass(Text.class);
-      job.setOutputValueClass(ArrayWritable.class);
+      job.setOutputValueClass(Text.class);
 
       /* Wait job to complete */
       boolean completed = job.waitForCompletion(true);

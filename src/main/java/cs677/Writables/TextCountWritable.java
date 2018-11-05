@@ -56,6 +56,6 @@ public class TextCountWritable implements Writable {
 
   @Override
   public String toString() {
-    return "{\"text\": \"" + text + "\", \"count\": " + count + "}";
+    return "{\"" + text + "\": " + count + "}";
   }
 }
