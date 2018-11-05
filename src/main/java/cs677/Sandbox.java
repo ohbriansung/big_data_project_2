@@ -1,5 +1,6 @@
 package cs677;
 
+import org.apache.hadoop.io.Text;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -7,6 +8,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.function.IntConsumer;
@@ -27,7 +29,8 @@ public class Sandbox {
     //    String str = createBigString();
     //    System.out.println("big string made");
     //    charSequenceStream(str);
-    senWorSylCount();
+//    senWorSylCount();
+    textIsEqual();
   }
 
   private void itemizeString() {
@@ -218,6 +221,20 @@ public class Sandbox {
 
   private boolean isPunct(char chr) {
     return chr == '.' || chr == '!' || chr == '?' || chr == '~';
+  }
+
+  private void textIsEqual() {
+    HashSet<Text> hashSet = new HashSet<>();
+
+    hashSet.add(new Text("a"));
+    hashSet.add(new Text("a"));
+    hashSet.add(new Text("a"));
+    hashSet.add(new Text());
+    hashSet.add(new Text());
+
+    for (Text text : hashSet) {
+      System.out.println("\"" + text + "\"");
+    }
   }
 
   class Averager implements IntConsumer {
