@@ -22,7 +22,7 @@ public class TermCountMapper extends Mapper<LongWritable, Text, Text, TextCountW
   protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
 
-    if (random.nextFloat() > 0.001) return;
+    if (random.nextFloat() > 0.05) return;
 
     JSONObject obj = new JSONObject(value.toString());
 

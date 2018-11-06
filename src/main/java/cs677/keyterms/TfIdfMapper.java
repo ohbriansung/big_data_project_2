@@ -18,14 +18,14 @@ public class TfIdfMapper extends Mapper<Text, Text, DoubleWritable, Text> {
     String keyToUse = conf.get(TfIdfJob.DOCUMENT_KEY, "");
     long totalTerms = conf.getLong(TfIdfJob.TOTAL_NUM_TERMS, 0L);
     long totalDocs = conf.getLong(TfIdfJob.TOTAL_NUM_DOCUMENTS, 0L);
-    JSONObject obj = new JSONObject(value.toString());
+    JSONObject jsonObject = new JSONObject(value.toString());
 
-    if (obj.length() == 0 || totalDocs == 0 || totalTerms == 0 || !obj.has(keyToUse)) {
+    if (jsonObject.length() == 0 || totalDocs == 0 || totalTerms == 0 || !jsonObject.has(keyToUse)) {
       return;
     }
 
-    double tf = obj.getDouble(keyToUse) / totalTerms;
-    double idf = Math.log(((double) totalDocs) / obj.length());
+    double tf = jsonObject.getDouble(keyToUse) / totalTerms;
+    double idf = Math.log(((double) totalDocs) / jsonObject.length());
 
     context.write(new DoubleWritable(tf * idf), key);
   }

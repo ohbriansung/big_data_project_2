@@ -3,6 +3,7 @@ package cs677.Writables;
 import org.apache.hadoop.io.ArrayWritable;
 
 public class TextCountArrayWritable extends ArrayWritable {
+
   public TextCountArrayWritable() {
     super(TextCountWritable.class);
   }

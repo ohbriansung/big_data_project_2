@@ -9,11 +9,20 @@ import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.time.Duration;
 import java.time.Instant;
 
+// yarn jar P2-1.0.jar cs677.keyterms.TfIdfJob /out/termcount_subs/* /out/tfidf  nosleep 41683 33714
+// yarn jar P2-1.0.jar cs677.keyterms.TfIdfJob /test/termcount_01/* /test/tfidf AskReddit 12 3
+// yarn jar P2-1.0.jar cs677.keyterms.TfIdfJob /out/termcount_subs_5per_00/* /out/tfidf_5per rarepuppers 23508 178519
+// hdfs dfs -cat /out/termindoc_subs_5per_00/part* | grep rarepuppers
+// hdfs dfs -cat /out/termindoc_subs_5per_00/part* | wc -l
+
+// wordcloud
+// https://github.com/amueller/word_cloud/blob/b79b3d69a65643dbd421a027e66760a4398e91b3/wordcloud/wordcloud.py#L363
 public class TfIdfJob {
   static final String DOCUMENT_KEY = "doc_key";
   static final String TOTAL_NUM_TERMS = "tot_terms";
@@ -47,6 +56,8 @@ public class TfIdfJob {
       /* Input path */
       FileInputFormat.addInputPath(job, new Path(input));
       System.out.println("Input path: " + input);
+      job.setInputFormatClass(KeyValueTextInputFormat.class);
+
 
       /* Output path */
       Path outPath = FileCreator.findEmptyPath(conf, output);

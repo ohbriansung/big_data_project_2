@@ -17,6 +17,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
+// yarn jar P2-1.0.jar cs677.keyterms.TermsInDocJob /out/termcount_02 /out/termindoc
+// yarn jar P2-1.0.jar cs677.keyterms.TermsInDocJob /out/termcount_subs_5per_00/ /out/termindoc_subs_5per
 
 public class TermsInDocJob {
   public static void main(String[] args) {

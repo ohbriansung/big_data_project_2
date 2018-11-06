@@ -12,7 +12,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.time.Duration;
 import java.time.Instant;
-// yarn jar P2-1.0.jar cs677.keyterms.TermCountJob /data/20* /out/termcount
+// yarn jar P2-1.0.jar cs677.keyterms.TermCountJob /data/20* /out/termcount_subs_5per
 public class TermCountJob {
   public static void main(String[] args) {
     if (args.length != 2) {
