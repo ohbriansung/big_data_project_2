@@ -12,7 +12,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.time.Duration;
 import java.time.Instant;
-// yarn jar P2-1.0.jar cs677.keyterms.TermCountJob /samples/20* /test/termcount
+// yarn jar P2-1.0.jar cs677.keyterms.TermCountJob /data/20* /out/termcount
 public class TermCountJob {
   public static void main(String[] args) {
     if (args.length != 2) {
@@ -60,6 +60,8 @@ public class TermCountJob {
 
       Instant t2 = Instant.now();
       System.out.println("Time Taken: " + TimerStuff.formatDuration(Duration.between(t1, t2)));
+
+      /* Post parse */
 
       System.exit(completed ? 0 : 1);
 

@@ -4,29 +4,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 /**
- * All info taken from
- * {
- *   "edited": false,
- *   "created_utc": "1325376000",
- *   "controversiality": 0,
- *   "body": "Isn't this against the first amendment? Doesn't the first amendment give us the right to assemble and protest?",
- *   "subreddit_id": "t5_2qh3l",
- *   "parent_id": "t3_nxrpq",
- *   "author_flair_text": null,
- *   "id": "c3ctzsj",
- *   "score": 5,
- *   "author_flair_css_class": null,
- *   "gilded": 0,
- *   "author": "goishin",
- *   "score_hidden": false,
- *   "retrieved_on": 1428104610,
- *   "ups": 5,
- *   "downs": 0,
- *   "name": "t1_c3ctzsj",
- *   "distinguished": null,
- *   "subreddit": "news",
- *   "archived": true,
- *   "link_id": "t3_nxrpq"
+ * All info taken from { "edited": false, "created_utc": "1325376000", "controversiality": 0,
+ * "body": "Isn't this against the first amendment? Doesn't the first amendment give us the right to
+ * assemble and protest?", "subreddit_id": "t5_2qh3l", "parent_id": "t3_nxrpq", "author_flair_text":
+ * null, "id": "c3ctzsj", "score": 5, "author_flair_css_class": null, "gilded": 0, "author":
+ * "goishin", "score_hidden": false, "retrieved_on": 1428104610, "ups": 5, "downs": 0, "name":
+ * "t1_c3ctzsj", "distinguished": null, "subreddit": "news", "archived": true, "link_id": "t3_nxrpq"
  * }
  */
 public class Constants {
@@ -53,26 +36,28 @@ public class Constants {
   public static final String UPS = "ups";
 
   public static final HashSet<String> VALID_KEYS =
-          new HashSet<>(
-                  Arrays.asList(
-                          ARCHIVED,
-                          AUTHOR,
-                          AUTHOR_FLAIR_CSS_CLASS,
-                          AUTHOR_FLAIR_TEXT,
-                          BODY,
-                          CREATED_UTC,
-                          CONTROVERSIALITY,
-                          DISTINGUISHED,
-                          DOWNS,
-                          EDITED,
-                          GILDED,
-                          ID,
-                          LINK_ID,
-                          NAME,
-                          PARENT_ID,
-                          RETRIEVED_ON,
-                          SCORE,
-                          SUBREDDIT,
-                          SUBREDDIT_ID,
-                          SCORE_HIDDEN,
-                          UPS));}
+      new HashSet<>(
+          Arrays.asList(
+              ARCHIVED,
+              AUTHOR,
+              AUTHOR_FLAIR_CSS_CLASS,
+              AUTHOR_FLAIR_TEXT,
+              BODY,
+              CREATED_UTC,
+              CONTROVERSIALITY,
+              DISTINGUISHED,
+              DOWNS,
+              EDITED,
+              GILDED,
+              ID,
+              LINK_ID,
+              NAME,
+              PARENT_ID,
+              RETRIEVED_ON,
+              SCORE,
+              SUBREDDIT,
+              SUBREDDIT_ID,
+              SCORE_HIDDEN,
+              UPS));
+  public static final String REGEX_ALL_PUNCTIATION = "\\p{P}";
+}

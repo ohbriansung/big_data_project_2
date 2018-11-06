@@ -11,27 +11,30 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.StringTokenizer;
 
-/** Mapper: Reads line by line, split them into words. Emit <word, 1> pairs. */
 public class TermCountMapper extends Mapper<LongWritable, Text, Text, TextCountWritable> {
 
   private Random random = new Random();
 
   private TextCountWritable outVal = new TextCountWritable("", 1L);
+  private Text outKey = new Text();
 
   @Override
   protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
 
-    if (random.nextFloat() > 0.01) return;
+    if (random.nextFloat() > 0.001) return;
 
     JSONObject obj = new JSONObject(value.toString());
 
     String subreddit = obj.getString(Constants.SUBREDDIT);
 
-    StringTokenizer itr = new StringTokenizer(value.toString());
+    StringTokenizer itr = new StringTokenizer(obj.getString(Constants.BODY));
+    String token;
+    outVal.setText(subreddit);
     while (itr.hasMoreTokens()) {
-      outVal.setText(subreddit);
-      context.write(new Text(itr.nextToken()), outVal);
+      token = itr.nextToken().toLowerCase().replaceAll(Constants.REGEX_ALL_PUNCTIATION, "");
+      outKey.set(token);
+      context.write(outKey, outVal);
     }
   }
 }

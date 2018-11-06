@@ -1,7 +1,5 @@
 package cs677;
 
-import cs677.Writables.TextCountArrayWritable;
-import cs677.Writables.TextCountWritable;
 import org.apache.hadoop.io.Text;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,7 +8,9 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.*;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Random;
 import java.util.function.IntConsumer;
 
 public class Sandbox {
@@ -239,10 +239,12 @@ public class Sandbox {
   }
 
   private void jsonReadKeys() {
-    String jsonString = "{\"a\": 1, \"b\": 2}";
+    String line =
+        "you     {\"politics\": 1, \"AnythingGoesNews\": 3, \"WeAreTheFilmMakers\": 1, \"netsec\": 1, }";
+    String jsonString = line.split("\\s+", 2)[1];
     JSONObject jsonObject = new JSONObject(jsonString);
     for (String key : jsonObject.keySet()) {
-      System.out.println(jsonObject.get(key));
+      System.out.println("\"" + key + "\": " + jsonObject.get(key));
     }
   }
 
