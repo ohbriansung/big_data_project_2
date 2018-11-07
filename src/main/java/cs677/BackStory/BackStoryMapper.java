@@ -18,8 +18,7 @@ public class BackStoryMapper extends Mapper<LongWritable, Text, Text, BackGround
         // tokenize into words.
         JSONObject obj = new JSONObject(value.toString());
 
-        String[] subreddits = new String[10];
-        subreddits[0] = obj.getString("subreddit");
+        String subreddits = obj.getString("subreddit");
 
         int ups = obj.getInt("ups");
         FleschKincaid fleschKincaid = new FleschKincaid();
@@ -27,7 +26,7 @@ public class BackStoryMapper extends Mapper<LongWritable, Text, Text, BackGround
         String location = getLocation(obj.getString("body"));
         int commentcount = 1;
 
-        BackGroundWritable background = new BackGroundWritable(ups,readscore,location,commentcount);
+        BackGroundWritable background = new BackGroundWritable(ups,readscore,location,subreddits,commentcount);
 
         String user = obj.getString("author");
         context.write(new Text(user),background);

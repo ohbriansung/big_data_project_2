@@ -11,16 +11,15 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
     IntWritable upvotes = new IntWritable(0);
     DoubleWritable readability_score = new DoubleWritable(0);
     Text location = new Text("");
-    String[] strings = new String[10];
-   // ArrayWritable likes = new ArrayWritable(strings);
+    Text likes = new Text("");
     IntWritable commentcount = new IntWritable(0);
 
     public BackGroundWritable(){};
-    public BackGroundWritable(int upvotes, double rscore, String location, int commentcount){
+    public BackGroundWritable(int upvotes, double rscore, String location,String like, int commentcount){
         this.upvotes = new IntWritable(upvotes);
         this.readability_score = new DoubleWritable(rscore);
         this.location = new Text(location);
-      //  this.likes = new ArrayWritable(likes);
+        this.likes = new Text(likes);
         this.commentcount = new IntWritable(commentcount);
     }
 
@@ -29,7 +28,6 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
         this.readability_score = new DoubleWritable(rscore + this.readability_score.get());
         if(!location.equals("none"))
             this.location = new Text(location);
-        //this.likes = new ArrayWritable(likes);
         this.commentcount = new IntWritable(this.commentcount.get() + commentcount);
     }
 
@@ -38,7 +36,7 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
         upvotes.write(dataOutput);
         readability_score.write(dataOutput);
         location.write(dataOutput);
-       // likes.write(dataOutput);
+        likes.write(dataOutput);
         commentcount.write(dataOutput);
     }
 
@@ -47,7 +45,7 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
         upvotes.readFields(dataInput);
         readability_score.readFields(dataInput);
         location.readFields(dataInput);
-       // likes.readFields(dataInput);
+        likes.readFields(dataInput);
         commentcount.readFields(dataInput);
     }
 
@@ -61,9 +59,9 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
             return this.upvotes.compareTo(o.upvotes);
     }
 
-    public ArrayWritable getLikes() {
-      //  return likes;
-        return null;
+    public Text getLikes() {
+        return likes;
+
     }
 
     public DoubleWritable getReadability_score() {
@@ -89,8 +87,7 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
         return "Average upvotes: " + Double.toString((double) upvotes.get()/ (double)commentcount.get()) + "\n" +
                 "Average education level: " +  Double.toString(readability_score.get()/(double) commentcount.get()) + "\n" +
                 "Comments Written: " + Double.toString(commentcount.get()) + "\n" +
-                "Location: " + location + "\n" +
-                "Liked subreddits:";
+                "Location: " + location + "\n";
     }
 }
 
