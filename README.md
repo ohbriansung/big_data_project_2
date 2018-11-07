@@ -86,6 +86,8 @@ Expected = total_posts * 0.05 / 365.25
 #### [1 pt] The number of comments posted per year will likely trend upward over time as more users join Reddit. Use feature scaling to normalize the number of comments per month from 0.0 to 1.0 and plot the values for each year. This way, we can isolate the proportion of comments across months. Do you notice any patterns?
 Elapsed Time: ~5:22:00
 
+![alt text]( "Distribution")
+
 ## Analysis
 
 #### [1 pt] Screamers
