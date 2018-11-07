@@ -6,7 +6,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class BackGroundWritable implements WritableComparable<BackGroundWritable> {
+public class BackGroundWritable implements Writable {
 
     IntWritable upvotes = new IntWritable(0);
     DoubleWritable readability_score = new DoubleWritable(0);
@@ -50,14 +50,6 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
     }
 
 
-
-    @Override
-    public int compareTo(BackGroundWritable o) {
-        if (o.readability_score.compareTo(this.readability_score) > 0)
-            return o.upvotes.compareTo(this.upvotes);
-        else
-            return this.upvotes.compareTo(o.upvotes);
-    }
 
     public Text getLikes() {
         return likes;
