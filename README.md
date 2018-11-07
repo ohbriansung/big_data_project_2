@@ -125,5 +125,9 @@ Some ideas:
 * Summary statistics: finding mins, maxes, standard deviations, or even correlations between variables to tell us something about a subreddit or multiple subreddits. For example, perhaps users that visit /r/technology also frequently visit /r/android.
 * Friend graph: can you link together ‘related’ users based on some shared interest? Maybe several users visit the same collection of subreddits. The PageRank could come in handy here.
 
+##### One: Use a bloom filter to measure how similar a user's vocabulary is to another user's
+
+##### Two: Five most diverse/most important subbreddits per month
+
 ## Wrap Up
 #### [1 pt] Project retrospective
