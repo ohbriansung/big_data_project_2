@@ -27,6 +27,7 @@ public class ToxicMapper extends Mapper<LongWritable, Text, Text, DoubleWritable
     double sentScore = 0;
     double count = 0;
     StringTokenizer itr = new StringTokenizer(body);
+    makeMap();
     // emit word, count pairs.
     while (itr.hasMoreTokens()) {
       count += 1;

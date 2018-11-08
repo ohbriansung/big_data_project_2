@@ -61,8 +61,8 @@ public class LifeJob {
 
       /* Reducer */
       job.setReducerClass(LifeReducer.class);
-      job.setOutputKeyClass(LongWritable.class);
-      job.setOutputValueClass(LifeWritable.class);
+      job.setOutputKeyClass(LifeWritable.class);
+      job.setOutputValueClass(NullWritable.class);
 
       /* Wait job to complete */
       boolean completed = job.waitForCompletion(true);
