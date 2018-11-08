@@ -19,7 +19,7 @@ public class BackGroundWritable implements Writable {
         this.upvotes = new IntWritable(upvotes);
         this.readability_score = new DoubleWritable(rscore);
         this.location = new Text(location);
-        this.likes = new Text(likes);
+        this.likes = new Text(like);
         this.commentcount = new IntWritable(commentcount);
     }
 
