@@ -31,7 +31,8 @@ public class Sandbox {
     //    charSequenceStream(str);
     //    senWorSylCount();
     //    textIsEqual();
-    jsonReadKeys();
+    //    jsonReadKeys();
+    sentenceSplit();
   }
 
   private void itemizeString() {
@@ -246,6 +247,33 @@ public class Sandbox {
     for (String key : jsonObject.keySet()) {
       System.out.println("\"" + key + "\": " + jsonObject.get(key));
     }
+  }
+
+  private void sentenceSplit() {
+    String body = "abc.!? def hij.";
+    int iP = body.indexOf('.');
+    int iQ = body.indexOf('?');
+    int iE = body.indexOf('!');
+
+    int cutIndex = body.length() - 1;
+
+    if (iP > 0 && iP < cutIndex) {
+      cutIndex = iP;
+    }
+
+    if (iQ > 0 && iQ < cutIndex) {
+      cutIndex = iQ;
+    }
+
+    if (iE > 0 && iE < cutIndex) {
+      cutIndex = iE;
+    }
+
+    cutIndex += 1;
+
+    String firstSentence = body.substring(0, cutIndex);
+
+    System.out.println(firstSentence);
   }
 
   class Averager implements IntConsumer {

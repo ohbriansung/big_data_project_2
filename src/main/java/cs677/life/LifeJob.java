@@ -93,6 +93,7 @@ public class LifeJob {
       String authorFilter = conf.get(AUTHOR_KEY);
 
       String author = jsonObject.getString(Constants.AUTHOR);
+      if (!author.equals(authorFilter)) return;
       String body = jsonObject.getString(Constants.BODY);
       String subreddit = jsonObject.getString(Constants.SUBREDDIT);
       int ups = jsonObject.getInt(Constants.UPS);
@@ -112,7 +113,22 @@ public class LifeJob {
       }
       SubreddtTimeWritable outKey = new SubreddtTimeWritable(subreddit, seconds);
 
-      String firstSentence = body.split("[.?!]", 2)[0];
+      int iP = body.indexOf('.');
+      int iQ = body.indexOf('?');
+      int iE = body.indexOf('!');
+      int cutIndex = body.length() - 1;
+      if (iP > 0 && iP < cutIndex) {
+        cutIndex = iP;
+      }
+      if (iQ > 0 && iQ < cutIndex) {
+        cutIndex = iQ;
+      }
+      if (iE > 0 && iE < cutIndex) {
+        cutIndex = iE;
+      }
+      cutIndex += 1;
+
+      String firstSentence = body.substring(0, cutIndex);
 
       SentenceUpvotesWritable sentenceUpvotes =
           new SentenceUpvotesWritable(firstSentence, (long) ups);
