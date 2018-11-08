@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class SubreddtTimeWritable implements WritableComparable<SubreddtTimeWritable> {
 
-  Text subreddit = new Text();
-  LongWritable time = new LongWritable();
+  private final Text subreddit = new Text();
+  private final LongWritable time = new LongWritable();
 
   public SubreddtTimeWritable() {}
 
@@ -50,8 +50,19 @@ public class SubreddtTimeWritable implements WritableComparable<SubreddtTimeWrit
 
   @Override
   public int compareTo(SubreddtTimeWritable other) {
+    if (other == null) return 1;
     int compared = this.time.compareTo(other.time);
     if (compared != 0) return compared;
     return this.subreddit.compareTo(other.subreddit);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    SubreddtTimeWritable other = (SubreddtTimeWritable) o;
+
+    return this.time.equals(other.time) && this.subreddit.equals(other.subreddit);
   }
 }
