@@ -1,24 +1,15 @@
 package cs677.life;
 
-import cs677.Writables.SubreddtTimeWritable;
-import cs677.Writables.TextCountWritable;
-import cs677.common.Constants;
-import cs677.common.FileCreator;
-import cs677.common.SentimentScorer;
-import cs677.common.TimerStuff;
+import cs677.common.*;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.DoubleWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.DataInput;
@@ -63,15 +54,15 @@ public class LifeJob {
       System.out.println("Output path: " + outPath.toString());
       FileOutputFormat.setOutputPath(job, outPath);
 
-      //      /* Mapper */
+      /* Mapper */
       job.setMapperClass(LifeMapper.class);
-      job.setMapOutputKeyClass(SubreddtTimeWritable.class);
-      job.setMapOutputValueClass(TextCountWritable.class);
+      job.setMapOutputKeyClass(LongWritable.class);
+      job.setMapOutputValueClass(LifeWritable.class);
 
-      //      /* Reducer */
+      /* Reducer */
       job.setReducerClass(LifeReducer.class);
-      job.setOutputKeyClass(SubreddtTimeWritable.class);
-      job.setOutputValueClass(TextCountWritable.class);
+      job.setOutputKeyClass(LongWritable.class);
+      job.setOutputValueClass(LifeWritable.class);
 
       /* Wait job to complete */
       boolean completed = job.waitForCompletion(true);
@@ -89,8 +80,7 @@ public class LifeJob {
     }
   }
 
-  private static class LifeMapper
-      extends Mapper<LongWritable, Text, SubreddtTimeWritable, TextCountWritable> {
+  private static class LifeMapper extends Mapper<LongWritable, Text, LongWritable, LifeWritable> {
     public LifeMapper() {}
 
     @Override
@@ -106,21 +96,19 @@ public class LifeJob {
       String subreddit = jsonObject.getString(Constants.SUBREDDIT);
       int ups = jsonObject.getInt(Constants.UPS);
 
-      long seconds;
-      try {
-        String timeString = jsonObject.getString(Constants.CREATED_UTC);
-        seconds = Long.parseLong(timeString);
-      } catch (JSONException e) {
-        try {
-          seconds = jsonObject.getLong(Constants.CREATED_UTC);
-        } catch (JSONException err) {
-          System.out.println(e.getMessage());
-          System.out.println(value.toString());
-          return;
-        }
-      }
-      SubreddtTimeWritable outKey = new SubreddtTimeWritable(subreddit, seconds);
+      long seconds = Util.getSeconds(jsonObject);
+      LongWritable outKey = new LongWritable(seconds);
 
+      String firstSentence = getFirstSentence(body);
+
+      SentimentScorer scorer = new SentimentScorer();
+      double score = scorer.sentimentScore(body);
+      LifeWritable lifeWritable = new LifeWritable(firstSentence, (long) ups, score, subreddit);
+
+      context.write(outKey, lifeWritable);
+    }
+
+    private String getFirstSentence(String body) {
       int iP = body.indexOf('.');
       int iQ = body.indexOf('?');
       int iE = body.indexOf('!');
@@ -136,27 +124,23 @@ public class LifeJob {
       }
       cutIndex += 1;
 
-      String firstSentence = body.substring(0, cutIndex);
-
-//      LifeWritable sentenceUpvotes = new LifeWritable(firstSentence, (long) ups);
-
-      SentimentScorer scorer = new SentimentScorer();
-      double score = scorer.sentimentScore(body);
-
-//      context.write(outKey, sentenceUpvotes);
+      return body.substring(0, cutIndex);
     }
   }
 
   private static class LifeReducer
-      extends Reducer<SubreddtTimeWritable, LifeWritable, SubreddtTimeWritable, LifeWritable> {
+      extends Reducer<LongWritable, LifeWritable, LifeWritable, NullWritable> {
+    private static NullWritable nullWritable = NullWritable.get();
+
     public LifeReducer() {}
 
     @Override
-    protected void reduce(SubreddtTimeWritable key, Iterable<LifeWritable> values, Context context)
+    protected void reduce(LongWritable key, Iterable<LifeWritable> values, Context context)
         throws InterruptedException, IOException {
 
       for (LifeWritable value : values) {
-        context.write(key, value);
+        value.setTime(key.get());
+        context.write(value, nullWritable);
       }
     }
   }
@@ -185,7 +169,7 @@ public class LifeJob {
     }
 
     @Override
-    public void write(DataOutput output) throws IOException{
+    public void write(DataOutput output) throws IOException {
       body.write(output);
       upvotes.write(output);
       score.write(output);
@@ -195,7 +179,14 @@ public class LifeJob {
 
     @Override
     public void readFields(DataInput input) throws IOException {
-
+      body.readFields(input);
+      upvotes.readFields(input);
+      score.readFields(input);
+      subreddit.readFields(input);
+      time.readFields(input);
+      if (time.get() != 0L) {
+        localDateTime = LocalDateTime.ofEpochSecond(time.get(), 0, ZoneOffset.UTC);
+      }
     }
 
     @Override
