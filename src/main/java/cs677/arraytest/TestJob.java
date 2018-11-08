@@ -45,7 +45,6 @@ public class TestJob {
       /* Input path */
       FileInputFormat.addInputPath(job, new Path(input));
       System.out.println("Input path: " + input);
-      job.setInputFormatClass(KeyValueTextInputFormat.class);
 
       /* Output path */
       Path outPath = FileCreator.findEmptyPath(conf, output);
