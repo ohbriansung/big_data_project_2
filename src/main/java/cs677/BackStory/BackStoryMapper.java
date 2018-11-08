@@ -10,6 +10,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BackStoryMapper extends Mapper<LongWritable, Text, BackGroundKey, BackGroundWritable> {
 
@@ -34,6 +36,14 @@ public class BackStoryMapper extends Mapper<LongWritable, Text, BackGroundKey, B
     }
 
     private String getLocation(String body){
+        String regex = "((i|we)('m|\\s*am|\\s*are)\\s*from\\s*([\\w\\d\\s]+))";
+        Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(body);
+
+        if (m.find()) {
+            return m.group(4);
+        }
+
         return "no location";
     }
 }
