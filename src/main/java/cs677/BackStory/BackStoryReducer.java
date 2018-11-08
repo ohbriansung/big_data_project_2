@@ -27,8 +27,9 @@ public class BackStoryReducer extends Reducer<BackGroundKey, BackGroundWritable,
             key.append(value.getReadability_score().get(),value.getCommentcount().get());
             backGroundWritable.append(value.getUpvotes().get(),value.getReadability_score().get(),value.getLocation().toString(),value.getCommentcount().get());
         }
+
         ArrayList<Subreddits> top10 = tolist(likedsubreddits);
-        context.write(key, new Text(buildtext(backGroundWritable,top10)) );
+        context.write(key, new Text(buildtext(backGroundWritable,top10) + likedsubreddits.size()) );
     }
 
 
@@ -36,11 +37,13 @@ public class BackStoryReducer extends Reducer<BackGroundKey, BackGroundWritable,
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\n");
         stringBuilder.append(backGroundWritable.toString());
-        stringBuilder.append("\nLikedSubreddits: ");
         if(top10.size() > 0) {
+            stringBuilder.append("\nLikedSubreddits: ");
             for (int i = 0; i < top10.size(); i++) {
                 stringBuilder.append("\n\t" + top10.get(i).toString());
             }
+        }else{
+            stringBuilder.append("Something is very wrong");
         }
         stringBuilder.append("\n\n");
         return stringBuilder.toString();
@@ -58,7 +61,6 @@ public class BackStoryReducer extends Reducer<BackGroundKey, BackGroundWritable,
                 Collections.sort(top10);
                 top10.remove(10);
             }
-
         }
         Collections.sort(top10);
         return top10;
