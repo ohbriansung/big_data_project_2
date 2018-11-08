@@ -9,12 +9,12 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class TextCountWritable implements Writable {
-  LongWritable count = new LongWritable();
-  Text text = new Text();
+  private final LongWritable count = new LongWritable();
+  private final Text text = new Text();
 
   public TextCountWritable() {}
 
-  public TextCountWritable(String text, Long count) {
+  public TextCountWritable(String text, long count) {
     this.text.set(text);
     this.count.set(count);
   }

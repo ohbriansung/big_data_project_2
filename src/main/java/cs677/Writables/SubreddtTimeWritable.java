@@ -65,4 +65,9 @@ public class SubreddtTimeWritable implements WritableComparable<SubreddtTimeWrit
 
     return this.time.equals(other.time) && this.subreddit.equals(other.subreddit);
   }
+
+  @Override
+  public String toString() {
+    return "{\"time\": " + time.get() + ", \"subreddit\": \"" + subreddit.toString() + "\"}";
+  }
 }
