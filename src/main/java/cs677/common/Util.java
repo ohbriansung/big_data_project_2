@@ -11,12 +11,7 @@ public class Util {
       String timeString = jsonObject.getString(Constants.CREATED_UTC);
       seconds = Long.parseLong(timeString);
     } catch (JSONException e) {
-      try {
-        seconds = jsonObject.getLong(Constants.CREATED_UTC);
-      } catch (JSONException err) {
-        System.out.println(e.getMessage());
-        return 0;
-      }
+      seconds = jsonObject.getLong(Constants.CREATED_UTC);
     }
     return seconds;
   }

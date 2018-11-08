@@ -96,7 +96,13 @@ public class LifeJob {
       String subreddit = jsonObject.getString(Constants.SUBREDDIT);
       int ups = jsonObject.getInt(Constants.UPS);
 
-      long seconds = Util.getSeconds(jsonObject);
+      long seconds;
+      try {
+        seconds = Util.getSeconds(jsonObject);
+      } catch (Error e) {
+        e.printStackTrace();
+        return;
+      }
       LongWritable outKey = new LongWritable(seconds);
 
       String firstSentence = getFirstSentence(body);
@@ -208,10 +214,10 @@ public class LifeJob {
       sb.append(", \"body\": \"");
       sb.append(body);
       if (localDateTime != null) {
-        sb.append("\"timeLong\": \"");
+        sb.append("\", \"timeLong\": \"");
         sb.append(time);
       }
-      sb.append("}");
+      sb.append("\"}");
       return sb.toString();
     }
   }
