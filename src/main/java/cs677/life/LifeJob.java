@@ -132,6 +132,9 @@ public class LifeJob {
 
       SentenceUpvotesWritable sentenceUpvotes =
           new SentenceUpvotesWritable(firstSentence, (long) ups);
+
+
+
       context.write(outKey, sentenceUpvotes);
     }
   }
