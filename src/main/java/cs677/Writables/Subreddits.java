@@ -55,6 +55,9 @@ public class Subreddits implements WritableComparable<Subreddits>{
     public Text getSubreddit() {
         return subreddit;
     }
+    public LongWritable getCount(){
+        return count;
+    }
 
     @Override
     public String toString() {

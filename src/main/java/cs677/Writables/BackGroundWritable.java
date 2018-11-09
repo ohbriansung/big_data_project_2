@@ -29,6 +29,7 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
 
     public void append(int upvotes,double rscore,String location, int commentcount){
         this.upvotes = new IntWritable(this.upvotes.get() + upvotes);
+
         this.readability_score = new DoubleWritable(rscore + this.readability_score.get());
         if(!location.equals("none"))
             this.location = new Text(location);
@@ -97,7 +98,7 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
     @Override
     public String toString() {
         return "Average upvotes: " + Double.toString((double) upvotes.get()/ (double)commentcount.get()) + "\n" +
-                "Average education level: " +  Double.toString(readability_score.get()/(double) commentcount.get()) + "\n" +
+                "Average education level: " +  Double.toString(readability_score.get()) + "\n" +
                 "Comments Written: " + Double.toString(commentcount.get()) + "\n" +
                 "Location: " + location + "\n" +
                 "Subreddits: " + subreddits.toString() + "\n";

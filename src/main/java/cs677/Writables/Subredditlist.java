@@ -41,11 +41,9 @@ public class Subredditlist extends ArrayWritable {
             subreddits[i] = (Subreddits) writables[i];
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("{");
+        sb.append("Liked Subreddits: ");
         for (Subreddits writable : subreddits) {
-            sb.append("\"");
-            sb.append(writable.getSubreddit());
-            sb.append(", ");
+            sb.append("\t" + writable.getSubreddit() + ":" + writable.getCount().toString() + "\n");
         }
         sb.append("}");
         return sb.toString();

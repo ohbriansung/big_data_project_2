@@ -33,6 +33,8 @@ public class BackStoryMapper extends Mapper<LongWritable, Text, Text, BackGround
         int commentcount = 1;
         ArrayList<Subreddits> subreddits = new ArrayList<>();
         subreddits.add(new Subreddits(1,sub));
+        if(Double.isNaN(readscore))
+            readscore = 0;
         BackGroundWritable background = new BackGroundWritable(ups,readscore,location,commentcount,sub,subreddits);
 
         String user = obj.getString("author");
