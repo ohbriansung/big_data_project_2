@@ -60,10 +60,12 @@ public class BackGroundKey implements WritableComparable<BackGroundKey> {
 
     @Override
     public int compareTo(BackGroundKey o) {
-        return o.getReadability_score().compareTo(this.getReadability_score());
+        return o.getCommentcount().compareTo(this.getCommentcount());
     }
 
-
+    public DoubleWritable getCommentcount() {
+        return commentcount;
+    }
 
     public DoubleWritable getReadability_score() {
         return new DoubleWritable(readability_score.get()/commentcount.get());

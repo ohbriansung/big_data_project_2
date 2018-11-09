@@ -22,14 +22,14 @@ public class BackStoryReducer extends Reducer<BackGroundKey, BackGroundWritable,
             subreddit = value.getLikes().toString();
             long count = 1;
             count += likedsubreddits.getOrDefault(subreddit, 0L);
-            likedsubreddits.replace(subreddit,count);
+            likedsubreddits.put(subreddit,count);
 
-            key.append(value.getReadability_score().get(),value.getCommentcount().get());
+            key.append(value.getReadability_score().get(),1);
             backGroundWritable.append(value.getUpvotes().get(),value.getReadability_score().get(),value.getLocation().toString(),value.getCommentcount().get());
         }
 
         ArrayList<Subreddits> top10 = tolist(likedsubreddits);
-        context.write(key, new Text(buildtext(backGroundWritable,top10) + likedsubreddits.size()) );
+        context.write(key, new Text(buildtext(backGroundWritable,top10)));
     }
 
 
