@@ -141,6 +141,10 @@ Given a specific user, find out more about them: where they’re from, what thin
 |Education Level| A guess on the level of education of a user| We can use the readabilty of a users comments to make a guess on education level
 |Agreeability | See how well a user gets along with other people | Using upvotes we can see how agreeable a user is. More upvotes means a higher agreeablity score.
 
+*a not for the dislikes: It is very difficult to find out what a user dislikes based on their reddit activity (the subreddits that users visit). This is because for the vast majority of people will not be visiting reddits that they have no interested in. An alterative way to actually track the dislikes of a user may require some more natural language processing to get dislikes based on comments and sentiment.
+
+
+
 #### [2 pt] A day in the life
 You are a struggling scriptwriter trying to make it big in Hollywood. Find an interesting user with your backstory job, then trace their commenting activities across the site over time. Use this combination of data to build a story about the user’s life: what they do on a regular basis, who their friends are, their hopes/dreams, etc. You have some creative license here.
 #### [2 pt] Matchmaker
