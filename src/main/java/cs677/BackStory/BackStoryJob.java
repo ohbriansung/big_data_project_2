@@ -14,6 +14,7 @@ import org.apache.hadoop.mapreduce.lib.map.InverseMapper;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 
+// yarn jar P2-1.0.jar cs677.BackStory.BackStoryJob /samples/20* /test/back
 public class BackStoryJob {
 
     public static void main(String[] args) {

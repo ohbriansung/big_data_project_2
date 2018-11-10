@@ -1,7 +1,7 @@
 package cs677;
 
-import com.google.gson.Gson;
 import cs677.Writables.BackGroundWritable;
+import cs677.Writables.Subreddits;
 import org.apache.hadoop.io.Text;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,10 +10,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.function.IntConsumer;
 
 public class Sandbox {
@@ -29,8 +26,8 @@ public class Sandbox {
     //    randTest();
     //    localDateTimeTest();
     //    durationTest();
-    treeMapForEach();
-    gsonTest();
+//    treeMapForEach();
+    jsonTest();
     //    String str = createBigString();
     //    System.out.println("big string made");
     //    charSequenceStream(str);
@@ -40,11 +37,16 @@ public class Sandbox {
     //    sentenceSplit();
   }
 
-  private void gsonTest() {
-    BackGroundWritable backGroundWritable = new BackGroundWritable();
-    Gson gson = new Gson();
-    String json = gson.toJson(backGroundWritable, BackGroundWritable.class);
-    System.out.println(json);
+  private void jsonTest() {
+    ArrayList<Subreddits> subreddits = new ArrayList<>();
+    for (int i = 0; i < 5; i++) {
+      subreddits.add(new Subreddits((long) i, Integer.toString(i)));
+    }
+
+    BackGroundWritable backGroundWritable =
+        new BackGroundWritable("user", 1.5, 3, 4.5, "location", 6, "like", subreddits);
+
+    System.out.println(backGroundWritable.toJsonString());
   }
 
   private void itemizeString() {
