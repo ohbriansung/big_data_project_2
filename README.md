@@ -85,8 +85,8 @@ Expected = total_posts * 0.05 / 365.25
 
 #### [1 pt] The number of comments posted per year will likely trend upward over time as more users join Reddit. Use feature scaling to normalize the number of comments per month from 0.0 to 1.0 and plot the values for each year. This way, we can isolate the proportion of comments across months. Do you notice any patterns?
 Elapsed Time: ~5:22:00
-
-![alt text](https://github.com/usf-cs677-fa18/P2-mcdomingo/blob/master/images/Normal%20Distribution.png "Distribution")
+![Alt text](images/normal_dist.png?raw=true "Distribution")
+<!--![alt text](https://github.com/usf-cs677-fa18/P2-mcdomingo/blob/master/images/Normal%20Distribution.png "Distribution")-->
 
 ## Analysis Part One
 
@@ -106,6 +106,8 @@ Write a job that computes Gunning Fog Index and Flesch-Kincaid Readability (both
 #### [2 pt] Key Terms
 Calculate the TF-IDF for a given subreddit.
 * Produce a Tag Cloud of the terms (note: this doesn’t have to be integrated into your code; simply including the image is enough).
+
+![Alt text](images/corgi.png?raw=true "r/rarepuppers")
 
 #### Toxicity
 Using Sentiment Analysis, determine the top 5 positive subreddits and top 5 negative subreddits based on comment sentiment.
