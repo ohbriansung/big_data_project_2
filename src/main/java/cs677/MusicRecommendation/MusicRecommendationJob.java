@@ -1,9 +1,9 @@
 package cs677.MusicRecommendation;
 
+import cs677.Writables.TextCountWritable;
 import cs677.common.*;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -14,21 +14,13 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  */
 public class MusicRecommendationJob {
     public static void main(String[] args) {
-        if (args.length != 3) {
-            System.out.println("Args: <input> <output> <user>");
-            System.exit(-1);
-        }
-
         Configuration conf = new Configuration();
-
-        conf.setStrings(Constants.AUTHOR, args[2]);
-        System.out.println("Author: " + args[2]);
 
         /* Job 1: get word count for author */
         authorJob(args, conf);
 
         /* Job 2: sort word count by value */
-        sortingJob(args, conf);
+        recommendJob(args, conf);
     }
 
     private static void authorJob(String[] args, Configuration conf) {
@@ -40,63 +32,30 @@ public class MusicRecommendationJob {
             job.setMapperClass(AuthorMapper.class);
 
             /* Reducer class */
-            job.setReducerClass(StringIntReducer.class);
+            job.setReducerClass(AuthorReducer.class);
 
             /* Outputs from the Mapper and Reducer. */
             job.setMapOutputKeyClass(Text.class);
-            job.setMapOutputValueClass(IntWritable.class);
+            job.setMapOutputValueClass(TextCountWritable.class);
             job.setOutputKeyClass(Text.class);
-            job.setOutputValueClass(IntWritable.class);
+            job.setOutputValueClass(Text.class);
 
             /* Job input path in HDFS */
             FileInputFormat.addInputPath(job, new Path(args[0]));
 
             /* Job output path in HDFS*/
-            FileOutputFormat.setOutputPath(job, new Path(args[1] + "/word-" + args[2]));
+            FileOutputFormat.setOutputPath(job, new Path(args[1] + "/temp"));
 
             /* Wait (block) for the job to complete... */
             job.waitForCompletion(true);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    private static void sortingJob(String[] args, Configuration conf) {
+    private static void recommendJob(String[] args, Configuration conf) {
         try {
-            Job job = Job.getInstance(conf, "author word count sorting job");
-            job.setJarByClass(MusicRecommendationJob.class);
-
-            /* Mapper class */
-            job.setMapperClass(SortByValueMapper.class);
-
-            /* Reducer class */
-            job.setReducerClass(SortByValueReducer.class);
-
-            /* Outputs from the Mapper and Reducer. */
-            job.setMapOutputKeyClass(IntWritable.class);
-            job.setMapOutputValueClass(Text.class);
-            job.setOutputKeyClass(Text.class);
-            job.setOutputValueClass(IntWritable.class);
-
-            /* Descending sorting */
-            job.setSortComparatorClass(IntComparator.class);
-
-            /* Job input path in HDFS */
-            FileInputFormat.addInputPath(job, new Path(args[1] + "/word-" + args[2]));
-
-            /* Job output path in HDFS */
-            FileOutputFormat.setOutputPath(job, new Path(args[1] + "/sorted-" + args[2]));
-
-            /* Wait (block) for the job to complete... */
-            job.waitForCompletion(true);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    private static void musicRecJob(String[] args, Configuration conf) {
-        try {
-            Job job = Job.getInstance(conf, "author word count sorting job");
+            Job job = Job.getInstance(conf, "music recommendation job");
             job.setJarByClass(MusicRecommendationJob.class);
 
             /* Mapper class */
@@ -106,24 +65,24 @@ public class MusicRecommendationJob {
             job.setReducerClass(MusicRecommendationReducer.class);
 
             /* Outputs from the Mapper and Reducer. */
-            job.setMapOutputKeyClass(IntWritable.class);
+            job.setMapOutputKeyClass(Text.class);
             job.setMapOutputValueClass(Text.class);
             job.setOutputKeyClass(Text.class);
-            job.setOutputValueClass(IntWritable.class);
+            job.setOutputValueClass(Text.class);
 
             /* Descending sorting */
             job.setSortComparatorClass(IntComparator.class);
 
             /* Job input path in HDFS */
-            FileInputFormat.addInputPath(job, new Path(args[1] + "/word-" + args[2]));
+            FileInputFormat.addInputPath(job, new Path(args[1] + "/temp/part-r-00000"));
 
             /* Job output path in HDFS */
-            FileOutputFormat.setOutputPath(job, new Path(args[1] + "/sorted-" + args[2]));
+            FileOutputFormat.setOutputPath(job, new Path(args[1] + "/final"));
 
             /* Wait (block) for the job to complete... */
             job.waitForCompletion(true);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }
