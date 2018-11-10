@@ -1,6 +1,7 @@
 package cs677.Writables;
 
 import org.apache.hadoop.io.ArrayWritable;
+import org.apache.hadoop.io.Writable;
 
 public class TextCountArrayWritable extends ArrayWritable {
 
@@ -14,7 +15,12 @@ public class TextCountArrayWritable extends ArrayWritable {
 
   @Override
   public TextCountWritable[] get() {
-    return (TextCountWritable[]) super.get();
+    Writable[] writables = super.get();
+    TextCountWritable[] out = new TextCountWritable[writables.length];
+    for (int i = 0; i < writables.length; i++) {
+      out[i] = (TextCountWritable) writables[i];
+    }
+    return out;
   }
 
   @Override

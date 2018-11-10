@@ -14,7 +14,6 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.json.JSONObject;
 
@@ -95,7 +94,7 @@ public class TestJob {
       String token;
       int count;
       while (itr.hasMoreTokens()) {
-        token = itr.nextToken();
+        token = itr.nextToken().toLowerCase();
         count = counts.getOrDefault(token, 0) + 1;
         counts.put(token, count);
       }
@@ -103,6 +102,7 @@ public class TestJob {
       for (Map.Entry<String, Integer> entry : counts.entrySet()) {
         textCountWritableList.add(new TextCountWritable(entry.getKey(), entry.getValue()));
       }
+
       TextCountArrayWritable outVal =
           new TextCountArrayWritable(textCountWritableList.toArray(new TextCountWritable[0]));
 
