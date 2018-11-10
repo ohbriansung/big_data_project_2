@@ -29,6 +29,16 @@ public class Subredditlist extends ArrayWritable {
     }
 
     @Override
+    public Object toArray() {
+        Writable[] writables = super.get();
+        Subreddits[] subreddits = new Subreddits[writables.length];
+        for(int i = 0; i < writables.length; i++){
+            subreddits[i] = (Subreddits) writables[i];
+        }
+        return subreddits;
+    }
+
+    @Override
     public Writable[] get() {
         return (super.get());
     }
@@ -41,7 +51,7 @@ public class Subredditlist extends ArrayWritable {
             subreddits[i] = (Subreddits) writables[i];
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("Liked Subreddits: ");
+        sb.append("Liked Subreddits: \n");
         for (Subreddits writable : subreddits) {
             sb.append("\t" + writable.getSubreddit() + ":" + writable.getCount().toString() + "\n");
         }
