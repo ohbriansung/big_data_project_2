@@ -1,39 +1,62 @@
 package cs677.MusicRecommendation;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
-import org.apache.hadoop.io.IntWritable;
+import com.google.gson.*;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-/**
- * Mapper: Reads line by line, split them into words. Emit <word, 1> pairs.
- */
-public class MusicRecommendationMapper
-extends Mapper<LongWritable, Text, Text, IntWritable> {
+public class MusicRecommendationMapper extends Mapper<LongWritable, Text, Text, Text> {
+    private final MusicGenre musicGenre = new MusicGenre();
 
     @Override
     protected void map(LongWritable key, Text value, Context context)
-        throws IOException, InterruptedException {
+            throws IOException, InterruptedException {
+        String line = value.toString();
+        int firstSpaceIndex = line.indexOf("\t");
+        String author = line.substring(0, firstSpaceIndex);
+        String textCountArray = line.substring(firstSpaceIndex + 1);
 
-        // parse line into JsonObject
-        JsonObject obj;
-        try {
-            JsonParser parser = new JsonParser();
-            obj = (JsonObject) parser.parse(value.toString());
-        } catch (JsonSyntaxException ignore) {
-            // invalid json string format
-            return;
+        JsonParser parser = new JsonParser();
+        JsonArray array = (JsonArray) parser.parse(textCountArray);
+
+        int score = -6;
+        int count = 0;
+        boolean check = false;
+
+        for (JsonElement element : array) {
+            JsonObject obj = ((JsonObject) element);
+            if (obj.get("SentimentScoreOfAuthorComment") != null) {
+                score = obj.get("SentimentScoreOfAuthorComment").getAsInt();
+                if (count > 0) {
+                    setTry(author, count, score, context);
+                }
+            } else if (obj.get("SentimentCountOfAuthorComment") != null) {
+                count = obj.get("SentimentCountOfAuthorComment").getAsInt();
+                if (score != -6) {
+                    setTry(author, count, score, context);
+                }
+            } else if (!check) {
+                String str = obj.toString();
+                int i = str.indexOf("\"");
+                str = str.substring(i + 1);
+                i = str.indexOf("\"");
+                str = str.substring(0, i);
+
+                String rec = this.musicGenre.getGenre(str);
+                if (rec != null) {
+                    context.write(new Text(author), new Text("recommended:" + rec));
+                    check = true;
+                }
+            }
         }
 
-        // Get subreddit
-        String sub = obj.get("subreddit").getAsString();
+    }
 
-        // emit word, count pairs.
-        context.write(new Text(sub), new IntWritable(1));
+    private void setTry(String author, int count, int score, Context context) throws IOException, InterruptedException {
+        int avg = score / count;
+        String tryThis = this.musicGenre.getTry(avg);
+        context.write(new Text(author), new Text("try:" + tryThis));
     }
 }

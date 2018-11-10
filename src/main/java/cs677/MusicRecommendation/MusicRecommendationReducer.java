@@ -1,29 +1,20 @@
 package cs677.MusicRecommendation;
 
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Reducer: Input to the reducer is the output from the mapper. It receives
- * word, list<count> pairs.  Sums up individual counts per given word. Emits
- * <word, total count> pairs.
- */
-public class MusicRecommendationReducer
-extends Reducer<Text, IntWritable, Text, IntWritable> {
-
+public class MusicRecommendationReducer extends Reducer<Text, Text, Text, Text> {
     @Override
-    protected void reduce(
-            Text key, Iterable<IntWritable> values, Context context)
-    throws IOException, InterruptedException {
-        int count = 0;
-        // calculate the total count
-        for(IntWritable val : values){
-            count += val.get();
+    protected void reduce(Text key, Iterable<Text> values, Context context)
+            throws IOException, InterruptedException {
+        List<String> array = new ArrayList<>();
+        for (Text val : values) {
+            array.add(val.toString());
         }
-        context.write(key, new IntWritable(count));
+        context.write(key, new Text(array.toString()));
     }
-
 }
