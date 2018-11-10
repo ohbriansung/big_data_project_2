@@ -5,6 +5,7 @@ import cs677.Writables.BackGroundKey;
 import cs677.Writables.BackGroundWritable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -27,7 +28,7 @@ public class BackStoryJob {
             job.setMapOutputKeyClass(Text.class);
             job.setMapOutputValueClass(BackGroundWritable.class);
 
-            job.setOutputKeyClass(Text.class);
+            job.setOutputKeyClass(NullWritable.class);
             job.setOutputValueClass(BackGroundWritable.class);
             job.setOutputFormatClass(SequenceFileOutputFormat.class);
 
@@ -45,7 +46,7 @@ public class BackStoryJob {
             job2.setMapperClass(InverseMapper.class);
 
             job2.setMapOutputKeyClass(BackGroundWritable.class);
-            job2.setMapOutputValueClass(Text.class);
+            job2.setMapOutputValueClass(NullWritable.class);
 
             FileInputFormat.addInputPath(job2, new Path(args[1] + "/temp"));
             FileOutputFormat.setOutputPath(job2, new Path(args[1] + "/final"));

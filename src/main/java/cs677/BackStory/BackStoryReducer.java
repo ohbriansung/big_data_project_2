@@ -4,7 +4,7 @@ import cs677.Writables.BackGroundKey;
 import cs677.Writables.BackGroundWritable;
 
 import cs677.Writables.Subreddits;
-import cs677.Writables.TextCountWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
@@ -12,26 +12,26 @@ import java.io.IOException;
 import java.util.*;
 
 
-public class BackStoryReducer extends Reducer<Text, BackGroundWritable, Text,BackGroundWritable> {
+public class BackStoryReducer extends Reducer<Text, BackGroundWritable, NullWritable,BackGroundWritable> {
 
     @Override
     protected void reduce(Text key, Iterable<BackGroundWritable> values, Context context) throws IOException, InterruptedException {
         HashMap<String,Long> likedsubreddits = new HashMap<>();
         String subreddit;
         ArrayList<Subreddits> top10  = new ArrayList<>();
-        BackGroundWritable backGroundWritable = new BackGroundWritable(0,0,"none",0,"none",top10);
+        BackGroundWritable backGroundWritable = new BackGroundWritable(key.toString(),0,0,0,"none",0,"none",top10);
         for(BackGroundWritable value : values){
             subreddit = value.getLikes().toString();
             long count = 1;
             count += likedsubreddits.getOrDefault(subreddit, 0L);
             likedsubreddits.put(subreddit,count);
 
-            backGroundWritable.append(value.getUpvotes().get(),value.getReadability_score().get(),value.getLocation().toString(),value.getCommentcount().get());
+            backGroundWritable.append(value.getToxic_score().get(),value.getUpvotes().get(),value.getReadability_score().get(),value.getLocation().toString(),value.getCommentcount().get());
         }
 
         top10 = tolist(likedsubreddits);
         backGroundWritable.updateList(top10);
-        context.write(key, backGroundWritable);
+        context.write(NullWritable.get(), backGroundWritable);
     }
 
 
