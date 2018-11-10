@@ -203,9 +203,9 @@ public class LifeJob {
         sb.append(localDateTime);
         sb.append("\", ");
       }
-      sb.append("\"subreddit\": ");
+      sb.append("\"subreddit\": \"");
       sb.append(subreddit);
-      sb.append(", \"ups\": ");
+      sb.append("\", \"ups\": ");
       sb.append(upvotes);
       sb.append(", \"sentimentScore\": ");
       sb.append(score);

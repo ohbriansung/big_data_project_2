@@ -2,6 +2,7 @@ package cs677.Writables;
 
 import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.Writable;
+import org.json.JSONObject;
 
 public class TextCountArrayWritable extends ArrayWritable {
 
