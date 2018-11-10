@@ -156,6 +156,6 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
 
   @Override
   public String toString() {
-    return readable();
+    return toJsonString();
   }
 }
