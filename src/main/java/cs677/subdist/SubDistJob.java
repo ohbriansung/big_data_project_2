@@ -21,7 +21,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+// yarn jar P2-1.0.jar cs677.subdist.SubDistJob /samples/* /test/subdist
+// yarn jar P2-1.0.jar cs677.subdist.SubDistJob /data/20* /out/subdist
 public class SubDistJob {
   public static void main(String[] args) {
     if (args.length != 2) {
