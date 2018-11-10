@@ -83,6 +83,7 @@ public class SubDistJob {
         throws InterruptedException, IOException {
       JSONObject jsonObject = new JSONObject(value.toString());
       String user = jsonObject.getString(Constants.AUTHOR);
+      if (user.equals(Constants.DELETED)) return;
       String sub = jsonObject.getString(Constants.SUBREDDIT);
       context.write(new Text(sub), new TextCountWritable(user, 1));
     }
