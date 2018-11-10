@@ -88,7 +88,7 @@ Elapsed Time: ~5:22:00
 
 ![alt text](https://github.com/usf-cs677-fa18/P2-mcdomingo/blob/master/images/Normal%20Distribution.png "Distribution")
 
-## Analysis
+## Analysis Part One
 
 #### [1 pt] Screamers
 It is well known that WRITING IN ALL CAPS ONLINE IS A SUBSTITUTE FOR SCREAMING… OR YELLING. *cough!* Write a job to find users that scream a lot, and provide a screamer score (a highly-technical metric expressed as the percentage of uppercase letters used in their comments).
@@ -102,14 +102,49 @@ Write a job that computes Gunning Fog Index and Flesch-Kincaid Readability (both
 * Choose a subreddit and plot the distribution of these scores using a histogram.
 * Find three subreddits of inscrutables, with users that write extremely unreadable comments.
 
+
 #### [2 pt] Key Terms
 Calculate the TF-IDF for a given subreddit.
 * Produce a Tag Cloud of the terms (note: this doesn’t have to be integrated into your code; simply including the image is enough).
 
-#### [2 pt] Toxicity
+#### Toxicity
 Using Sentiment Analysis, determine the top 5 positive subreddits and top 5 negative subreddits based on comment sentiment.
+Our original approach to the sentiment analysis was to use the Standford NLP library to generate a score based on average sentiment score and number of sentences. This apporach however was riddled with issue aside from not running due a difference in protobuf versions. 
+
+| Pros                    | Cons         	              |
+|-------------------      |----------------             |
+| Accuracy is acceptable  | Library is very large 	    |
+| Easy to use             | Take a long time to run     |
+| Machine learning models | Lots of functions not used  |
+
+
+As using the library has failed we approached the problem from a different perspective. Instead of using a machine learning model to determine sentiment, we decided to use a word list the consisted of a word and a value, the value being a positive or negative score based on the sentiment. Then we simply added up all the sentiment values to get an absolute value for negativity. An alternative was to use relative scores in order to normalize the data set. However using an absolute value seems to create the most readable results as we should not weigh a small subreddit the same as a large one. This is mostly because using a relative scale would acutally allow the subreddits with less comments to skew the data ( since one positive comment would automatically make them the most positive sub reddit ). 
+
+| Pros                    | Cons         	              |
+|-------------------      |------------	                |
+| Easy to implement       | Accuracy is questionable    |
+| Faster Computations     | Take a long time to run     |
+| Flexable word list      | Lots of functions not used  |
+
+
+
+## Analysis Part 2
+
+
 #### [3 pt] Backstory
 Given a specific user, find out more about them: where they’re from, what things they like/dislike, and other data about their background (think of at least 2 more things to determine). Note that this should be automated; I should be able to give you a username and you’ll produce a backstory for them. Provide a three sample user backstories in your report (you can clean these up when you add them to the report – they don’t have to be raw comments).
+
+|Trait | Description| Implementation summary|
+|------|------------|-----------------------|
+|Location | Where this user is located| Tracks certain phrases to deduce location
+|Likes | What the users interests are | We can assume that if a user comments on a subreddit it is something they have an interest in
+|Education Level| A guess on the level of education of a user| We can use the readabilty of a users comments to make a guess on education level
+|Agreeability | See how well a user gets along with other people | Using upvotes we can see how agreeable a user is. More upvotes means a higher agreeablity score.
+
+*a not for the dislikes: It is very difficult to find out what a user dislikes based on their reddit activity (the subreddits that users visit). This is because for the vast majority of people will not be visiting reddits that they have no interested in. An alterative way to actually track the dislikes of a user may require some more natural language processing to get dislikes based on comments and sentiment.
+
+
+
 #### [2 pt] A day in the life
 You are a struggling scriptwriter trying to make it big in Hollywood. Find an interesting user with your backstory job, then trace their commenting activities across the site over time. Use this combination of data to build a story about the user’s life: what they do on a regular basis, who their friends are, their hopes/dreams, etc. You have some creative license here.
 #### [2 pt] Matchmaker

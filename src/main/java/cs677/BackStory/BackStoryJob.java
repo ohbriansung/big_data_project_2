@@ -19,22 +19,37 @@ public class BackStoryJob {
         try{
             Configuration conf = new Configuration();
             Job job = Job.getInstance(conf,"BackStory Generation");
-
             job.setJarByClass(BackStoryJob.class);
 
             job.setMapperClass(BackStoryMapper.class);
             job.setReducerClass(BackStoryReducer.class);
 
-            job.setMapOutputKeyClass(BackGroundKey.class);
+            job.setMapOutputKeyClass(Text.class);
             job.setMapOutputValueClass(BackGroundWritable.class);
 
-            job.setOutputKeyClass(BackGroundKey.class);
-            job.setOutputValueClass(Text.class);
+            job.setOutputKeyClass(Text.class);
+            job.setOutputValueClass(BackGroundWritable.class);
+            job.setOutputFormatClass(SequenceFileOutputFormat.class);
 
             FileInputFormat.addInputPath(job, new Path(args[0]));
-            FileOutputFormat.setOutputPath(job, new Path(args[1] ));
+            FileOutputFormat.setOutputPath(job, new Path(args[1] +"/temp"));
 
             job.waitForCompletion(true);
+
+            Configuration conf2 = new Configuration();
+            Job job2 = Job.getInstance(conf2,"Invert");
+            job2.setInputFormatClass(SequenceFileInputFormat.class);
+            job2.setJarByClass(BackStoryJob.class);
+
+
+            job2.setMapperClass(InverseMapper.class);
+
+            job2.setMapOutputKeyClass(BackGroundWritable.class);
+            job2.setMapOutputValueClass(Text.class);
+
+            FileInputFormat.addInputPath(job2, new Path(args[1] + "/temp"));
+            FileOutputFormat.setOutputPath(job2, new Path(args[1] + "/final"));
+            job2.waitForCompletion(true);
 
         }catch (Exception e){
             System.err.println(e.getMessage());

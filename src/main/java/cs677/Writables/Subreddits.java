@@ -1,21 +1,42 @@
 package cs677.Writables;
 
-public class Subreddits implements Comparable<Subreddits>{
-    private long count;
-    private String subreddit;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.WritableComparable;
+
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+
+public class Subreddits implements WritableComparable<Subreddits>{
+    private LongWritable count = new LongWritable();
+    private Text subreddit = new Text();
+
+    public Subreddits(){
+
+    }
 
     public Subreddits(long count, String subreddit)
     {
-        this.count = count;
-        this.subreddit = subreddit;
+        this.count = new LongWritable(count);
+        this.subreddit = new Text(subreddit);
+    }
+
+    @Override
+    public void write(DataOutput dataOutput) throws IOException {
+        count.write(dataOutput);
+        subreddit.write(dataOutput);
+    }
+
+    @Override
+    public void readFields(DataInput dataInput) throws IOException {
+        count.readFields(dataInput);
+        subreddit.readFields(dataInput);
     }
 
     @Override
     public int compareTo(Subreddits o) {
-        if( o.count > this.count)
-            return 1;
-        else
-            return -1;
+        return o.count.compareTo(this.count);
     }
 
     @Override
@@ -31,12 +52,15 @@ public class Subreddits implements Comparable<Subreddits>{
     }
 
 
-    public String getSubreddit() {
+    public Text getSubreddit() {
         return subreddit;
+    }
+    public LongWritable getCount(){
+        return count;
     }
 
     @Override
     public String toString() {
-        return subreddit + ":" + Long.toString(count);
+        return subreddit.toString();
     }
 }
