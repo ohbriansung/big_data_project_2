@@ -8,7 +8,6 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.json.JSONObject;
 
@@ -19,8 +18,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-
+// yarn jar P2-1.0.jar cs677.life.LifeJob /samples/* /test/life_gsfgf gsfgf
+// yarn jar P2-1.0.jar cs677.life.LifeJob /data/20* /out/life_cos1ne cos1ne
 public class LifeJob {
   private static final String AUTHOR_KEY = "user_key";
 
@@ -47,7 +46,6 @@ public class LifeJob {
       /* Input path */
       FileInputFormat.addInputPath(job, new Path(input));
       System.out.println("Input path: " + input);
-      job.setInputFormatClass(KeyValueTextInputFormat.class);
 
       /* Output path */
       Path outPath = FileCreator.findEmptyPath(conf, output);
@@ -202,12 +200,12 @@ public class LifeJob {
       sb.append("{");
       if (localDateTime != null) {
         sb.append("\"time\": \"");
-        sb.append(localDateTime.format(DateTimeFormatter.ISO_INSTANT));
+        sb.append(localDateTime);
         sb.append("\", ");
       }
-      sb.append("\"subreddit\": ");
+      sb.append("\"subreddit\": \"");
       sb.append(subreddit);
-      sb.append(", \"ups\": ");
+      sb.append("\", \"ups\": ");
       sb.append(upvotes);
       sb.append(", \"sentimentScore\": ");
       sb.append(score);
