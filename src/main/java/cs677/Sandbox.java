@@ -1,5 +1,7 @@
 package cs677;
 
+import com.google.gson.Gson;
+import cs677.Writables.BackGroundWritable;
 import org.apache.hadoop.io.Text;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,10 +10,10 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.TreeMap;
 import java.util.function.IntConsumer;
 
 public class Sandbox {
@@ -25,8 +27,10 @@ public class Sandbox {
     //    jsonArrTest();
     //    instantNow();
     //    randTest();
-    localDateTimeTest();
+    //    localDateTimeTest();
     //    durationTest();
+    treeMapForEach();
+    gsonTest();
     //    String str = createBigString();
     //    System.out.println("big string made");
     //    charSequenceStream(str);
@@ -34,6 +38,13 @@ public class Sandbox {
     //    textIsEqual();
     //    jsonReadKeys();
     //    sentenceSplit();
+  }
+
+  private void gsonTest() {
+    BackGroundWritable backGroundWritable = new BackGroundWritable();
+    Gson gson = new Gson();
+    String json = gson.toJson(backGroundWritable, BackGroundWritable.class);
+    System.out.println(json);
   }
 
   private void itemizeString() {
@@ -141,6 +152,19 @@ public class Sandbox {
       sb.append(str);
     }
     return sb.toString();
+  }
+
+  private void treeMapForEach() {
+    TreeMap<String, Integer> treeMap = new TreeMap<>();
+
+    String str = "qaaasdflkjhv";
+    int count = 0;
+    for (char c : str.toCharArray()) {
+      treeMap.put(Character.toString(c), count);
+      count += 1;
+    }
+
+    treeMap.forEach((k, v) -> System.out.println(k + v.toString()));
   }
 
   private void senWorSylCount() {

@@ -21,6 +21,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
+
 // yarn jar P2-1.0.jar cs677.subdist.SubDistJob /samples/* /test/subdist
 // yarn jar P2-1.0.jar cs677.subdist.SubDistJob /data/20* /out/subdist
 public class SubDistJob {
@@ -96,18 +98,22 @@ public class SubDistJob {
     @Override
     protected void reduce(Text key, Iterable<TextCountWritable> values, Context context)
         throws InterruptedException, IOException {
-      HashMap<String, Long> countMap = new HashMap<>();
+      HashMap<String, Long> userCountMap = new HashMap<>();
 
       for (TextCountWritable value : values) {
         long count = value.getCount();
         String user = value.getText();
-        count += countMap.getOrDefault(user, 0L);
-        countMap.put(user, count);
+        count += userCountMap.getOrDefault(user, 0L);
+        userCountMap.put(user, count);
       }
+
+      TreeMap<String, Long> binMap = new TreeMap<>();
+
+      userCountMap.forEach((k, v) -> binMap.put(v.toString(), binMap.getOrDefault(k, 0L) + 1));
 
       ArrayList<TextCountWritable> textCountList = new ArrayList<>();
 
-      countMap.forEach((k, v) -> textCountList.add(new TextCountWritable(k, v)));
+      binMap.forEach((k, v) -> textCountList.add(new TextCountWritable(k, v)));
 
       TextCountArrayWritable outVal =
           new TextCountArrayWritable(textCountList.toArray(new TextCountWritable[0]));
