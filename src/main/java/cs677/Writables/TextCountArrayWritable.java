@@ -3,9 +3,6 @@ package cs677.Writables;
 import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.Writable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TextCountArrayWritable extends ArrayWritable {
 
   public TextCountArrayWritable() {
@@ -23,7 +20,6 @@ public class TextCountArrayWritable extends ArrayWritable {
     for (int i = 0; i < writables.length; i++) {
       out[i] = (TextCountWritable) writables[i];
     }
-
     return out;
   }
 

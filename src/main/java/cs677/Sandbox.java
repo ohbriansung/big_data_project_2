@@ -8,6 +8,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Random;
@@ -24,7 +25,7 @@ public class Sandbox {
     //    jsonArrTest();
     //    instantNow();
     //    randTest();
-    //        localDateTimeTest();
+    localDateTimeTest();
     //    durationTest();
     //    String str = createBigString();
     //    System.out.println("big string made");
@@ -32,7 +33,7 @@ public class Sandbox {
     //    senWorSylCount();
     //    textIsEqual();
     //    jsonReadKeys();
-    sentenceSplit();
+    //    sentenceSplit();
   }
 
   private void itemizeString() {
@@ -95,6 +96,7 @@ public class Sandbox {
     System.out.println(dateTime.getYear());
 
     System.out.println(String.format("%d-%02d", dateTime.getYear(), dateTime.getMonthValue()));
+    System.out.println(dateTime);
   }
 
   private void durationTest() {

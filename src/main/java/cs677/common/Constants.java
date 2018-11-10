@@ -35,6 +35,8 @@ public class Constants {
   public static final String SCORE_HIDDEN = "score_hidden";
   public static final String UPS = "ups";
 
+  public static final String DELETED = "[deleted]";
+
   public static final HashSet<String> VALID_KEYS =
       new HashSet<>(
           Arrays.asList(

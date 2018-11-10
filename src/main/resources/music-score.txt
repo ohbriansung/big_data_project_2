@@ -1,0 +1,11 @@
+-5 comedy
+-4 electronic
+-3 country
+-2 instrumental disney
+-1 classical inspirational
+0 pop
+1 hip-hop/rap
+2 jazz
+3 rock
+4 r&b/soul
+5 blues

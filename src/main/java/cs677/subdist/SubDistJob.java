@@ -1,4 +1,4 @@
-package cs677.arraytest;
+package cs677.subdist;
 
 import cs677.Writables.TextCountArrayWritable;
 import cs677.Writables.TextCountWritable;
@@ -8,7 +8,6 @@ import cs677.common.TimerStuff;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -20,10 +19,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.*;
-// yarn jar P2-1.0.jar cs677.arraytest.TestJob /samples/* /test/arraytest
-public class TestJob {
-
+import java.util.ArrayList;
+import java.util.HashMap;
+// yarn jar P2-1.0.jar cs677.subdist.SubDistJob /samples/* /test/subdist
+// yarn jar P2-1.0.jar cs677.subdist.SubDistJob /data/20* /out/subdist
+public class SubDistJob {
   public static void main(String[] args) {
     if (args.length != 2) {
       System.out.println("required args: <input_path> <output_path>");
@@ -38,8 +38,8 @@ public class TestJob {
       Configuration conf = new Configuration();
 
       /* Setup */
-      Job job = Job.getInstance(conf, "array test");
-      job.setJarByClass(TestJob.class);
+      Job job = Job.getInstance(conf, "subdist");
+      job.setJarByClass(SubDistJob.class);
 
       /* Input path */
       FileInputFormat.addInputPath(job, new Path(input));
@@ -51,14 +51,14 @@ public class TestJob {
       FileOutputFormat.setOutputPath(job, outPath);
 
       /* Mapper */
-      job.setMapperClass(ArrayTestMapper.class);
+      job.setMapperClass(SubDistMapper.class);
       job.setMapOutputKeyClass(Text.class);
-      job.setMapOutputValueClass(TextCountArrayWritable.class);
+      job.setMapOutputValueClass(TextCountWritable.class);
 
       /* Reducer */
-      job.setReducerClass(ArrayTestReducer.class);
-      job.setOutputKeyClass(TextCountArrayWritable.class);
-      job.setOutputValueClass(NullWritable.class);
+      job.setReducerClass(SubDistReducer.class);
+      job.setOutputKeyClass(Text.class);
+      job.setOutputValueClass(TextCountArrayWritable.class);
 
       /* Wait job to complete */
       boolean completed = job.waitForCompletion(true);
@@ -70,59 +70,49 @@ public class TestJob {
       System.out.println("Time Taken: " + TimerStuff.formatDuration(Duration.between(t1, t2)));
 
       System.exit(completed ? 0 : 1);
-
     } catch (Exception e) {
-      System.err.println(e.getMessage());
+      e.printStackTrace();
     }
   }
 
-  private static class ArrayTestMapper
-      extends Mapper<LongWritable, Text, Text, TextCountArrayWritable> {
-    private static final Text outKey = new Text("");
-
-    private HashMap<String, Integer> counts = new HashMap<>();
-
-    public ArrayTestMapper() {}
+  private static class SubDistMapper extends Mapper<LongWritable, Text, Text, TextCountWritable> {
+    public SubDistMapper() {}
 
     @Override
     protected void map(LongWritable key, Text value, Context context)
         throws InterruptedException, IOException {
       JSONObject jsonObject = new JSONObject(value.toString());
-
-      String body = jsonObject.getString(Constants.BODY);
-      StringTokenizer itr = new StringTokenizer(body);
-      String token;
-      int count;
-      while (itr.hasMoreTokens()) {
-        token = itr.nextToken().toLowerCase();
-        count = counts.getOrDefault(token, 0) + 1;
-        counts.put(token, count);
-      }
-      List<TextCountWritable> textCountWritableList = new LinkedList<>();
-      for (Map.Entry<String, Integer> entry : counts.entrySet()) {
-        textCountWritableList.add(new TextCountWritable(entry.getKey(), entry.getValue()));
-      }
-
-      TextCountArrayWritable outVal =
-          new TextCountArrayWritable(textCountWritableList.toArray(new TextCountWritable[0]));
-
-      context.write(outKey, outVal);
+      String user = jsonObject.getString(Constants.AUTHOR);
+      if (user.equals(Constants.DELETED)) return;
+      String sub = jsonObject.getString(Constants.SUBREDDIT);
+      context.write(new Text(sub), new TextCountWritable(user, 1));
     }
   }
 
-  private static class ArrayTestReducer
-      extends Reducer<Text, TextCountArrayWritable, TextCountArrayWritable, NullWritable> {
-    private static NullWritable nullWritable = NullWritable.get();
-
-    public ArrayTestReducer() {}
+  private static class SubDistReducer
+      extends Reducer<Text, TextCountWritable, Text, TextCountArrayWritable> {
+    public SubDistReducer() {}
 
     @Override
-    protected void reduce(Text key, Iterable<TextCountArrayWritable> values, Context context)
+    protected void reduce(Text key, Iterable<TextCountWritable> values, Context context)
         throws InterruptedException, IOException {
+      HashMap<String, Long> countMap = new HashMap<>();
 
-      for (TextCountArrayWritable value : values) {
-        context.write(value, nullWritable);
+      for (TextCountWritable value : values) {
+        long count = value.getCount();
+        String user = value.getText();
+        count += countMap.getOrDefault(user, 0L);
+        countMap.put(user, count);
       }
+
+      ArrayList<TextCountWritable> textCountList = new ArrayList<>();
+
+      countMap.forEach((k, v) -> textCountList.add(new TextCountWritable(k, v)));
+
+      TextCountArrayWritable outVal =
+          new TextCountArrayWritable(textCountList.toArray(new TextCountWritable[0]));
+
+      context.write(key, outVal);
     }
   }
 }
