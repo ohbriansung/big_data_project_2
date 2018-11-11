@@ -300,3 +300,6 @@ auto.sh
 
 .DS_Store
 .idea/
+
+# Matthew's data stuff
+data/
