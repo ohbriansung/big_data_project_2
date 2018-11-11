@@ -96,6 +96,8 @@ It is well known that WRITING IN ALL CAPS ONLINE IS A SUBSTITUTE FOR SCREAMINGâ€
 
 For my metric, I used the ratio of upper case letters and "!" to lower case letters and ".". It turns out there are a lot of users who have only posted upper case.
 
+Initial thoughts was to take a flat score for each subreddit and count the number of capitol letters and take the values that are the highest. But upon inspection it seems that alot of the subreddits that either had 100% uppercase or 0% uppercase letters also had very few comments. In order balance out and get a more accurate measurement we only included subreddits with at least 50 comments to get a better representation of the true screamiest subreddit.
+
 
 #### [3 pt] Readability
 Write a job that computes Gunning Fog Index and Flesch-Kincaid Readability (both reading ease and grade level) of user comments.
