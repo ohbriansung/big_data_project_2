@@ -2,10 +2,8 @@ package cs677.BackStory;
 
 
 import com.kennycason.fleschkincaid.FleschKincaid;
-import cs677.Writables.BackGroundKey;
 import cs677.Writables.BackGroundWritable;
-import cs677.Writables.Subreddits;
-import cs677.Writables.TextCountWritable;
+import cs677.Writables.SubredditWritable;
 import cs677.common.SentimentScorer;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -35,8 +33,8 @@ public class BackStoryMapper extends Mapper<LongWritable, Text, Text, BackGround
         String location = getLocation(obj.getString("body"));
         double score = scorer.sentimentScore(obj.getString("body"));
         int commentcount = 1;
-        ArrayList<Subreddits> subreddits = new ArrayList<>();
-        subreddits.add(new Subreddits(1,sub));
+        ArrayList<SubredditWritable> subreddits = new ArrayList<>();
+        subreddits.add(new SubredditWritable(1,sub));
         if(Double.isNaN(readscore))
             readscore = 0;
         if(Double.isNaN(score)){
