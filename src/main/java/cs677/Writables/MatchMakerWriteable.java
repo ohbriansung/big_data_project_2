@@ -26,14 +26,14 @@ public class MatchMakerWriteable extends BackGroundWritable {
             String location,
             int commentcount,
             String like,
-            ArrayList<Subreddits> subreddits) {
+            ArrayList<SubredditWritable> subreddits) {
         super.upvotes = new IntWritable(upvotes);
         super.readability_score = new DoubleWritable(rscore);
         super.location = new Text(location);
         super.likes = new Text(like);
         super.commentcount = new IntWritable(commentcount);
         super.toxic_score = new DoubleWritable(tox);
-        super.subreddits = new Subredditlist(subreddits.toArray(new Subreddits[0]));
+        super.subreddits = new SubredditList(subreddits.toArray(new SubredditWritable[0]));
         super.user = new Text(user);
     }
 
