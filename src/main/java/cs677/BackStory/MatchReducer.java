@@ -2,7 +2,7 @@ package cs677.BackStory;
 
 import cs677.Writables.BackGroundWritable;
 import cs677.Writables.MatchMakerWriteable;
-import cs677.Writables.Subreddits;
+import cs677.Writables.SubredditWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -20,7 +20,7 @@ public class MatchReducer extends Reducer<Text,BackGroundWritable,NullWritable,M
         HashMap<String,Long> likedsubreddits = new HashMap<>();
         String subreddit;
         MatchMakerWriteable matcher = new MatchMakerWriteable();
-        ArrayList<Subreddits> top10;
+        ArrayList<SubredditWritable> top10;
         for(BackGroundWritable value : values){
             subreddit = value.getLikes().toString();
             long count = 1;
@@ -35,11 +35,11 @@ public class MatchReducer extends Reducer<Text,BackGroundWritable,NullWritable,M
         context.write(NullWritable.get(), matcher);
     }
 
-    protected ArrayList<Subreddits> tolist(HashMap<String,Long> subreddits)
+    protected ArrayList<SubredditWritable> tolist(HashMap<String,Long> subreddits)
     {
-        ArrayList<Subreddits> top10 = new ArrayList<>();
+        ArrayList<SubredditWritable> top10 = new ArrayList<>();
         for(Map.Entry<String,Long> entry : subreddits.entrySet()){
-            top10.add(new Subreddits(entry.getValue(),entry.getKey()));
+            top10.add(new SubredditWritable(entry.getValue(),entry.getKey()));
             if(top10.size() > 10)
             {
                 Collections.sort(top10);
