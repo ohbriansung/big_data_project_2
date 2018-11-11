@@ -140,27 +140,6 @@ As using the library has failed we approached the problem from a different persp
 | Faster Computations     | Take a long time to run     |
 | Flexable word list      | Lots of functions not used  |
 
-
-
-## Analysis Part 2
-
-
-#### [3 pt] Backstory
-Given a specific user, find out more about them: where they’re from, what things they like/dislike, and other data about their background (think of at least 2 more things to determine). Note that this should be automated; I should be able to give you a username and you’ll produce a backstory for them. Provide a three sample user backstories in your report (you can clean these up when you add them to the report – they don’t have to be raw comments).
-
-The Backstory generator will not nessessary produce a backstory instant instead it will produce a range of metrics that can be reused in future jobs. Instead for this question we will simply be analysising these metrics to produce a backstory for a use. Since there are not many backstories to analysis in this particualar case (we are only analysis three) We can do this manueal but in the future if we were to implement this on a larger scale a simple script can also achieve the same goal. Below we will include both the human analyed backstory and the script one ( the human one being much more detailed ).
-
-|Trait | Description| Implementation summary|
-|------|------------|-----------------------|
-|Location | Where this user is located| Tracks certain phrases to deduce location
-|Number of Comments| The number of comments a user posts | Tracks the number of comments a users postes over time
-|Likes | What the users interests are | We can assume that if a user comments on a subreddit it is something they have an interest in
-|Education Level| A guess on the level of education of a user| We can use the readabilty of a users comments to make a guess on education level
-|Temperment| The Users overall temperment, | Uses Sentiment analysis to determine if the person is a overall a positive or negative person
-|Agreeability | See how well a user gets along with other people | Using upvotes we can see how agreeable a user is. More upvotes means a higher agreeablity score.
-
-*a note for the dislikes: It is very difficult to find out what a user dislikes based on their reddit activity (the subreddits that users visit). This is because for the vast majority of people will not be visiting reddits that they have no interested in. An alterative way to actually track the dislikes of a user may require some more natural language processing to get dislikes based on comments and sentiment.
-
 ### Absolute Sentiment Score (2012)
 |Subreddit|Sentiment Score |
 |------- |--------------- |
@@ -181,6 +160,27 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 
   It is ressuring that the subreddits listed seem to correctate to the topic. It does make sence that politics and news would have on average a negative sentiment score as those topics are highly polarized. While both trees and MensRights are clearly satirical (I hope), it is obvious that trees would have less offensive or negative content than MensRights. While I believe the sentiment of MensRights is most likely negative (but in a joking way?).  
   For the positive subreddits, I expect that those who comment on my little pony are probably fans of the show and would comment positive things about it. This also applies to funny and aw which also seem like subreddits that would not have upsetting content in contrast to somthing that can be potentially offensive. 
+
+## Analysis Part 2
+
+
+#### [3 pt] Backstory
+Given a specific user, find out more about them: where they’re from, what things they like/dislike, and other data about their background (think of at least 2 more things to determine). Note that this should be automated; I should be able to give you a username and you’ll produce a backstory for them. Provide a three sample user backstories in your report (you can clean these up when you add them to the report – they don’t have to be raw comments).
+
+The Backstory generator will not nessessary produce a backstory instant instead it will produce a range of metrics that can be reused in future jobs. Instead for this question we will simply be analysising these metrics to produce a backstory for a use. Since there are not many backstories to analysis in this particualar case (we are only analysis three) We can do this manueal but in the future if we were to implement this on a larger scale a simple script can also achieve the same goal. Below we will include both the human analyed backstory and the script one ( the human one being much more detailed ).
+
+|Trait | Description| Implementation summary|
+|------|------------|-----------------------|
+|Location | Where this user is located| Tracks certain phrases to deduce location
+|Number of Comments| The number of comments a user posts | Tracks the number of comments a users postes over time
+|Likes | What the users interests are | We can assume that if a user comments on a subreddit it is something they have an interest in
+|Education Level| A guess on the level of education of a user| We can use the readabilty of a users comments to make a guess on education level
+|Temperment| The Users overall temperment, | Uses Sentiment analysis to determine if the person is a overall a positive or negative person
+|Agreeability | See how well a user gets along with other people | Using upvotes we can see how agreeable a user is. More upvotes means a higher agreeablity score.
+
+*a note for the dislikes: It is very difficult to find out what a user dislikes based on their reddit activity (the subreddits that users visit). This is because for the vast majority of people will not be visiting reddits that they have no interested in. An alterative way to actually track the dislikes of a user may require some more natural language processing to get dislikes based on comments and sentiment.
+
+
 
 
 
