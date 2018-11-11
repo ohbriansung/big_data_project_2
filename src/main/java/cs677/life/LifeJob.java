@@ -1,7 +1,6 @@
 package cs677.life;
 
 import cs677.common.*;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
