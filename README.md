@@ -255,7 +255,7 @@ While you work on your hit movie script, you need to pay the bills. Use your ana
 
 Here is the results for trinkalkohol
 
-|         |trinkalkohol   |      |vikkrell|  
+|         |trinkalkohol   |vikkrell       |  
 |---------|---------------|---------------|
 |ReadScore|30.35          |31.62 |
 |ToxicScore|.02099        |.00150|
