@@ -303,3 +303,4 @@ auto.sh
 
 # Matthew's data stuff
 data/
+make_and_scp.*
