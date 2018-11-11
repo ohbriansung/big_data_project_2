@@ -152,7 +152,7 @@ As using the library has failed we approached the problem from a different persp
 |pics| 9506.3160|MensRights|-440.3776|
 |mylittlepony|4417.8108|4chan|-944.4091|
 |funny|3667.3823|politics|-1668.8645|
-|aww| 358|3584.1785|worldnews|-1892.4820|
+|aww|3584.1785|worldnews|-1892.4820|
 
 Interesting things about the anaylsis:
 Even the most negative subreddit has a lower absolute value than the 5th postive subreddit. Upon further inspection it takes 15 subreddits to find a positive subreddit with the same absolute value as the most negative one. Of course this can be for a variety of reasons. I suspect it is because the method we used do not account for words that modify the meaning of other words. For example "I am very happy" is a postive sentence, but "I am NOT happy" is a negative one. While this can be also true for the reverse "I am not angry", I suspect that these sentences are not as common.
