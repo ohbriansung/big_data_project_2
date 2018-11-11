@@ -250,7 +250,23 @@ While you work on your hit movie script, you need to pay the bills. Use your ana
 
   The matchmaker algorithm involved grouping user that have the similar readabilty scores and similar toxicity levels then sorting these user by thier average upvotes. While this was effective, the sample size that was obtained was too broad and had too many users with little or no information used make an effective match. First part of matching would require the removal of outliers in the data set. For this particular job the outliers would be users that do not comment enough, spam bots, and those with very large or very low readabilty scores. 
   
-  We will use hadoop automatic sort to our advantage by automatically grouping users that are similar together. This allows for easier post processing after as to get users that have similiar reading and toxicity levels are a must before matching thier common interest. If a user is more educated and less toxic we can be a bit less strict with matching subreddits in contrast to the more toxic demographic which would require more similar interest.
+  We will use hadoop automatic sort to our advantage by automatically grouping users that are similar together. This allows for easier post processing after as to get users that have similiar reading and toxicity levels are a must before matching thier common interest. If a user is more educated and less toxic we can be a bit less strict with matching subreddits in contrast to the more toxic demographic which would require more similar interest. For simplicty our script will try to find the best match within 1000 users (500 upward and 500 downwards) and return the users with the most similiar interest (subreddits).
+  
+
+Here is the results for trinkalkohol
+
+{u'SubredditWritable': [{u'pics': 7}, {u'videos': 6}, {u'funny': 4}, {u'WTF': 3}, {u'IAmA': 3}, {u'AskReddit': 3}, {u'aww': 2}, {u'BBQ': 2}, {u'smoking': 2}, {u'travel': 2}], u'CommentCount': 42, u'User': u'vikkrell', u'Toxic': 0.0015037056588515884, u'Upvotes': 4.333333333333333, u'Education': 31.626367264748232, u'Location': u'no location'}
+[[u'AskReddit'], [u'IAmA'], [u'travel']]
+
+3
+[tyung@orion11 final]$ vim match.py 
+[tyung@orion11 final]$ python match.py 
+{u'SubredditWritable': [{u'AskReddit': 39}, {u'vaporents': 17}, {u'IAmA': 10}, {u'travel': 7}, {u'solotravel': 4}, {u'Psychonaut': 3}, {u'writing': 3}, {u'eldertrees': 2}, {u'askphilosophy': 2}, {u'Calligraphy': 1}], u'CommentCount': 98, u'User': u'trinkalkohol', u'Toxic': 0.020999115075059787, u'Upvotes': 1.989795918367347, u'Education': 30.357724896981196, u'Location': u'no location'}
+____
+{u'SubredditWritable': [{u'pics': 7}, {u'videos': 6}, {u'funny': 4}, {u'WTF': 3}, {u'IAmA': 3}, {u'AskReddit': 3}, {u'aww': 2}, {u'BBQ': 2}, {u'smoking': 2}, {u'travel': 2}], u'CommentCount': 42, u'User': u'vikkrell', u'Toxic': 0.0015037056588515884, u'Upvotes': 4.333333333333333, u'Education': 31.626367264748232, u'Location': u'no location'}
+[[u'AskReddit'], [u'IAmA'], [u'travel']]
+
+ 
 
   
 
