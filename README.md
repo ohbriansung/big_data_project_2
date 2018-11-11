@@ -161,6 +161,25 @@ The Backstory generator will not nessessary produce a backstory instant instead 
 
 *a note for the dislikes: It is very difficult to find out what a user dislikes based on their reddit activity (the subreddits that users visit). This is because for the vast majority of people will not be visiting reddits that they have no interested in. An alterative way to actually track the dislikes of a user may require some more natural language processing to get dislikes based on comments and sentiment.
 
+### Absolute Sentiment Score (2012)
+|Subreddit|Sentiment Score |
+|trees| 10792.0779|
+|pics| 9506.3160|
+|mylittlepony|4417.8108|
+|funny|3667.3823|
+|aww| 358|3584.1785|
+|...|....|
+|news|-324.1795|
+|MensRights|-440.3776|
+|4chan|-944.4091|
+|politics|-1668.8645|
+|worldnews|-1892.4820|
+
+Interesting things about the anaylsis:
+Even the most negative subreddit has a lower absolute value than the 5th postive subreddit. Upon further inspection it takes 15 subreddits to find a positive subreddit with the same absolute value as the most negative one. Of course this can be for a variety of reasons. I suspect it is because the method we used do not account for words that modify the meaning of other words. For example "I am very happy" is a postive sentence, but "I am NOT happy" is a negative one. While this can be also true for the reverse "I am not angry", I suspect that these sentences are not as common.
+
+It is ressuring that the subreddits listed seem to correctate to the topic. It does make sence that politics and news would have on average a negative sentiment score as those topics are highly polarized. This contrast to the postive subreddits that are clearly either saterical in nature (trees) or positive "echo chambers". I expect that those who comment on my little pony are probably fans of the show and would comment positive things about it. This also applies to funny and aw which also seem like subreddits that would not have upsetting content. 
+
 
 
 #### [2 pt] A day in the life
