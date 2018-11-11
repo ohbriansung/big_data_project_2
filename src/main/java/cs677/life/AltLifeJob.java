@@ -26,7 +26,7 @@ public class AltLifeJob {
             Job job = Job.getInstance(conf, "Life Tracer");
             job.setJarByClass(LifeJob.class);
 
-            job.setMapperClass(Lifemapper.class);
+            job.setMapperClass(BackStoryMapper.class);
             job.setReducerClass(LifeReducer.class);
 
             job.setMapOutputKeyClass(IntWritable.class);
