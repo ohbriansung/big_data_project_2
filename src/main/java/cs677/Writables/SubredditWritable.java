@@ -9,13 +9,13 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class Subreddits implements WritableComparable<Subreddits> {
+public class SubredditWritable implements WritableComparable<SubredditWritable> {
   private LongWritable count = new LongWritable();
   private Text subreddit = new Text();
 
-  public Subreddits() {}
+  public SubredditWritable() {}
 
-  public Subreddits(long count, String subreddit) {
+  public SubredditWritable(long count, String subreddit) {
     this.count = new LongWritable(count);
     this.subreddit = new Text(subreddit);
   }
@@ -33,13 +33,13 @@ public class Subreddits implements WritableComparable<Subreddits> {
   }
 
   @Override
-  public int compareTo(Subreddits o) {
+  public int compareTo(SubredditWritable o) {
     return o.count.compareTo(this.count);
   }
 
   @Override
   public boolean equals(Object obj) {
-    Subreddits sub = (Subreddits) obj;
+    SubredditWritable sub = (SubredditWritable) obj;
     return sub.getSubreddit().equals(this.subreddit);
   }
 

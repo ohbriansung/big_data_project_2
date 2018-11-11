@@ -1,7 +1,7 @@
 package cs677;
 
 import cs677.Writables.BackGroundWritable;
-import cs677.Writables.Subreddits;
+import cs677.Writables.SubredditWritable;
 import org.apache.hadoop.io.Text;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,9 +38,9 @@ public class Sandbox {
   }
 
   private void jsonTest() {
-    ArrayList<Subreddits> subreddits = new ArrayList<>();
+    ArrayList<SubredditWritable> subreddits = new ArrayList<>();
     for (int i = 0; i < 5; i++) {
-      subreddits.add(new Subreddits((long) i, Integer.toString(i)));
+      subreddits.add(new SubredditWritable((long) i, Integer.toString(i)));
     }
 
     BackGroundWritable backGroundWritable =

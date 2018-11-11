@@ -1,9 +1,8 @@
 package cs677.BackStory;
 
-import cs677.Writables.BackGroundKey;
 import cs677.Writables.BackGroundWritable;
 
-import cs677.Writables.Subreddits;
+import cs677.Writables.SubredditWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -18,7 +17,7 @@ public class BackStoryReducer extends Reducer<Text, BackGroundWritable, NullWrit
     protected void reduce(Text key, Iterable<BackGroundWritable> values, Context context) throws IOException, InterruptedException {
         HashMap<String,Long> likedsubreddits = new HashMap<>();
         String subreddit;
-        ArrayList<Subreddits> top10  = new ArrayList<>();
+        ArrayList<SubredditWritable> top10  = new ArrayList<>();
         BackGroundWritable backGroundWritable = new BackGroundWritable(key.toString(),0,0,0,"none",0,"none",top10);
         for(BackGroundWritable value : values){
             subreddit = value.getLikes().toString();
@@ -38,11 +37,11 @@ public class BackStoryReducer extends Reducer<Text, BackGroundWritable, NullWrit
 
 
 
-    protected ArrayList<Subreddits> tolist(HashMap<String,Long> subreddits)
+    private ArrayList<SubredditWritable> tolist(HashMap<String,Long> subreddits)
     {
-        ArrayList<Subreddits> top10 = new ArrayList<>();
+        ArrayList<SubredditWritable> top10 = new ArrayList<>();
         for(Map.Entry<String,Long> entry : subreddits.entrySet()){
-            top10.add(new Subreddits(entry.getValue(),entry.getKey()));
+            top10.add(new SubredditWritable(entry.getValue(),entry.getKey()));
             if(top10.size() > 10)
             {
                 Collections.sort(top10);

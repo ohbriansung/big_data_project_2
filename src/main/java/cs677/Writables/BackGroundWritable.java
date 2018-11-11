@@ -18,7 +18,7 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
   Text location = new Text("");
   Text likes = new Text("");
   IntWritable commentcount = new IntWritable(0);
-  Subredditlist subreddits = new Subredditlist();
+  SubredditList subreddits = new SubredditList();
   DoubleWritable toxic_score = new DoubleWritable(0);
   Text user = new Text("");
 
@@ -32,14 +32,14 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
       String location,
       int commentcount,
       String like,
-      ArrayList<Subreddits> subreddits) {
+      ArrayList<SubredditWritable> subreddits) {
     this.upvotes = new IntWritable(upvotes);
     this.readability_score = new DoubleWritable(rscore);
     this.location = new Text(location);
     this.likes = new Text(like);
     this.commentcount = new IntWritable(commentcount);
     this.toxic_score = new DoubleWritable(tox);
-    this.subreddits = new Subredditlist(subreddits.toArray(new Subreddits[0]));
+    this.subreddits = new SubredditList(subreddits.toArray(new SubredditWritable[0]));
     this.user = new Text(user);
   }
 
@@ -51,8 +51,8 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
     this.commentcount = new IntWritable(this.commentcount.get() + commentcount);
   }
 
-  public void updateList(ArrayList<Subreddits> subreddits) {
-    this.subreddits = new Subredditlist(subreddits.toArray(new Subreddits[0]));
+  public void updateList(ArrayList<SubredditWritable> subreddits) {
+    this.subreddits = new SubredditList(subreddits.toArray(new SubredditWritable[0]));
   }
 
   @Override
@@ -126,7 +126,7 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
     jsonObject.put("Toxic", tscore);
     jsonObject.put("CommentCount", commentcount.get());
     jsonObject.put("Location", location);
-    jsonObject.put("Subreddits", subreddits.toJsonArray());
+    jsonObject.put("SubredditWritable", subreddits.toJsonArray());
     return jsonObject.toString();
   }
 

@@ -8,14 +8,14 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class Subredditlist extends ArrayWritable {
+public class SubredditList extends ArrayWritable {
 
-  public Subredditlist() {
-    super(Subreddits.class);
+  public SubredditList() {
+    super(SubredditWritable.class);
   }
 
-  public Subredditlist(Writable[] values) {
-    super(Subreddits.class, values);
+  public SubredditList(Writable[] values) {
+    super(SubredditWritable.class, values);
   }
 
   @Override
@@ -36,9 +36,9 @@ public class Subredditlist extends ArrayWritable {
   @Override
   public Object toArray() {
     Writable[] writables = super.get();
-    Subreddits[] subreddits = new Subreddits[writables.length];
+    SubredditWritable[] subreddits = new SubredditWritable[writables.length];
     for (int i = 0; i < writables.length; i++) {
-      subreddits[i] = (Subreddits) writables[i];
+      subreddits[i] = (SubredditWritable) writables[i];
     }
     return subreddits;
   }
@@ -47,23 +47,22 @@ public class Subredditlist extends ArrayWritable {
     JSONArray jsonArray = new JSONArray();
     Writable[] writables = super.get();
     for (Writable writable : writables) {
-      jsonArray.put(((Subreddits) writable).toJsonObject());
+      jsonArray.put(((SubredditWritable) writable).toJsonObject());
     }
     return jsonArray;
   }
 
 
-
   @Override
   public String toString() {
     Writable[] writables = super.get();
-    Subreddits[] subreddits = new Subreddits[writables.length];
+    SubredditWritable[] subreddits = new SubredditWritable[writables.length];
     for (int i = 0; i < writables.length; i++) {
-      subreddits[i] = (Subreddits) writables[i];
+      subreddits[i] = (SubredditWritable) writables[i];
     }
     StringBuilder sb = new StringBuilder();
-    sb.append("Liked Subreddits: \n");
-    for (Subreddits writable : subreddits) {
+    sb.append("Liked SubredditWritable: \n");
+    for (SubredditWritable writable : subreddits) {
       sb.append("\t");
       sb.append(writable.getSubreddit());
       sb.append(":");
