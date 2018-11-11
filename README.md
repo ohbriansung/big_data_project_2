@@ -140,6 +140,8 @@ Our original approach to the sentiment analysis was to use the Standford NLP lib
 
 As using the library has failed we approached the problem from a different perspective. Instead of using a machine learning model to determine sentiment, we decided to use a word list the consisted of a word and a value, the value being a positive or negative score based on the sentiment. Then we simply added up all the sentiment values to get an absolute value for negativity. An alternative was to use relative scores in order to normalize the data set. However using an absolute value seems to create the most readable results as we should not weigh a small subreddit the same as a large one. This is mostly because using a relative scale would acutally allow the subreddits with less comments to skew the data ( since one positive comment would automatically make them the most positive sub reddit ). 
 
+*Both these approaches fall short when looking at context of the comments. While you can see the sentiment of the sentence as a whole you cannot see the context of the comment which at times is very important to determining if a sentence is truly negative or not. Also both versions of sentiment analysis cannot detect satire very well possibly give "dark humour" a negative sentiment score when in reality it may not be the case. 
+
 | Pros                    | Cons         	              |
 |-------------------      |------------	                |
 | Easy to implement       | Accuracy is questionable    |
@@ -179,8 +181,11 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 
 *a note for the dislikes: It is very difficult to find out what a user dislikes based on their reddit activity (the subreddits that users visit). This is because for the vast majority of people will not be visiting reddits that they have no interested in. An alterative way to actually track the dislikes of a user may require some more natural language processing to get dislikes based on comments and sentiment.
 
+*We will structure the analysis as follows, First part of the user analysis can be done with a script, Second part will be analysis personality based on subreddit activity.
+
+
 ## MikeMarx153
-|Backstory Table|
+
 |Trait| Value|
 |-------|-----------------------|
 |User|MikeMarx153|
@@ -192,11 +197,30 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 |Liked Subreddits | loseit:18, books:4, science:4, adviceanimals:4, fatlogic:3, funny:3, nutrition:2, fitness:2, politics:1, asianamerican:1|
  
 ### What we know about MikeMarx153:
-For the table above we can see that this user is quite an agreeable person overall. His neutral toxicity score indicates that he must not be a particular negative person and seems to post either both postive and negative comments or most flat comment on the posts. In addition he seems to be a user that does not comment on post alot but does on average get a 5 upvotes per post making him have a total of 260 upvotes (quite impressive). This means he likely does not post unless information and using has somthing constructive to bring to a conversation.
+  For the table above we can see that this user is quite an agreeable person overall. His neutral toxicity score indicates that he must not be a particular negative person and seems to post either both postive and negative comments or most flat comment on the posts. In addition he seems to be a user that does not comment on post alot but does on average get a 5 upvotes per post making him have a total of 260 upvotes. This means he likely does not post unless information and using has somthing constructive to bring to a conversation.
 
-From his likes we can deduct that he may be an slightly overwieght asain-american around high school. His most visited sub reddit "lose it" is primariy a fat lose subreddit and this in combiniation 3 other fitness related subreddits shows me that he is trying to lose weight as about half of his comments are related to fitness. In addition he seems enjoy books and science and probably has a pet (most likely a dog). This user seems to have enough common sense to not post his location on the internet but based on his race we can see that he is likely either from california or texas. While he this does show his top ten subreddits he also goes to 10 other subreddits that are not accounted for that can expand on his backstory.
+  From his likes we can deduct that he may be an slightly overwieght asain-american around high school. His most visited sub reddit "lose it" is primariy a fat lose subreddit and this in combiniation 3 other fitness related subreddits shows me that he is trying to lose weight as about half of his comments are related to fitness. In addition he seems enjoy books and science and probably has a pet (most likely a dog). This user seems to have enough common sense to not post his location on the internet but based on his race we can see that he is likely either from california or texas. While he this does show his top ten subreddits he also goes to 10 other subreddits that are not accounted for that can expand on his backstory.
 
 
+
+## IlikeHistory
+
+|Trait| Value|
+|-------|-----------------------|
+|User|IlikeHistory|
+|Toxic Score| 0.0037|
+|Education | 36.814|
+|Comment Count | 178|
+|Upvotes | 20.63|
+|Location | null|
+|Liked Subreddits | atheism:55, AskReddit:42, todayilearned:36, AskHistorians:20, history:6, bestof:6, IAmA"4, movies:3, books:3, TrueReddit:1|
+
+### What we know about IlikeHistory
+
+  One of the first things that stand out for this user is that his name correlates with his interest alot. From his sentiment score and education level in combintion with his interest, it seems that much of the comments are factual by nature rather than opinionative lacking words that can be thought of as postive or negative. This user has a resonably large presence on reddit making 178 comments. Despite using neutural language it seems this user mostly post helpful comments, which results in a very high average upvote count bring his total upvotes to 3560. His high average upvotes indicates that this user only post comments which are help or constructive to the topic.
+
+  This user is Likely atheist as that is the subreddit that the user visits the most. Anouther alternative is that he is a religous person who like to go on atheist subreddits and pick fights with other users, but this would reflect on his average upvotes and is likely not the case. This user is most likely in college either doing a master or is graduating soon based on the readablity of his comments. However this may be an issue with the Flesch-Kincaid algorithm as historical words and pronouns are possibly weighted quite low skewing the score. While this user does "like history" it seems he actually goes on history subreddits less than expected, having only 14% of his comment activity on history subreddits. But this also may be misleading as we do not have data on how often one visits a subreddit. It is possible history subreddits are in fact his most VISITED subreddits but based on his comment trends it is likely he will not comment unless the user has something contructive. This means that he may very much just enjoy reading through the subreddit and not post useless/meaningless comments like "haha" or "lol".
+  
 
 #### [2 pt] A day in the life
 You are a struggling scriptwriter trying to make it big in Hollywood. Find an interesting user with your backstory job, then trace their commenting activities across the site over time. Use this combination of data to build a story about the user’s life: what they do on a regular basis, who their friends are, their hopes/dreams, etc. You have some creative license here.
@@ -204,7 +228,11 @@ You are a struggling scriptwriter trying to make it big in Hollywood. Find an in
 #### [2 pt] Matchmaker
 While you work on your hit movie script, you need to pay the bills. Use your analysis skills to match up users with similar interests so that they can find love or friendship. If your algorithm is effective, you might just be able to pay rent this month!
 
-Early trials of the matchmaker involved grouping user that have the similar readabilty scores and similar toxicity levels. While this was effective, the sample size that was obtained was too broad and had too many users with little or no information used make an effective match. First part of matching would require the removal of outliers in the data set. For this particular job the outliers would be users that do not comment enough, spam bots, and those with very large or very low readabilty scores.
+  The matchmaker algorithm involved grouping user that have the similar readabilty scores and similar toxicity levels then sorting these user by thier average upvotes. While this was effective, the sample size that was obtained was too broad and had too many users with little or no information used make an effective match. First part of matching would require the removal of outliers in the data set. For this particular job the outliers would be users that do not comment enough, spam bots, and those with very large or very low readabilty scores. 
+  
+  We will use hadoop automatic sort to our advantage by automatically grouping users that are similar together. This allows for easier post processing after as to get users that have similiar reading and toxicity levels are a must before matching thier common interest. If a user is more educated and less toxic we can be a bit less strict with matching subreddits in contrast to the more toxic demographic which would require more similar interest.
+
+  
 
           Note: remember to explain your methodology in your report.
 #### [2 pt] Music Recommendations
