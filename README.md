@@ -255,16 +255,18 @@ While you work on your hit movie script, you need to pay the bills. Use your ana
 
 Here is the results for trinkalkohol
 
-{u'SubredditWritable': [{u'pics': 7}, {u'videos': 6}, {u'funny': 4}, {u'WTF': 3}, {u'IAmA': 3}, {u'AskReddit': 3}, {u'aww': 2}, {u'BBQ': 2}, {u'smoking': 2}, {u'travel': 2}], u'CommentCount': 42, u'User': u'vikkrell', u'Toxic': 0.0015037056588515884, u'Upvotes': 4.333333333333333, u'Education': 31.626367264748232, u'Location': u'no location'}
-[[u'AskReddit'], [u'IAmA'], [u'travel']]
+|         |trinkalkohol   |      |vikkrell|  
+|---------|---------------|---------------|
+|ReadScore|30.35          |31.62 |
+|ToxicScore|.02099        |.00150|
+|Upvotes | 1.989| 4.3333|
+|Comment Count| 98 | 42|
 
-3
-[tyung@orion11 final]$ vim match.py 
-[tyung@orion11 final]$ python match.py 
-{u'SubredditWritable': [{u'AskReddit': 39}, {u'vaporents': 17}, {u'IAmA': 10}, {u'travel': 7}, {u'solotravel': 4}, {u'Psychonaut': 3}, {u'writing': 3}, {u'eldertrees': 2}, {u'askphilosophy': 2}, {u'Calligraphy': 1}], u'CommentCount': 98, u'User': u'trinkalkohol', u'Toxic': 0.020999115075059787, u'Upvotes': 1.989795918367347, u'Education': 30.357724896981196, u'Location': u'no location'}
-____
-{u'SubredditWritable': [{u'pics': 7}, {u'videos': 6}, {u'funny': 4}, {u'WTF': 3}, {u'IAmA': 3}, {u'AskReddit': 3}, {u'aww': 2}, {u'BBQ': 2}, {u'smoking': 2}, {u'travel': 2}], u'CommentCount': 42, u'User': u'vikkrell', u'Toxic': 0.0015037056588515884, u'Upvotes': 4.333333333333333, u'Education': 31.626367264748232, u'Location': u'no location'}
-[[u'AskReddit'], [u'IAmA'], [u'travel']]
+|Subreddits in common|
+|-------------------|
+|IAmA|
+|AskReddit|
+|travel|
 
  
 
