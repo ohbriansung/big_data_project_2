@@ -70,9 +70,6 @@ public class MusicRecommendationJob {
             job.setOutputKeyClass(Text.class);
             job.setOutputValueClass(Text.class);
 
-            /* Descending sorting */
-            job.setSortComparatorClass(IntComparator.class);
-
             /* Job input path in HDFS */
             FileInputFormat.addInputPath(job, new Path(args[1] + "/temp/part-r-00000"));
 

@@ -12,6 +12,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -39,7 +40,7 @@ public class AuthorMapper extends Mapper<LongWritable, Text, Text, TextCountWrit
         // emit word, count pairs
         HashMap<String, Integer> map = new HashMap<>();
         while (itr.hasMoreTokens()) {
-            String token = itr.nextToken().replaceAll("\\\"", "");
+            String token = itr.nextToken().replaceAll("[^\\w\\d\\s-_@.]", "");
             int count = map.getOrDefault(token, 0);
             count++;
             map.put(token, count);
