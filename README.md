@@ -94,6 +94,7 @@ Elapsed Time: ~5:22:00
 |--------|----------------------|
 |Users and subreddits with low comments tend to skew the data| To fix this we simply add a minimum number of comments required to actually be included into the results|
 |Averages vs Absolute values | Averages are better for when we need equal representation between larger and smaller data sets otherwise we will use absolute values|
+|Machine Learning vs Human Analysis| Overall for this project adding machine learning models add significant overhead to the data collection and for now we have decided to use human analysis replace the models in exchange for a performance increase| 
 
 #### [1 pt] Screamers
 It is well known that WRITING IN ALL CAPS ONLINE IS A SUBSTITUTE FOR SCREAMING… OR YELLING. *cough!* Write a job to find users that scream a lot, and provide a screamer score (a highly-technical metric expressed as the percentage of uppercase letters used in their comments).
@@ -134,7 +135,7 @@ Our original approach to the sentiment analysis was to use the Standford NLP lib
 |-------------------      |----------------             |
 | Accuracy is acceptable  | Library is very large 	    |
 | Easy to use             | Take a long time to run     |
-| Machine learning models | Lots of functions not used  |
+| Machine learning models | Lots of functions included but not used  |
 
 
 As using the library has failed we approached the problem from a different perspective. Instead of using a machine learning model to determine sentiment, we decided to use a word list the consisted of a word and a value, the value being a positive or negative score based on the sentiment. Then we simply added up all the sentiment values to get an absolute value for negativity. An alternative was to use relative scores in order to normalize the data set. However using an absolute value seems to create the most readable results as we should not weigh a small subreddit the same as a large one. This is mostly because using a relative scale would acutally allow the subreddits with less comments to skew the data ( since one positive comment would automatically make them the most positive sub reddit ). 
@@ -166,20 +167,20 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 #### [3 pt] Backstory
 Given a specific user, find out more about them: where they’re from, what things they like/dislike, and other data about their background (think of at least 2 more things to determine). Note that this should be automated; I should be able to give you a username and you’ll produce a backstory for them. Provide a three sample user backstories in your report (you can clean these up when you add them to the report – they don’t have to be raw comments).
 
-The Backstory generator will not nessessary produce a backstory instance, but instead it will produce a range of metrics that can be reused in future jobs. Instead for this question we will simply be analysising these metrics to produce a backstory for a use. Since there are not many backstories to analysis in this particualar case (we are only analysis three) We can do this manueal but in the future if we were to implement this on a larger scale a simple script can also achieve the same goal. Below we will include both the human analyed backstory and the script one ( the human one being much more detailed ).
+The Backstory generator will not nessessary produce a backstory instance, but instead it will produce a range of metrics that can be reused in future jobs. Instead for this question we will simply be constructing a story these metrics to produce a backstory for a use. Since there are not many backstories to analysis in this particualar case (we are only analysis three) We can do this by hand but in the future if we were to implement this on a larger scale to get backstories for more users, we would use a machine learning model to generate a back story. While a script could also work to find a backstory, it would not be very detailed since much of a users personality and traits are actually found my looking into the subreddits that they visit rather than the raw metrics we have defined below.. Below we have inclulded a human analyed backstory with detailed analysis and methodologies.
 
 |Trait | Description| Implementation summary|
 |------|------------|-----------------------|
-|Location | Where this user is located| Tracks certain phrases to deduce location
-|Number of Comments| The number of comments a user posts | Tracks the number of comments a users postes over time
-|Likes | What the users interests are | We can assume that if a user comments on a subreddit it is something they have an interest in
-|Education Level| A guess on the level of education of a user| We can use the readabilty of a users comments to make a guess on education level
 |Temperment| The Users overall temperment, | Uses Sentiment analysis to determine if the person is a overall a positive or negative person
-|Agreeability | See how well a user gets along with other people | Using upvotes we can see how agreeable a user is. More upvotes means a higher agreeablity score.
+|Education Level| A guess on the level of education of a user| We can use the readabilty of a users comments to make a guess on education level
+|Number of Comments| The number of comments a user posts | Tracks the number of comments a users postes over time
+|Agreeability | See how well a user gets along with other people | Using average upvotes we can see how agreeable a user is. More upvotes means a higher agreeablity score.
+|Location | Where this user is located| Tracks certain phrases to deduce location
+|Likes | What the users interests are | We can assume that if a user comments on a subreddit it is something they have an interest in
 
 *a note for the dislikes: It is very difficult to find out what a user dislikes based on their reddit activity (the subreddits that users visit). This is because for the vast majority of people will not be visiting reddits that they have no interested in. An alterative way to actually track the dislikes of a user may require some more natural language processing to get dislikes based on comments and sentiment.
 
-
+## MikeMarx153
 |Trait| Value|
 |-------|-----------------------|
 |User|MikeMarx153|
