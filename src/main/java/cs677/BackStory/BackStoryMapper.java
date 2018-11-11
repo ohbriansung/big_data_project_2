@@ -29,7 +29,7 @@ public class BackStoryMapper extends Mapper<LongWritable, Text, Text, BackGround
 
         String sub = obj.getString("subreddit");
 
-        int ups = obj.getInt("ups");
+        int ups = obj.getInt("score");
         FleschKincaid fleschKincaid = new FleschKincaid();
         double readscore = fleschKincaid.calculate(obj.getString("body"));
         String location = getLocation(obj.getString("body"));

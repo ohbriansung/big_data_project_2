@@ -1,21 +1,22 @@
-package cs677.BackStory;
+package cs677.life;
 
-import cs677.Writables.BackGroundKey;
 import cs677.Writables.BackGroundWritable;
-
 import cs677.Writables.Subreddits;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-
-public class BackStoryReducer extends Reducer<Text, BackGroundWritable, NullWritable,BackGroundWritable> {
+public class LifeReducer extends Reducer<IntWritable, BackGroundWritable, NullWritable,BackGroundWritable> {
 
     @Override
-    protected void reduce(Text key, Iterable<BackGroundWritable> values, Context context) throws IOException, InterruptedException {
+    protected void reduce(IntWritable key, Iterable<BackGroundWritable> values, Context context) throws IOException, InterruptedException {
         HashMap<String,Long> likedsubreddits = new HashMap<>();
         String subreddit;
         ArrayList<Subreddits> top10  = new ArrayList<>();
@@ -34,11 +35,7 @@ public class BackStoryReducer extends Reducer<Text, BackGroundWritable, NullWrit
         context.write(NullWritable.get(), backGroundWritable);
     }
 
-
-
-
-
-    protected ArrayList<Subreddits> tolist(HashMap<String,Long> subreddits)
+    private ArrayList<Subreddits> tolist(HashMap<String,Long> subreddits)
     {
         ArrayList<Subreddits> top10 = new ArrayList<>();
         for(Map.Entry<String,Long> entry : subreddits.entrySet()){
@@ -53,6 +50,4 @@ public class BackStoryReducer extends Reducer<Text, BackGroundWritable, NullWrit
         return top10;
 
     }
-
-
 }
