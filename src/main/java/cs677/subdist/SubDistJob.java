@@ -1,6 +1,6 @@
 package cs677.subdist;
 
-import cs677.Writables.TextCountArrayWritable;
+import cs677.Writables.TextCountMapWritable;
 import cs677.Writables.TextCountWritable;
 import cs677.common.Constants;
 import cs677.common.FileCreator;
@@ -60,7 +60,7 @@ public class SubDistJob {
       /* Reducer */
       job.setReducerClass(SubDistReducer.class);
       job.setOutputKeyClass(Text.class);
-      job.setOutputValueClass(TextCountArrayWritable.class);
+      job.setOutputValueClass(TextCountMapWritable.class);
 
       /* Wait job to complete */
       boolean completed = job.waitForCompletion(true);
@@ -92,7 +92,7 @@ public class SubDistJob {
   }
 
   private static class SubDistReducer
-      extends Reducer<Text, TextCountWritable, Text, TextCountArrayWritable> {
+      extends Reducer<Text, TextCountWritable, Text, TextCountMapWritable> {
     public SubDistReducer() {}
 
     @Override
@@ -107,16 +107,12 @@ public class SubDistJob {
         userCountMap.put(user, count);
       }
 
-      TreeMap<Long, Long> binMap = new TreeMap<>();
+      TreeMap<String, Long> binMap = new TreeMap<>();
 
-      userCountMap.forEach((k, v) -> binMap.put(v, binMap.getOrDefault(v, 0L) + 1));
+      userCountMap.forEach(
+          (k, v) -> binMap.put(v.toString(), binMap.getOrDefault(v.toString(), 0L) + 1));
 
-      ArrayList<TextCountWritable> textCountList = new ArrayList<>();
-
-      binMap.forEach((k, v) -> textCountList.add(new TextCountWritable(k.toString(), v)));
-
-      TextCountArrayWritable outVal =
-          new TextCountArrayWritable(textCountList.toArray(new TextCountWritable[0]));
+      TextCountMapWritable outVal = new TextCountMapWritable(binMap);
 
       context.write(key, outVal);
     }

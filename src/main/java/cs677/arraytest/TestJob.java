@@ -1,6 +1,6 @@
 package cs677.arraytest;
 
-import cs677.Writables.TextCountArrayWritable;
+import cs677.Writables.TextCountMapWritable;
 import cs677.Writables.TextCountWritable;
 import cs677.common.Constants;
 import cs677.common.FileCreator;
@@ -53,11 +53,11 @@ public class TestJob {
       /* Mapper */
       job.setMapperClass(ArrayTestMapper.class);
       job.setMapOutputKeyClass(Text.class);
-      job.setMapOutputValueClass(TextCountArrayWritable.class);
+      job.setMapOutputValueClass(TextCountMapWritable.class);
 
       /* Reducer */
       job.setReducerClass(ArrayTestReducer.class);
-      job.setOutputKeyClass(TextCountArrayWritable.class);
+      job.setOutputKeyClass(TextCountMapWritable.class);
       job.setOutputValueClass(NullWritable.class);
 
       /* Wait job to complete */
@@ -77,10 +77,10 @@ public class TestJob {
   }
 
   private static class ArrayTestMapper
-      extends Mapper<LongWritable, Text, Text, TextCountArrayWritable> {
+      extends Mapper<LongWritable, Text, Text, TextCountMapWritable> {
     private static final Text outKey = new Text("");
 
-    private HashMap<String, Integer> counts = new HashMap<>();
+    private HashMap<String, Long> counts = new HashMap<>();
 
     public ArrayTestMapper() {}
 
@@ -92,35 +92,30 @@ public class TestJob {
       String body = jsonObject.getString(Constants.BODY);
       StringTokenizer itr = new StringTokenizer(body);
       String token;
-      int count;
+      long count;
       while (itr.hasMoreTokens()) {
         token = itr.nextToken().toLowerCase();
-        count = counts.getOrDefault(token, 0) + 1;
+        count = counts.getOrDefault(token, 0L) + 1;
         counts.put(token, count);
       }
-      List<TextCountWritable> textCountWritableList = new LinkedList<>();
-      for (Map.Entry<String, Integer> entry : counts.entrySet()) {
-        textCountWritableList.add(new TextCountWritable(entry.getKey(), entry.getValue()));
-      }
 
-      TextCountArrayWritable outVal =
-          new TextCountArrayWritable(textCountWritableList.toArray(new TextCountWritable[0]));
+      TextCountMapWritable outVal = new TextCountMapWritable(counts);
 
       context.write(outKey, outVal);
     }
   }
 
   private static class ArrayTestReducer
-      extends Reducer<Text, TextCountArrayWritable, TextCountArrayWritable, NullWritable> {
+      extends Reducer<Text, TextCountMapWritable, TextCountMapWritable, NullWritable> {
     private static NullWritable nullWritable = NullWritable.get();
 
     public ArrayTestReducer() {}
 
     @Override
-    protected void reduce(Text key, Iterable<TextCountArrayWritable> values, Context context)
+    protected void reduce(Text key, Iterable<TextCountMapWritable> values, Context context)
         throws InterruptedException, IOException {
 
-      for (TextCountArrayWritable value : values) {
+      for (TextCountMapWritable value : values) {
         context.write(value, nullWritable);
       }
     }

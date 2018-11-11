@@ -4,14 +4,32 @@ import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.Writable;
 import org.json.JSONObject;
 
-public class TextCountArrayWritable extends ArrayWritable {
+import java.util.Map;
 
-  public TextCountArrayWritable() {
+public class TextCountMapWritable extends ArrayWritable {
+
+  public TextCountMapWritable() {
     super(TextCountWritable.class);
   }
 
-  public TextCountArrayWritable(TextCountWritable[] values) {
-    super(TextCountWritable.class, values);
+  public TextCountMapWritable(Map<String, Long> map) {
+    super(TextCountWritable.class);
+    set(map);
+  }
+
+  @Override
+  public void set(Writable[] values) {
+    throw new java.lang.UnsupportedOperationException(
+        "set(Writable[] values) is unsupported. Please use set(Map<String, Long) function.");
+  }
+
+  public void set(Map<String, Long> map) {
+    TextCountWritable[] writables = new TextCountWritable[map.size()];
+    int i = 0;
+    for (Map.Entry<String, Long> entry : map.entrySet()) {
+      writables[i] = new TextCountWritable(entry.getKey(), entry.getValue());
+    }
+    super.set(writables);
   }
 
   @Override
