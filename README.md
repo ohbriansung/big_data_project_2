@@ -163,6 +163,7 @@ The Backstory generator will not nessessary produce a backstory instant instead 
 
 ### Absolute Sentiment Score (2012)
 |Subreddit|Sentiment Score |
+|------- |--------------- |
 |trees| 10792.0779|
 |pics| 9506.3160|
 |mylittlepony|4417.8108|
