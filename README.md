@@ -119,6 +119,8 @@ It is well known that WRITING IN ALL CAPS ONLINE IS A SUBSTITUTE FOR SCREAMINGâ€
 Write a job that computes Gunning Fog Index and Flesch-Kincaid Readability (both reading ease and grade level) of user comments.
 * Choose a subreddit and plot the distribution of these scores using a histogram.
 * Find three subreddits of inscrutables, with users that write extremely unreadable comments.
+##### Limitation
+On the internet many comments and typing style can lead to inconsistent results when using the Flesch-Kincaid Algorithm. Internet slang such as "lol" or "rotfl" can result in null values for this algorithm as well as comments being on average shorter than the posts themselves. Because of the lengh of the comments readablity can somtimes not be accuratly judged. In addition mispelled words or gibberish often get an extremely low readabilty score with is not useful for analysis and very very short comments also have a extremely high readability score also skewing the data (however these can be filtered out).
 
 
 ####  Key Terms
@@ -173,7 +175,7 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 |Trait | Description| Implementation summary|
 |------|------------|-----------------------|
 |Temperment| The Users overall temperment, | Uses Sentiment analysis to determine if the person is a overall a positive or negative person
-|Education Level| A guess on the level of education of a user| We can use the readabilty of a users comments to make a guess on education level
+|Readabilty Score| A guess on the level of education of a user| We can use the readabilty of a users comments to make a guess on education level
 |Number of Comments| The number of comments a user posts | Tracks the number of comments a users postes over time
 |Agreeability | See how well a user gets along with other people | Using average upvotes we can see how agreeable a user is. More upvotes means a higher agreeablity score.
 |Location | Where this user is located| Tracks certain phrases to deduce location
@@ -190,7 +192,7 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 |-------|-----------------------|
 |User|MikeMarx153|
 |Toxic Score| 0.007|
-|Education | 62.72|
+|Readabilty Score | 62.72|
 |Comment Count | 52|
 |Upvotes | 5.2|
 |Location | null|
@@ -209,7 +211,7 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 |-------|-----------------------|
 |User|IlikeHistory|
 |Toxic Score| 0.0037|
-|Education | 36.814|
+|Readabilty Score | 36.814|
 |Comment Count | 178|
 |Upvotes | 20.63|
 |Location | null|
@@ -220,7 +222,25 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
   One of the first things that stand out for this user is that his name correlates with his interest alot. From his sentiment score and education level in combintion with his interest, it seems that much of the comments are factual by nature rather than opinionative lacking words that can be thought of as postive or negative. This user has a resonably large presence on reddit making 178 comments. Despite using neutural language it seems this user mostly post helpful comments, which results in a very high average upvote count bring his total upvotes to 3560. His high average upvotes indicates that this user only post comments which are help or constructive to the topic.
 
   This user is Likely atheist as that is the subreddit that the user visits the most. Anouther alternative is that he is a religous person who like to go on atheist subreddits and pick fights with other users, but this would reflect on his average upvotes and is likely not the case. This user is most likely in college either doing a master or is graduating soon based on the readablity of his comments. However this may be an issue with the Flesch-Kincaid algorithm as historical words and pronouns are possibly weighted quite low skewing the score. While this user does "like history" it seems he actually goes on history subreddits less than expected, having only 14% of his comment activity on history subreddits. But this also may be misleading as we do not have data on how often one visits a subreddit. It is possible history subreddits are in fact his most VISITED subreddits but based on his comment trends it is likely he will not comment unless the user has something contructive. This means that he may very much just enjoy reading through the subreddit and not post useless/meaningless comments like "haha" or "lol".
+
+##Psychocoolguy
+ 
+|Trait| Value|
+|-------|-----------------------|
+|User|Psychocoolguy|
+|Toxic Score| -0.0024|
+|Education | 33.8688|
+|Comment Count | 129|
+|Upvotes | 1.124|
+|Location | null|
+|Liked Subreddits | Fireteams:92, pokemongo:20, Smite:11, DestinyTheGame:4, Overwatch:2|
+
+### What we know about Psychocoolguy
+  From the table above se can see that he is mostly neutral in terms of toxicity, however unlike the previous users that we have identified it is likely because of polarizing comments the cancel each other out rather than the use of neutral langauge. This is becasue his average upvotes are relativly low telling us that he is likely getting some comments that are getting lots of upvotes and some getting lots of downvotes. His low readabilty score shows me that he is also makes is comments are not exactly short as it is much more difficult to get a low readabilty score when the user makes small comments. While overall he is mostly accepted it is likely that he does post upsetting comments from time to time keeping his overall average upvote count low dispite having a high comment count.
   
+  It is clear by looking at the subreddits user comments on that he is a gamer. While estimating age with the previous users was relativly straight forword, estimating the age of psychocoolguy seems to be problematic as there are too many factors that can skew his readabity score. The best we can do to estimate this persons age is using the gamer demographic making this person likly a male between 15 and 30. Looking into the FireTeams subreddit it seems to be a community for gamers to get together. This implies that he may or may not have any friends in his friend group that is interested in the games he is interested in leading him to conduct his search on reddit.
+
+
 
 #### [2 pt] A day in the life
 You are a struggling scriptwriter trying to make it big in Hollywood. Find an interesting user with your backstory job, then trace their commenting activities across the site over time. Use this combination of data to build a story about the userâ€™s life: what they do on a regular basis, who their friends are, their hopes/dreams, etc. You have some creative license here.
