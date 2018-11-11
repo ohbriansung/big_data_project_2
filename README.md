@@ -253,7 +253,7 @@ While you work on your hit movie script, you need to pay the bills. Use your ana
   We will use hadoop automatic sort to our advantage by automatically grouping users that are similar together. This allows for easier post processing after as to get users that have similiar reading and toxicity levels are a must before matching thier common interest. If a user is more educated and less toxic we can be a bit less strict with matching subreddits in contrast to the more toxic demographic which would require more similar interest. For simplicty our script will try to find the best match within 1000 users (500 upward and 500 downwards) and return the users with the most similiar interest (subreddits).
   
 
-Here is the results for trinkalkohol
+## trinkalkohol
 
 |         |trinkalkohol   |vikkrell       |  
 |---------|---------------|---------------|
@@ -268,11 +268,25 @@ Here is the results for trinkalkohol
 |AskReddit|
 |travel|
 
+## HOWDYPARTNERBOT
+
+|         |HOWDYPARTNERBOT   |InternetContrarian       |  
+|---------|---------------|---------------|
+|ReadScore|35.6055          |42.8 |
+|ToxicScore|0        |.00335|
+|Upvotes | -0.5| 11.3|
+|Comment Count| 92 | 2081|
+
+|Subreddits in common|
+|-------------------|
+|AskReddit|
+|WTF|
+|videos|
+|AdviceAnimals|
+|4chan|
+|funny|
+
  
-
-  
-
-          Note: remember to explain your methodology in your report.
 #### [2 pt] Music Recommendations
 After graduating from USF, you found a startup company that aims to provide personalized music recommendations using big data analysis. In other words, the pitch is that users can “just be themselves” on social media and the service will determine their personality to provide new music recommendations. Design a MapReduce job to do this.
 Note: remember to explain your methodology in your report.
