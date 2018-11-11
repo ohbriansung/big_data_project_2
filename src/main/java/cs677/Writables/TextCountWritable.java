@@ -3,6 +3,7 @@ package cs677.Writables;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
+import org.json.JSONObject;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -49,13 +50,16 @@ public class TextCountWritable implements Writable {
 
   @Override
   public int hashCode() {
-    int hashCode = count != null ? count.hashCode() : 0;
-    hashCode = 31 * hashCode + (text != null ? text.hashCode() : 0);
+    int hashCode = count.hashCode();
+    hashCode = 31 * hashCode + text.hashCode();
     return hashCode;
   }
 
   @Override
   public String toString() {
-    return "{\"" + text + "\": " + count + "}";
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("text", text);
+    jsonObject.put("count", count);
+    return jsonObject.toString();
   }
 }

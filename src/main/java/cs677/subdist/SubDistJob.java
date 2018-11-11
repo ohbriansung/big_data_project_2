@@ -107,13 +107,13 @@ public class SubDistJob {
         userCountMap.put(user, count);
       }
 
-      TreeMap<String, Long> binMap = new TreeMap<>();
+      TreeMap<Long, Long> binMap = new TreeMap<>();
 
-      userCountMap.forEach((k, v) -> binMap.put(v.toString(), binMap.getOrDefault(k, 0L) + 1));
+      userCountMap.forEach((k, v) -> binMap.put(v, binMap.getOrDefault(v, 0L) + 1));
 
       ArrayList<TextCountWritable> textCountList = new ArrayList<>();
 
-      binMap.forEach((k, v) -> textCountList.add(new TextCountWritable(k, v)));
+      binMap.forEach((k, v) -> textCountList.add(new TextCountWritable(k.toString(), v)));
 
       TextCountArrayWritable outVal =
           new TextCountArrayWritable(textCountList.toArray(new TextCountWritable[0]));

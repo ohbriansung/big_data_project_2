@@ -2,6 +2,7 @@ package cs677.Writables;
 
 import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.Writable;
+import org.json.JSONObject;
 
 public class TextCountArrayWritable extends ArrayWritable {
 
@@ -26,16 +27,10 @@ public class TextCountArrayWritable extends ArrayWritable {
   @Override
   public String toString() {
     TextCountWritable[] values = get();
-    StringBuilder sb = new StringBuilder();
-    sb.append("{");
+    JSONObject jsonObject = new JSONObject();
     for (TextCountWritable writable : values) {
-      sb.append("\"");
-      sb.append(writable.getText());
-      sb.append("\": ");
-      sb.append(writable.getCount());
-      sb.append(", ");
+      jsonObject.put(writable.getText(), writable.getCount());
     }
-    sb.append("}");
-    return sb.toString();
+    return jsonObject.toString();
   }
 }
