@@ -35,17 +35,17 @@ Example Post Json:
 
 ## Warmup
 
-#### [0.25 pt] How many records are in the dataset?
+#### How many records are in the dataset?
 Elapsed Time: 3:32:02
 
 Total number of entries: 2661983402
 
-#### [0.25 pt] How many unique subreddits are there?
+#### How many unique subreddits are there?
 Elapsed Time: 3:32:02 (Solved using same map reduce as records)
 
 Number of subreddits: 417834
 
-#### [0.5 pt] What user wrote the most comments in July of 2012? What was the user’s top three most-upvoted comments?
+#### What user wrote the most comments in July of 2012? What was the user’s top three most-upvoted comments?
 Elapsed Time: 1:14:01
 
 I took the top commenter that appeared to not be a bot.
@@ -71,7 +71,7 @@ Posts from user: Apostolate
 | original-finder     	| 4013    	|
 | tweet_poster        	| 3980    	|
 
-#### [1 pt] Choose a day of significance to you (e.g., your birthday), and retrieve a 5% sample of the comments posted on this particular day across all 5 years of the dataset.
+#### Choose a day of significance to you (e.g., your birthday), and retrieve a 5% sample of the comments posted on this particular day across all 5 years of the dataset.
 Elapsed Time: 0:50:06
 
 | type | Number of posts saved |
@@ -83,12 +83,12 @@ Expected = total_posts * 0.05 / 365.25
 
 365.25 is average number of days over a 4 year span per year
 
-#### [1 pt] The number of comments posted per year will likely trend upward over time as more users join Reddit. Use feature scaling to normalize the number of comments per month from 0.0 to 1.0 and plot the values for each year. This way, we can isolate the proportion of comments across months. Do you notice any patterns?
+#### The number of comments posted per year will likely trend upward over time as more users join Reddit. Use feature scaling to normalize the number of comments per month from 0.0 to 1.0 and plot the values for each year. This way, we can isolate the proportion of comments across months. Do you notice any patterns?
 Elapsed Time: ~5:22:00
 ![Alt text](images/normal_dist.png?raw=true "Distribution")
 <!--![alt text](https://github.com/usf-cs677-fa18/P2-mcdomingo/blob/master/images/Normal%20Distribution.png "Distribution")-->
 
-## Analysis Part One
+#### Analysis Part One
 
 |General Observations ||
 |--------|----------------------|
@@ -96,11 +96,11 @@ Elapsed Time: ~5:22:00
 |Averages vs Absolute values | Averages are better for when we need equal representation between larger and smaller data sets otherwise we will use absolute values|
 |Machine Learning vs Human Analysis| Overall for this project adding machine learning models add significant overhead to the data collection and for now we have decided to use human analysis replace the models in exchange for a performance increase| 
 
-#### [1 pt] Screamers
+#### Screamers
 It is well known that WRITING IN ALL CAPS ONLINE IS A SUBSTITUTE FOR SCREAMING… OR YELLING. *cough!* Write a job to find users that scream a lot, and provide a screamer score (a highly-technical metric expressed as the percentage of uppercase letters used in their comments).
 * For future reference (when we really want to get something off our chest), what are the top 5 subreddits for scream-y comments?
 
-Initial thoughts was to take a flat score for each subreddit and count the number of capitol letters and take the values that are the highest. But upon inspection it seems that alot of the subreddits that either had 100% uppercase or 0% uppercase letters also had very few comments. In order balance out and get a more accurate measurement we only included subreddits with at least 50 comments to get a better representation of the true screamiest subreddit. We use the number 50 since I put the cutoff at 50 since that is how much information I believe to get a better sense of how screamy a subreddit is. 
+  Initial thoughts was to take a flat score for each subreddit and count the number of capitol letters and take the values that are the highest. But upon inspection it seems that alot of the subreddits that either had 100% uppercase or 0% uppercase letters also had very few comments. In order balance out and get a more accurate measurement we only included subreddits with at least 50 comments to get a better representation of the true screamiest subreddit. We use the number 50 since I put the cutoff at 50 since that is how much information I believe to get a better sense of how screamy a subreddit is. 
 
 *this tables is generated using data from 2012
 
@@ -115,13 +115,13 @@ Initial thoughts was to take a flat score for each subreddit and count the numbe
 
 
 
-#### [3 pt] Readability
+####  Readability
 Write a job that computes Gunning Fog Index and Flesch-Kincaid Readability (both reading ease and grade level) of user comments.
 * Choose a subreddit and plot the distribution of these scores using a histogram.
 * Find three subreddits of inscrutables, with users that write extremely unreadable comments.
 
 
-#### [2 pt] Key Terms
+####  Key Terms
 Calculate the TF-IDF for a given subreddit.
 * Produce a Tag Cloud of the terms (note: this doesn’t have to be integrated into your code; simply including the image is enough).
 
@@ -161,13 +161,12 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
   It is ressuring that the subreddits listed seem to correctate to the topic. It does make sence that politics and news would have on average a negative sentiment score as those topics are highly polarized. While both trees and MensRights are clearly satirical (I hope), it is obvious that trees would have less offensive or negative content than MensRights. While I believe the sentiment of MensRights is most likely negative (but in a joking way?).  
   For the positive subreddits, I expect that those who comment on my little pony are probably fans of the show and would comment positive things about it. This also applies to funny and aw which also seem like subreddits that would not have upsetting content in contrast to somthing that can be potentially offensive. 
 
-## Analysis Part 2
+# Analysis Part 2
 
 
-#### [3 pt] Backstory
-Given a specific user, find out more about them: where they’re from, what things they like/dislike, and other data about their background (think of at least 2 more things to determine). Note that this should be automated; I should be able to give you a username and you’ll produce a backstory for them. Provide a three sample user backstories in your report (you can clean these up when you add them to the report – they don’t have to be raw comments).
+## Backstory
 
-The Backstory generator will not nessessary produce a backstory instance, but instead it will produce a range of metrics that can be reused in future jobs. Instead for this question we will simply be constructing a story these metrics to produce a backstory for a use. Since there are not many backstories to analysis in this particualar case (we are only analysis three) We can do this by hand but in the future if we were to implement this on a larger scale to get backstories for more users, we would use a machine learning model to generate a back story. While a script could also work to find a backstory, it would not be very detailed since much of a users personality and traits are actually found my looking into the subreddits that they visit rather than the raw metrics we have defined below.. Below we have inclulded a human analyed backstory with detailed analysis and methodologies.
+  The Backstory generator will not nessessary produce a backstory instance, but instead it will produce a range of metrics that can be reused in future jobs. Instead for this question we will simply be constructing a story these metrics to produce a backstory for a use. Since there are not many backstories to analysis in this particualar case (we are only analysis three) We can do this by hand but in the future if we were to implement this on a larger scale to get backstories for more users, we would use a machine learning model to generate a back story. While a script could also work to find a backstory, it would not be very detailed since much of a users personality and traits are actually found my looking into the subreddits that they visit rather than the raw metrics we have defined below.. Below we have inclulded a human analyed backstory with detailed analysis and methodologies.
 
 |Trait | Description| Implementation summary|
 |------|------------|-----------------------|
@@ -181,6 +180,7 @@ The Backstory generator will not nessessary produce a backstory instance, but in
 *a note for the dislikes: It is very difficult to find out what a user dislikes based on their reddit activity (the subreddits that users visit). This is because for the vast majority of people will not be visiting reddits that they have no interested in. An alterative way to actually track the dislikes of a user may require some more natural language processing to get dislikes based on comments and sentiment.
 
 ## MikeMarx153
+|Backstory Table|
 |Trait| Value|
 |-------|-----------------------|
 |User|MikeMarx153|
