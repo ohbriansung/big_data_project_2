@@ -1,5 +1,5 @@
 package cs677.life;
-
+/*
 import cs677.BackStory.BackStoryJob;
 import cs677.BackStory.BackStoryMapper;
 import cs677.BackStory.BackStoryReducer;
@@ -46,4 +46,7 @@ public class AltLifeJob {
             System.err.println(e.getMessage());
         }
     }
+
 }
+
+*/

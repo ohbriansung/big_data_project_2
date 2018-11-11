@@ -1,5 +1,5 @@
 package cs677.life;
-
+/*
 import cs677.Writables.BackGroundWritable;
 import cs677.Writables.SubredditWritable;
 import org.apache.hadoop.io.IntWritable;
@@ -55,3 +55,4 @@ public class LifeReducer
     return top10;
   }
 }
+*/
