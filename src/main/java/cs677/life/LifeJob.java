@@ -217,28 +217,18 @@ public class LifeJob extends Configured implements Tool {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder();
-
-      sb.append("{");
+      JSONObject jsonObject = new JSONObject();
       if (localDateTime != null) {
-        sb.append("\"time\": \"");
-        sb.append(localDateTime);
-        sb.append("\", ");
+        jsonObject.put("time", localDateTime.toString());
       }
-      sb.append("\"subreddit\": \"");
-      sb.append(subreddit);
-      sb.append("\", \"score\": ");
-      sb.append(score);
-      sb.append(", \"sentimentScore\": ");
-      sb.append(sentimentScore);
-      sb.append(", \"body\": \"");
-      sb.append(body);
+      jsonObject.put("subreddit", subreddit);
+      jsonObject.put("score", score);
+      jsonObject.put("sentimentScore", sentimentScore);
+      jsonObject.put("body", body);
       if (localDateTime != null) {
-        sb.append("\", \"timeLong\": \"");
-        sb.append(time);
+        jsonObject.put("timeLong", time);
       }
-      sb.append("\"}");
-      return sb.toString();
+      return jsonObject.toString();
     }
   }
 }
