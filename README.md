@@ -137,8 +137,8 @@ As using the library has failed we approached the problem from a different persp
 | Pros                    | Cons         	              |
 |-------------------      |------------	                |
 | Easy to implement       | Accuracy is questionable    |
-| Faster Computations     | Take a long time to run     |
-| Flexable word list      | Lots of functions not used  |
+| Faster Computations     | Wordlist is much smaller     |
+| Flexable word list      | Does Not handle Many Edge cases |
 
 ### Absolute Sentiment Score (2012)
 |Subreddit|Sentiment Score |
