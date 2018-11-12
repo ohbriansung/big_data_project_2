@@ -8,17 +8,12 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class ReadabilityMapper extends Mapper<LongWritable, Text, Text, SenWorSylWritable> {
-
-  private Random random = new Random();
 
   @Override
   protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
-
-    if (random.nextFloat() > 0.01) return;
 
     JSONObject obj = new JSONObject(value.toString());
 
@@ -101,6 +96,9 @@ public class ReadabilityMapper extends Mapper<LongWritable, Text, Text, SenWorSy
       }
     }
 
+    senCount = Math.max(1, senCount);
+    worCount = Math.max(1, worCount);
+    sylCount = Math.max(1, sylCount);
     context.write(new Text(subreddit), new SenWorSylWritable(senCount, worCount, sylCount));
   }
 

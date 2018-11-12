@@ -221,12 +221,12 @@ public class LifeJob extends Configured implements Tool {
       if (localDateTime != null) {
         jsonObject.put("time", localDateTime.toString());
       }
-      jsonObject.put("subreddit", subreddit);
-      jsonObject.put("score", score);
-      jsonObject.put("sentimentScore", sentimentScore);
-      jsonObject.put("body", body);
+      jsonObject.put("subreddit", subreddit.toString());
+      jsonObject.put("score", score.get());
+      jsonObject.put("sentimentScore", sentimentScore.get());
+      jsonObject.put("body", body.toString());
       if (localDateTime != null) {
-        jsonObject.put("timeLong", time);
+        jsonObject.put("timeLong", time.get());
       }
       return jsonObject.toString();
     }

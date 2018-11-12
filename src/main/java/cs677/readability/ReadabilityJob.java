@@ -12,6 +12,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.time.Duration;
 import java.time.Instant;
+// yarn jar P2-1.0.jar cs677.readability.ReadabilityJob /data/2012/RC_2012*2*.bz2 /test/read
+
 // yarn jar P2-1.0.jar cs677.readability.ReadabilityJob /data/20* /out/read
 // yarn jar P2-1.0.jar cs677.readability.ReadabilityJob /data/20* /out/read skyrim
 public class ReadabilityJob {
