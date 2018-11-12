@@ -26,14 +26,23 @@ public class ComplexSpeakerMapper extends Mapper<LongWritable, Text, Text, Reada
         String body = obj.getString("body");
         FleschKincaid fleschKincaid = new FleschKincaid();
 
+        double fscore = fleschKincaid.calculate(body);
+        double gscore = gunnfog(body);
+
+        if(Double.isNaN(fscore))
+            fscore = 0;
+        if(Double.isNaN(gscore)){
+            gscore = 0;
+        }
+
 
 
         if("all".equals(configuration.get("subreddit"))){
-            context.write(new Text(subreddit), new Readablity(fleschKincaid.calculate(body),gunnfog(body)));
+            context.write(new Text(subreddit), new Readablity(fscore,gscore,subreddit));
         }
 
         if(subreddit.equals(configuration.get("subreddit"))){
-            context.write(new Text(author), new Readablity(fleschKincaid.calculate(body),gunnfog(body)));
+            context.write(new Text(author), new Readablity(fscore,gscore,author));
         }
 
 
@@ -48,7 +57,7 @@ public class ComplexSpeakerMapper extends Mapper<LongWritable, Text, Text, Reada
         while (itr.hasMoreTokens()) {
             String word = itr.nextToken();
             wordcount += 1;
-            if(itr.nextToken().length() > 6)
+            if(word.length() > 6)
                 complexcount += 1;
             if(word.endsWith(".") || word.endsWith("?") || word.endsWith("!")){
                 sentences += 1;

@@ -2,12 +2,13 @@ package cs677.ComplexWord;
 
 import cs677.Writables.Readablity;
 import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class ComplexSpeakerReducer extends Reducer<Text, Readablity,Text,Readablity> {
+public class ComplexSpeakerReducer extends Reducer<Text, Readablity, NullWritable,Readablity> {
 
     @Override
     protected void reduce(Text key, Iterable<Readablity> values, Context context) throws IOException, InterruptedException {
@@ -16,6 +17,7 @@ public class ComplexSpeakerReducer extends Reducer<Text, Readablity,Text,Readabl
         double gsum = 0;
         for(Readablity val : values){
             count += 1;
+
             if ( val.getFletch().get() > 100)
                 fsum += 100;
             else if (val.getFletch().get() < 0)
@@ -29,13 +31,12 @@ public class ComplexSpeakerReducer extends Reducer<Text, Readablity,Text,Readabl
             else if (val.getGunn().get() < 0)
                 gsum += 0;
             else
-                gsum += val.getFletch().get();
+                gsum += val.getGunn().get();
 
 
-            gsum += val.getGunn().get();
         }
 
         if(count > 50)
-            context.write(key,new Readablity((fsum/count), (gsum/count)));
+            context.write(NullWritable.get(),new Readablity((fsum/count), (gsum/count),key.toString()));
     }
 }
