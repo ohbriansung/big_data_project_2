@@ -33,9 +33,9 @@ public class ComplexSpeakerMapper extends Mapper<LongWritable, Text, Text, Reada
     }
   }
 
-  private Readablity score(String s, String key) {
+  private Readablity score(String body, String key) {
 
-    StringTokenizer itr = new StringTokenizer(s);
+    StringTokenizer itr = new StringTokenizer(body);
     int words = 0;
     int complexWords = 0;
     int sentences = 0;
