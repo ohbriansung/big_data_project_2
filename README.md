@@ -123,12 +123,15 @@ It is well known that WRITING IN ALL CAPS ONLINE IS A SUBSTITUTE FOR SCREAMING�
 Write a job that computes Gunning Fog Index and Flesch-Kincaid Readability (both reading ease and grade level) of user comments.
 
 #### Skyrim
+Time: ~1:00:00
+
 Choose a subreddit and plot the distribution of these scores using a histogram.
 
 ![Alt text](images/skyrim_ease.png?raw=true "r/skyrim_ease")
 ![Alt text](images/skyrim_grade.png?raw=true "r/skyrim_grade")
 
 #### Worst Subreddits
+Time: ~6:00:00
 Find three subreddits of inscrutables, with users that write extremely unreadable comments.
 
 | Sub | Ease | Grade |
@@ -144,6 +147,8 @@ On the internet many comments and typing style can lead to inconsistent results 
 
 
 ### [2 pt] Key Terms
+Time: 6:43:48 (Setup) +  0:01:09 (Calculating TF IDF)
+
 Calculate the TF-IDF for a given subreddit. Produce a Tag Cloud of the terms.
 
 ![Alt text](images/corgi.png?raw=true "r/rarepuppers")
@@ -260,6 +265,8 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 
 
 ### [2 pt] A day in the life
+Time: 2:31:10
+
 You are a struggling scriptwriter trying to make it big in Hollywood. Find an interesting user with your backstory job, then trace their commenting activities across the site over time. Use this combination of data to build a story about the user’s life: what they do on a regular basis, who their friends are, their hopes/dreams, etc. You have some creative license here.
 
 In order to create this I took the first sentence of every post he
@@ -395,6 +402,8 @@ Note: remember to explain your methodology in your report.
 Use a bloom filter to measure how similar a user's vocabulary is to another user's
 
 #### Design Two: Distribution
+Time: 6:30:00
+
 Try to fit a curve to the number of posts per use in a given subreddit. What did you find?
 
 The graphs below show that trying to fit simple curves to any of the subreddits doesn't not seem possible.
@@ -409,3 +418,16 @@ I used reservoir sampling to find which subreddits in each row to use.
 ![Alt text](images/sub_dist2.png?raw=true "sub_dist")
 ## Wrap Up
 ### [1 pt] Project retrospective
+
+#### Given the same goals, how would you complete the project differently if you didn’t have any restrictions imposed by the instructor?
+
+I wouldn't have changed the project.
+
+#### We are using hadoop instead of regular programming to deal with the data set. Discuss this trade-off.
+
+
+#### Let’s imagine that your next project was to improve and extend P2. What are the features/functionality you would add, use cases you would support, etc? Are there any weaknesses in your current implementation that you would like to improve upon? This should include at least three areas you would improve/extend.
+
+#### Give a rough estimate of how long you spent completing this assignment. Additionally, what part of the assignment took the most time?
+
+#### What did you learn from completing this project? Is there anything you would change about the project?
