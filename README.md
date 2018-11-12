@@ -262,7 +262,13 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 ### [2 pt] A day in the life
 You are a struggling scriptwriter trying to make it big in Hollywood. Find an interesting user with your backstory job, then trace their commenting activities across the site over time. Use this combination of data to build a story about the user’s life: what they do on a regular basis, who their friends are, their hopes/dreams, etc. You have some creative license here.
 
-In a small rural house
+In order to create this I took the first sentence of every post he
+wrote, the sub he wrote on and a bunch of other info using map reduce.
+I then used reservoir sampling to take one post per month. The intro scene
+was based statistical analysis of the subreddits he posts on.
+
+Camera blurs into focus.
+Inside of small rural house.
 A young southern man wearing a NFL shirt, yelling loudly at his mother.
 The mother is crying.
 
@@ -274,7 +280,7 @@ Man leaves and slams the door behind him
 
 Then comes an oddly long and chaotic montage, leaping forward a month at a time.
 
-> 12-01: I agree with you the last bit (religion promoting illegal activity) is a ridiculous claim made by the Bishop to appeal to conservatives.
+> 12-01:  I agree with you the last bit (religion promoting illegal activity) is a ridiculous claim made by the Bishop to appeal to conservatives.
 > <br/>12-02: You are using it correctly.
 > <br/>12-03: Why don't you try out new classes?
 > <br/>12-04: Haha this is true and not ragging on you at all it's just I've found when *one* mentions downvotes it attracts downvotes and when *someone else* mentions downvotes it attracts upvotes.
