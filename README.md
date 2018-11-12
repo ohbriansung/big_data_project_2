@@ -397,5 +397,15 @@ Use a bloom filter to measure how similar a user's vocabulary is to another user
 #### Design Two: Distribution
 Try to fit a curve to the number of posts per use in a given subreddit. What did you find?
 
+The graphs below show that trying to fit simple curves to any of the subreddits doesn't not seem possible.
+
+I tried fitting multiple curves, linear,  gaussian, pow2 (a + bx + cx^2), and expontential decay.
+None of them closely fit the line.
+
+I grouped each row by how many posts are in it, in a log scale.
+
+I used reservoir sampling to find which subreddits in each row to use.
+
+![Alt text](images/sub_dist.png?raw=true "sub_dist")
 ## Wrap Up
 ### [1 pt] Project retrospective
