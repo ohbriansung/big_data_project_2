@@ -399,7 +399,7 @@ Note: remember to explain your methodology in your report.
  Make your own Now that you’ve found the answers to the questions above, design two of your own questions to answer. These should be sufficiently difficult, and you should be creative! You should start with a question, and then propose a predicted answer or hypothesis before writing a MapReduce job to answer it. If you come up with a particularly challenging question, it can count for two (ask first).
 
 #### Design One: Bloom Filter
-Use a bloom filter to measure how similar a user's vocabulary is to another user's
+Use a bloom filter to measure users' similarity compare to the input user in a subreddit.
 
 #### Design Two: Distribution
 Time: 6:30:00
@@ -416,6 +416,7 @@ I grouped each row by how many posts are in it, in a log scale.
 I used reservoir sampling to find which subreddits in each row to use.
 
 ![Alt text](images/sub_dist2.png?raw=true "sub_dist")
+
 ## Wrap Up
 ### [1 pt] Project retrospective
 

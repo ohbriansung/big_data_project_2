@@ -300,6 +300,7 @@ auto.sh
 
 .DS_Store
 .idea/
+.ipynb_checkpoints/
 
 # Matthew's data stuff
 data/

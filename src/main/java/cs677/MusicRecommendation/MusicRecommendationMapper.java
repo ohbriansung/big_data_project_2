@@ -13,10 +13,9 @@ public class MusicRecommendationMapper extends Mapper<LongWritable, Text, Text, 
     @Override
     protected void map(LongWritable key, Text value, Context context)
             throws IOException, InterruptedException {
-        String line = value.toString();
-        int firstSpaceIndex = line.indexOf(" ");
-        String author = line.substring(0, firstSpaceIndex);
-        String textCountArray = line.substring(firstSpaceIndex + 1);
+        String[] split = value.toString().split("\t");
+        String author = split[0];
+        String textCountArray = split[1];
 
         JsonParser parser = new JsonParser();
         JsonArray array = (JsonArray) parser.parse(textCountArray);
@@ -24,34 +23,28 @@ public class MusicRecommendationMapper extends Mapper<LongWritable, Text, Text, 
         int score = -6;
         int count = 0;
         boolean check = false;
-        boolean check2 = false;
 
         for (JsonElement element : array) {
-            if (check && check2) {
-                break;
-            }
-
             JsonObject obj = ((JsonObject) element);
-            if (obj.get("SentimentScoreOfAuthorComment") != null) {
-                score = obj.get("SentimentScoreOfAuthorComment").getAsInt();
-                if (count > 0 && !check2) {
-                    setTry(author, count, score, context);
-                    check2 = true;
+            String text = obj.get("text").getAsString();
+            int val = obj.get("count").getAsInt();
+
+            if (text.equals("SentimentScoreOfAuthorComment")) {
+                if (count > 0) {
+                    setTry(author, count, val, context);
                 }
-            } else if (obj.get("SentimentCountOfAuthorComment") != null) {
-                count = obj.get("SentimentCountOfAuthorComment").getAsInt();
-                if (score != -6 && !check2) {
-                    setTry(author, count, score, context);
-                    check2 = true;
+                else {
+                    score = val;
+                }
+            } else if (text.equals("SentimentCountOfAuthorComment")) {
+                if (score != -6) {
+                    setTry(author, val, score, context);
+                }
+                else {
+                    count = val;
                 }
             } else if (!check) {
-                String str = obj.toString();
-                int i = str.indexOf("\"");
-                str = str.substring(i + 1);
-                i = str.indexOf("\"");
-                str = str.substring(0, i);
-
-                String rec = this.musicGenre.getGenre(str);
+                String rec = this.musicGenre.getGenre(text);
                 if (rec != null) {
                     context.write(new Text(author), new Text("recommended:" + rec));
                     check = true;

@@ -1,41 +1,49 @@
-package cs677.MusicRecommendation;
+package cs677.UserSimilarity;
 
-import cs677.Writables.TextCountWritable;
+import cs677.Writables.AuthorWordsWritable;
+import cs677.common.Constants;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-/**
- * This is the main class. Hadoop will invoke the main method of this class.
- */
-public class MusicRecommendationJob {
+public class UserSimilarityJob {
     public static void main(String[] args) {
+        if (args.length < 4) {
+            System.out.println("Args: <input> <output> <subreddit> <user>");
+            System.exit(-1);
+        }
+
         Configuration conf = new Configuration();
 
-        /* Job 1: get word count for author */
-        authorJob(args, conf);
+        conf.setStrings(Constants.ARCHIVED, args[1]);
+        conf.setStrings(Constants.SUBREDDIT, args[2]);
+        conf.setStrings(Constants.AUTHOR, args[3]);
 
-        /* Job 2: sort word count by value */
-        recommendJob(args, conf);
+        /* job 1: author word count in subreddit */
+        subredditWordCountJob(args, conf);
+
+        /* job 2: bloom filter to match users' words */
+        bloomFilterJob(args, conf);
     }
 
-    private static void authorJob(String[] args, Configuration conf) {
+    private static void subredditWordCountJob(String[] args, Configuration conf) {
         try {
-            Job job = Job.getInstance(conf, "author word count job");
-            job.setJarByClass(MusicRecommendationJob.class);
+            Job job = Job.getInstance(conf, "User similarity job: subreddit author word list");
+            job.setJarByClass(UserSimilarityJob.class);
 
             /* Mapper class */
-            job.setMapperClass(AuthorMapper.class);
+            job.setMapperClass(SubredditAuthorWordListMapper.class);
 
             /* Reducer class */
-            job.setReducerClass(AuthorReducer.class);
+            job.setReducerClass(SubredditAuthorWordListReducer.class);
 
             /* Outputs from the Mapper and Reducer. */
             job.setMapOutputKeyClass(Text.class);
-            job.setMapOutputValueClass(TextCountWritable.class);
+            job.setMapOutputValueClass(Text.class);
             job.setOutputKeyClass(Text.class);
             job.setOutputValueClass(Text.class);
 
@@ -52,27 +60,27 @@ public class MusicRecommendationJob {
         }
     }
 
-    private static void recommendJob(String[] args, Configuration conf) {
+    private static void bloomFilterJob(String[] args, Configuration conf) {
         try {
-            Job job = Job.getInstance(conf, "music recommendation job");
-            job.setJarByClass(MusicRecommendationJob.class);
+            Job job = Job.getInstance(conf, "User similarity job: bloom filter");
+            job.setJarByClass(UserSimilarityJob.class);
 
             /* Mapper class */
-            job.setMapperClass(MusicRecommendationMapper.class);
+            job.setMapperClass(UserSimilarityMapper.class);
 
             /* Reducer class */
-            job.setReducerClass(MusicRecommendationReducer.class);
+            job.setReducerClass(UserSimilarityReducer.class);
 
             /* Outputs from the Mapper and Reducer. */
-            job.setMapOutputKeyClass(Text.class);
-            job.setMapOutputValueClass(Text.class);
+            job.setMapOutputKeyClass(DoubleWritable.class);
+            job.setMapOutputValueClass(AuthorWordsWritable.class);
             job.setOutputKeyClass(Text.class);
             job.setOutputValueClass(Text.class);
 
             /* Job input path in HDFS */
             FileInputFormat.addInputPath(job, new Path(args[1] + "/temp/part-r-00000"));
 
-            /* Job output path in HDFS */
+            /* Job output path in HDFS*/
             FileOutputFormat.setOutputPath(job, new Path(args[1] + "/final"));
 
             /* Wait (block) for the job to complete... */
