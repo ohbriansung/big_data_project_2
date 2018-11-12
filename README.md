@@ -123,13 +123,19 @@ It is well known that WRITING IN ALL CAPS ONLINE IS A SUBSTITUTE FOR SCREAMINGâ€
 Write a job that computes Gunning Fog Index and Flesch-Kincaid Readability (both reading ease and grade level) of user comments.
 * Choose a subreddit and plot the distribution of these scores using a histogram.
 * Find three subreddits of inscrutables, with users that write extremely unreadable comments.
+
+
+#### Skyrim
+
+![Alt text](images/skyrim_ease.png?raw=true "r/skyrim_ease")
+![Alt text](images/skyrim_grade.png?raw=true "r/skyrim_grade")
+
 ##### Limitation
 On the internet many comments and typing style can lead to inconsistent results when using the Flesch-Kincaid Algorithm. Internet slang such as "lol" or "rotfl" can result in null values for this algorithm as well as comments being on average shorter than the posts themselves. Because of the lengh of the comments readablity can somtimes not be accuratly judged. In addition mispelled words or gibberish often get an extremely low readabilty score with is not useful for analysis and very very short comments also have a extremely high readability score also skewing the data (however these can be filtered out).
 
 
 ### [2 pt] Key Terms
-Calculate the TF-IDF for a given subreddit.
-* Produce a Tag Cloud of the terms (note: this doesnâ€™t have to be integrated into your code; simply including the image is enough).
+Calculate the TF-IDF for a given subreddit. Produce a Tag Cloud of the terms.
 
 ![Alt text](images/corgi.png?raw=true "r/rarepuppers")
 
