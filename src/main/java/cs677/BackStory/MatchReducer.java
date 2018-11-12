@@ -19,8 +19,8 @@ public class MatchReducer extends Reducer<Text,BackGroundWritable,NullWritable,M
     protected void reduce(Text key, Iterable<BackGroundWritable> values, Context context) throws IOException, InterruptedException {
         HashMap<String,Long> likedsubreddits = new HashMap<>();
         String subreddit;
-        MatchMakerWriteable matcher = new MatchMakerWriteable();
-        ArrayList<SubredditWritable> top10;
+        ArrayList<SubredditWritable> top10 = new ArrayList<>();
+        MatchMakerWriteable matcher = new MatchMakerWriteable(key.toString(),0,0,0,"none",0,"none",top10);
         for(BackGroundWritable value : values){
             subreddit = value.getLikes().toString();
             long count = 1;
@@ -32,7 +32,8 @@ public class MatchReducer extends Reducer<Text,BackGroundWritable,NullWritable,M
 
         top10 = tolist(likedsubreddits);
         matcher.updateList(top10);
-        context.write(NullWritable.get(), matcher);
+        if(matcher.getReadAvg() < 100 && matcher.getReadAvg() > 30 && matcher.getCommentcount().get() > 30)
+            context.write(NullWritable.get(), matcher);
     }
 
     protected ArrayList<SubredditWritable> tolist(HashMap<String,Long> subreddits)

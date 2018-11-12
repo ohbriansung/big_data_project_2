@@ -113,6 +113,14 @@ public class BackGroundWritable implements WritableComparable<BackGroundWritable
     return location;
   }
 
+  public double getReadAvg(){
+    return readability_score.get()/commentcount.get();
+  }
+
+  public  double getToxAvg(){
+    return toxic_score.get()/commentcount.get();
+  }
+
   public String toJsonString() {
     JSONObject jsonObject = new JSONObject();
     double rscore = readability_score.get() / (double) commentcount.get();

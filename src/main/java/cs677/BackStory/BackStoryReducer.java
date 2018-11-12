@@ -30,7 +30,8 @@ public class BackStoryReducer extends Reducer<Text, BackGroundWritable, NullWrit
 
         top10 = tolist(likedsubreddits);
         backGroundWritable.updateList(top10);
-        context.write(NullWritable.get(), backGroundWritable);
+        if(backGroundWritable.getCommentcount().get() > 30 && backGroundWritable.getReadAvg() < 100 && backGroundWritable.getReadAvg() > 30)
+            context.write(NullWritable.get(), backGroundWritable);
     }
 
 

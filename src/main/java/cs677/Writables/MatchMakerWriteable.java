@@ -14,7 +14,7 @@ public class MatchMakerWriteable extends BackGroundWritable {
 
     }
 
-    private IntWritable compareScore = new IntWritable(0);
+
 
 
 
@@ -45,17 +45,20 @@ public class MatchMakerWriteable extends BackGroundWritable {
 
     @Override
     public int compareTo(BackGroundWritable o) {
-
-
-        if(abs(o.readability_score.get() - this.readability_score.get()) > 15){
-            if(abs(o.getToxic_score().get() - this.getToxic_score().get()) > 10){
-                return o.upvotes.compareTo(this.upvotes);
-            }else
-                return o.toxic_score.compareTo(this.toxic_score);
-
-
+        if(abs(o.getReadAvg() - this.getReadAvg()) > 15){
+            if(o.getReadAvg() > this.getReadAvg())
+                return -1;
+            else
+                return 1;
         }else
-            return o.readability_score.compareTo(this.readability_score);
+            if(abs(o.getToxAvg() - this.getToxAvg()) > 1)
+                return o.getUpvotes().compareTo(this.getUpvotes());
+            else
+                if(o.getToxAvg() > this.getToxAvg())
+                    return -1;
+                else
+                    return 0;
+
     }
 
 
