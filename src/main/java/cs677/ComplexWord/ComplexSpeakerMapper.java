@@ -78,7 +78,7 @@ public class ComplexSpeakerMapper extends Mapper<LongWritable, Text, Text, Reada
   private int syllableCount(String s) {
     int sylCount = 0;
     char[] chars = s.toCharArray();
-    for (int i = 0; i < chars.length; i++) {
+    for (int i = 0; i < chars.length - 1; i++) {
       switch (chars[i]) {
         case 'a':
           if (chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
@@ -102,6 +102,7 @@ public class ComplexSpeakerMapper extends Mapper<LongWritable, Text, Text, Reada
           break;
       }
     }
+    if (sylCount == 0) sylCount = 1;
     return sylCount;
   }
 }
