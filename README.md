@@ -433,7 +433,7 @@ Find your own data set and try to find three things about it using big data.
 
 #### Give a rough estimate of how long you spent completing this assignment. Additionally, what part of the assignment took the most time?
 
-Matthew: Well over 30 hours
+Matthew: Well over 40 hours
 
 #### What did you learn from completing this project? Is there anything you would change about the project?
 
