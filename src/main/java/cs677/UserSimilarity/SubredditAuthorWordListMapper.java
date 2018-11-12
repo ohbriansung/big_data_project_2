@@ -47,7 +47,7 @@ public class SubredditAuthorWordListMapper extends Mapper<LongWritable, Text, Te
             String token = itr.nextToken().toLowerCase().replaceAll("[-_\\.]", " ");
             token = token.replaceAll("[^\\w\\d]", "");
 
-            String[] strings = token.split(" ");
+            String[] strings = token.split("\\s+");
             for (String str : strings) {
                 if (str.length() > 0) {
                     set.add(str);

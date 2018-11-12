@@ -11,8 +11,6 @@ public class MusicRecommendationReducer extends Reducer<Text, Text, Text, Text> 
     @Override
     protected void reduce(Text key, Iterable<Text> values, Context context)
             throws IOException, InterruptedException {
-        boolean checkTry = false;
-        boolean checkRec = false;
         List<String> array = new ArrayList<>();
         for (Text val : values) {
             array.add(val.toString());
