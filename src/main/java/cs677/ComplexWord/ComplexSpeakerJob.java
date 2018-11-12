@@ -1,9 +1,11 @@
 package cs677.ComplexWord;
 
 import cs677.Writables.Readablity;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -21,15 +23,12 @@ public class ComplexSpeakerJob {
             job.setJarByClass(ComplexSpeakerJob.class);
 
             job.setMapperClass(ComplexSpeakerMapper.class);
-            job.setCombinerClass(ComplexSpeakerReducer.class);
             job.setReducerClass(ComplexSpeakerReducer.class);
-
-            job.setNumReduceTasks(12);
 
             job.setMapOutputKeyClass(Text.class);
             job.setMapOutputValueClass(Readablity.class);
 
-            job.setOutputKeyClass(Text.class);
+            job.setOutputKeyClass(NullWritable.class);
             job.setOutputValueClass(Readablity.class);
             job.setOutputFormatClass(SequenceFileOutputFormat.class);
 
@@ -47,7 +46,7 @@ public class ComplexSpeakerJob {
             job2.setMapperClass(InverseMapper.class);
 
             job2.setMapOutputKeyClass(Readablity.class);
-            job2.setMapOutputValueClass(Text.class);
+            job2.setMapOutputValueClass(NullWritable.class);
 
             FileInputFormat.addInputPath(job2, new Path(args[2] + "/temp"));
             FileOutputFormat.setOutputPath(job2, new Path(args[2] +"/final" ));
