@@ -122,13 +122,14 @@ It is well known that WRITING IN ALL CAPS ONLINE IS A SUBSTITUTE FOR SCREAMINGâ€
 ### [3 pt] Readability
 Write a job that computes Gunning Fog Index and Flesch-Kincaid Readability (both reading ease and grade level) of user comments.
 
-#### Skyrim
-Time: ~1:00:00
+#### r/rarepuppers
+Time: 6:32:00
 
 Choose a subreddit and plot the distribution of these scores using a histogram.
 
-![Alt text](images/skyrim_ease.png?raw=true "r/skyrim_ease")
-![Alt text](images/skyrim_grade.png?raw=true "r/skyrim_grade")
+![Alt text](images/f_ease_rarepups.png?raw=true "f_ease_rarepups")
+![Alt text](images/f_grade_rarepups.png?raw=true "f_grade_rarepups")
+![Alt text](images/f_grade_rarepups.png?raw=true "gunn_rarepups")
 
 #### Worst Subreddits
 Time: ~6:00:00
