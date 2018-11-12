@@ -129,7 +129,7 @@ Choose a subreddit and plot the distribution of these scores using a histogram.
 
 ![Alt text](images/f_ease_rarepups.png?raw=true "f_ease_rarepups")
 ![Alt text](images/f_grade_rarepups.png?raw=true "f_grade_rarepups")
-![Alt text](images/f_grade_rarepups.png?raw=true "gunn_rarepups")
+![Alt text](images/gunn_rarepups.png?raw=true "gunn_rarepups")
 
 #### Worst Subreddits
 Time: ~6:00:00
