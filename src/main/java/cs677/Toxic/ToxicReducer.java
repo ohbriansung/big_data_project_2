@@ -17,6 +17,7 @@ public class ToxicReducer extends Reducer<Text, DoubleWritable,Text,DoubleWritab
             sentscore += val.get();
         }
         //sentscore = sentscore/sentencecount;
-        context.write(key,new DoubleWritable(sentscore));
+        if(sentencecount > 50)
+            context.write(key,new DoubleWritable(sentscore));
     }
 }
