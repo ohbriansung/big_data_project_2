@@ -34,8 +34,7 @@ public class ComplexSpeakerMapper extends Mapper<LongWritable, Text, Text, Reada
   }
 
   private Readablity score(String body, String key) {
-
-    StringTokenizer itr = new StringTokenizer(body);
+    StringTokenizer itr = new StringTokenizer(body.toLowerCase());
     int words = 0;
     int complexWords = 0;
     int sentences = 0;
@@ -81,22 +80,22 @@ public class ComplexSpeakerMapper extends Mapper<LongWritable, Text, Text, Reada
     for (int i = 0; i < chars.length - 1; i++) {
       switch (chars[i]) {
         case 'a':
-          if (chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
+          if ( chars[i + 1] != 'a' || chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
           break;
         case 'e':
-          if (chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
+          if (chars[i + 1] != 'e' || chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
           break;
         case 'i':
-          sylCount += 1;
+          if (chars[i + 1] != 'i' || chars[i + 1] != 'o') sylCount += 1;
           break;
         case 'o':
-          if (chars[i + 1] != 'i' || chars[i + 1] != 'u' || chars[i + 1] != 'y') sylCount += 1;
+          if (chars[i + 1] != 'i' || chars[i + 1] != 'o' || chars[i + 1] != 'u' || chars[i + 1] != 'y') sylCount += 1;
           break;
         case 'u':
-          sylCount += 1;
+          if (chars[i + 1] != 'u') sylCount += 1;
           break;
         case 'y':
-          sylCount += 1;
+          if (chars[i + 1] != 'y') sylCount += 1;
           break;
         default:
           break;
