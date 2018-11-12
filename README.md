@@ -253,7 +253,9 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 ### [2 pt] A day in the life
 You are a struggling scriptwriter trying to make it big in Hollywood. Find an interesting user with your backstory job, then trace their commenting activities across the site over time. Use this combination of data to build a story about the user’s life: what they do on a regular basis, who their friends are, their hopes/dreams, etc. You have some creative license here.
 
-On stage appears a young southern man, yelling loudly at his mother. She's crying.
+In a small rural house
+A young southern man wearing a NFL shirt, yelling loudly at his mother.
+The mother is crying.
 
 > Man: No mom! You're wrong. God doesn't exist!
 > <br/> Mother: I...
