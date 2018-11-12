@@ -421,13 +421,20 @@ I used reservoir sampling to find which subreddits in each row to use.
 
 #### Given the same goals, how would you complete the project differently if you didn’t have any restrictions imposed by the instructor?
 
-I wouldn't have changed the project.
+I wouldn't have changed the project or how I completed the tasks.
 
 #### We are using hadoop instead of regular programming to deal with the data set. Discuss this trade-off.
 
+Using hadoop made it significantly faster by allowing for the use of multiple computers in an easy to program fashion.
 
 #### Let’s imagine that your next project was to improve and extend P2. What are the features/functionality you would add, use cases you would support, etc? Are there any weaknesses in your current implementation that you would like to improve upon? This should include at least three areas you would improve/extend.
 
+Find your own data set and try to find three things about it using big data.
+
 #### Give a rough estimate of how long you spent completing this assignment. Additionally, what part of the assignment took the most time?
 
+Matthew: Well over 30 hours
+
 #### What did you learn from completing this project? Is there anything you would change about the project?
+
+Smaller data set or teams from the start. I learned that Hadoop is very finicky and that not all curves can easily be fit to data.
