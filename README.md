@@ -391,9 +391,41 @@ While you work on your hit movie script, you need to pay the bills. Use your ana
 |funny|
 
  
-### [2 pt] Music Recommendations
+### [2 pt] Music Recommendations (2012, 5% sample)
 After graduating from USF, you found a startup company that aims to provide personalized music recommendations using big data analysis. In other words, the pitch is that users can “just be themselves” on social media and the service will determine their personality to provide new music recommendations. Design a MapReduce job to do this.
 Note: remember to explain your methodology in your report.
+
+![Music Recommendation](images/music.png)
+
+The Music recommendation combined two techniques:
+
+1. Measuring users' sentiment score (+5 ~ -5) and tell users to "try" some genres of music. If a user has a -5 sentiment score, we would tell him/her to try "Comedy" music because he/she needs it! And we will tell a "always-excited" user with +5 sentiment score to listen to "Blues" to chill a little bit. 
+    * You can see in the graph that we tell most of the users to listen to "Pop" music since they have almost 0 sentiment score, which is expected. Like Youtube, if you are a completely new user to them, they probably will recommend you some pop (hit) music.
+    * Some users have sentiment score between -1 and +1.
+    * We tell user "zwizard666" to try "Classical" and "Inspirational" music since this guy is very negative.
+1. Parse users' words frequency and match with music genre key word database. We basically recommend user to listen to a specific genre of music based on what they said. For instance, we receommend "Country" music to those use "howdy" a lot!
+    * We recommended user "yoni491" who used "funny" to listen to "Comedy" music since he/she is more likely to like funny things. And looks like that "hip-hop/rap" might not be his/her choice so we tell him/her to try it.
+    * Most of the words are not related to music at all, so we grab the term with highest rank that is related to music. For example, "8ryn". 
+
+*\(I removed some bad words...\)*
+
+| |User's word list and count|
+|------------|------------|
+|User|zwizard666|
+|Word|\[{"count":"2","text":"NI\*\*ER"}, {"count":"2","text":"I"}, {"count":"2","text":"f\*\*king"}, {"count":"2","text":"the"}, {"count":"1","text":"stupid"}, {"count":"1","text":"some"}, {"count":"1","text":"putting"}, {"count":"1","text":"Im"}, {"count":"1","text":"against"}, {"count":"1","text":"DUMB"}, {"count":"1","text":"f\*\*k"}, {"count":"1","text":"for"}, {"count":"1","text":"had"}, {"count":"1","text":"remember"}, {"count":"1","text":"THE"}, {"count":"1","text":"lunatic"}, {"count":"1","text":"not"}, {"count":"1","text":"of"}, {"count":"1","text":"GT\*O"}, {"count":"1","text":"me"}, {"count":"1","text":"pe\*\*s"}, {"count":"1","text":"MOTHERF\*\*\*ING"}, {"count":"1","text":"so"}, {"count":"1","text":"listening"}, {"count":"1","text":"a"}, {"count":"1","text":"underside"}, {"count":"1","text":"INTERNET"}, {"count":"1","text":"a\*\*\*ole."}, {"count":"1","text":"yes"}, {"count":"1","text":"it"}, {"count":"1","text":"my"}, {"count":"1","text":"pack"}, {"count":"1","text":"n64"}, {"count":"1","text":"call"}, {"count":"1","text":"CORRECT"}, {"count":"1","text":"LULZ"}, {"count":"1","text":"maximum"}, {"count":"1","text":"to"}, {"count":"1","text":"racist"}, {"count":"1","text":"rumble"}, {"count":"1","text":"fun"}, {"count":"1","text":"much"}, {"count":"1","text":"YOU"}, {"count":"1","text":"POLITICALLY"}\]|
+|Result|\[recommended:comedy, try:classical inspirational\]|
+
+| |User's word list and count|
+|------------|------------|
+|User|yoni491|
+|Word|\[{"count":"1","text":"now"}, {"count":"1","text":"funny"}, {"count":"1","text":"kids"}, {"count":"1","text":"thats"}\]|
+|Result|\[try:hip-hop/rap, recommended:comedy\]|
+
+| |User's word list and count|
+|------------|------------|
+|User|8ryn|
+|Word|\[{"count":"23","text":"the"}, {"count":"14","text":"to"}, {"count":"13","text":"of"}, {"count":"6","text":"I"}, {"count":"6","text":"a"}, {"count":"6","text":"up"}, {"count":"6","text":"for"}, {"count":"6","text":"in"}, {"count":"6","text":"him"}, {"count":"5","text":"he"}, {"count":"5","text":"it"}, {"count":"4","text":"but"}, {"count":"4","text":"back"}, {"count":"4","text":"season"}, {"count":"4","text":"like"}, {"count":"4","text":"my"}, {"count":"3","text":""}, {"count":"3","text":"be"}, {"count":"3","text":"Arsenal"}, {"count":"3","text":"good"}, {"count":"3","text":"last"}, {"count":"3","text":"was"}, {"count":"3","text":"out"}, {"count":"3","text":"have"}, {"count":"3","text":"that"}, {"count":"3","text":"only"}, {"count":"3","text":"David"}, {"count":"3","text":"why"}, {"count":"3","text":"on"}, {"count":"3","text":"say"}, {"count":"2","text":"about"}, {"count":"2","text":"would"}, {"count":"2","text":"they"}, {"count":"2","text":"then"}, {"count":"2","text":"at"}, {"count":"2","text":"Ian"}, {"count":"2","text":"same"}, {"count":"2","text":"are"}, {"count":"2","text":"by"}, {"count":"2","text":"so"}, {"count":"2","text":"free"}, {"count":"2","text":"got"}, {"count":"2","text":"leave"}, {"count":"2","text":"never"}, {"count":"2","text":"next"}, {"count":"2","text":"Wright"}, {"count":"2","text":"We"}, {"count":"2","text":"way"}, {"count":"2","text":"Sorry"}, {"count":"2","text":"when"}, {"count":"2","text":"Spurs"}, {"count":"2","text":"understand"}, {"count":"2","text":"is"}, {"count":"2","text":"didnt"}, {"count":"2","text":"acting"}, {"count":"2","text":"against"}, {"count":"2","text":"fuck"}, {"count":"2","text":"get"}, {"count":"2","text":"while"}, {"count":"2","text":"day"}, {"count":"2","text":"most"}, {"count":"2","text":"seems"}, {"count":"2","text":"who"}, {"count":"2","text":"here"}, {"count":"2","text":"amp"}, {"count":"2","text":"decent"}, {"count":"2","text":"and"}, {"count":"2","text":"fans"}, {"count":"1","text":"been"}, {"count":"1","text":"thought"}, {"count":"1","text":"allowed"}, {"count":"1","text":"United"}, {"count":"1","text":"bring"}, {"count":"1","text":"same."}, {"count":"1","text":"your"}, {"count":"1","text":"him."}, **{"count":"1","text":"bar"}**, ...\]|
+|Result|\[recommended:blues, try:pop\]|
 
 ### [4 pt] Design Two
  Make your own Now that you’ve found the answers to the questions above, design two of your own questions to answer. These should be sufficiently difficult, and you should be creative! You should start with a question, and then propose a predicted answer or hypothesis before writing a MapReduce job to answer it. If you come up with a particularly challenging question, it can count for two (ask first).
@@ -431,9 +463,13 @@ Using hadoop made it significantly faster by allowing for the use of multiple co
 #### Let’s imagine that your next project was to improve and extend P2. What are the features/functionality you would add, use cases you would support, etc? Are there any weaknesses in your current implementation that you would like to improve upon? This should include at least three areas you would improve/extend.
 
 Find your own data set and try to find three things about it using big data.
+Using a machine learning model to do natural lanagage processing
+Better metric for filtering through data, We mostly did guesses but it would be nice to have a better methodology to filtering what data should be included.
+A more detailed backstory and a better script/ model to create a user backstory rather than doing it by hand. (lots of user information is actually found in the subreddits IN ADDITION TO the scores they have. The meaning of the backstory changes based on the subreddits viewed thus requiring a machine learning model.
 
 #### Give a rough estimate of how long you spent completing this assignment. Additionally, what part of the assignment took the most time?
 
+Timothy: 50 
 Matthew: Well over 40 hours
 
 #### What did you learn from completing this project? Is there anything you would change about the project?

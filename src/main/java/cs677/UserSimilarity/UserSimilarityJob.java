@@ -2,6 +2,7 @@ package cs677.UserSimilarity;
 
 import cs677.Writables.AuthorWordsWritable;
 import cs677.common.Constants;
+import cs677.common.DoubleComparator;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
@@ -24,7 +25,7 @@ public class UserSimilarityJob {
         conf.setStrings(Constants.AUTHOR, args[3]);
 
         /* job 1: author word count in subreddit */
-        subredditWordCountJob(args, conf);
+        // subredditWordCountJob(args, conf);
 
         /* job 2: bloom filter to match users' words */
         bloomFilterJob(args, conf);
