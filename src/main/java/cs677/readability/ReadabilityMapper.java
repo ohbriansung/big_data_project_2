@@ -12,13 +12,9 @@ import java.util.Random;
 
 public class ReadabilityMapper extends Mapper<LongWritable, Text, Text, SenWorSylWritable> {
 
-  private Random random = new Random();
-
   @Override
   protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
-
-    if (random.nextFloat() > 0.01) return;
 
     JSONObject obj = new JSONObject(value.toString());
 

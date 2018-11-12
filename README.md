@@ -253,6 +253,76 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
 ### [2 pt] A day in the life
 You are a struggling scriptwriter trying to make it big in Hollywood. Find an interesting user with your backstory job, then trace their commenting activities across the site over time. Use this combination of data to build a story about the user’s life: what they do on a regular basis, who their friends are, their hopes/dreams, etc. You have some creative license here.
 
+On stage appears a young southern man, yelling loudly at his mother. She's crying.
+
+> Man: No mom! You're wrong. God doesn't exist!
+> <br/> Mother: I...
+> <br/> Man: I can't live in a house where people can't even see the truth in front of their eyes!
+
+Man leaves and slams the door behind him
+
+Then comes an oddly long and chaotic montage, leaping forward a month at a time.
+
+> 12-01: I agree with you the last bit (religion promoting illegal activity) is a ridiculous claim made by the Bishop to appeal to conservatives.
+> <br/>12-02: You are using it correctly.
+> <br/>12-03: Why don't you try out new classes?
+> <br/>12-04: Haha this is true and not ragging on you at all it's just I've found when *one* mentions downvotes it attracts downvotes and when *someone else* mentions downvotes it attracts upvotes.
+> <br/>12-05: No he can't it's a logical impossibility.
+> <br/>12-06: God does not rule over us because he created us.
+> <br/>12-07: Yes pretty much.
+> <br/>12-08: This is handled by the Catechism.
+> <br/>12-09: Allow me to explain further.
+> <br/>12-10: Well for the Catholic Church will consider this a bad thing as it forces Catholic institutions to commit a sin by at least implicitly condoning birth control.
+> <br/>12-11: He means according to this scenario, not according to how it is.
+> <br/>12-12: In my view they've always been unacceptable, but I have the benefit of Centuries of understanding and humanization that they did not have access to.
+> <br/>13-01: Okay radical new idea!
+> <br/>13-02: Okay then lets say that we have different enhancements for different qualities due to limitations in the human body.
+> <br/>13-03: You should never end anyone's life premature, because you are doing them a great disservice.
+> <br/>13-04: Happy to have you back around man.
+> <br/>13-05: So no two events ever happen at the same time?
+> <br/>13-06: Because they believed they happened.
+> <br/>13-07: What specifically turned you off from it?
+> <br/>13-08: I would think it would be an accurate term if we are describing a living organism's descendents turning into non-living organisms.
+> <br/>13-09: \[This is what I came up with\](http://imgur.
+> <br/>13-10: Thomas Aquinas' \[Summa Theologica\](http://www.
+> <br/>13-11: Good lord that's a giant city!
+> <br/>13-12: I would assume they are going for it because they would like to get some game experience on 4th and long packages just in case they would need to use it in the playoffs.
+> <br/>14-01: It wouldn't be a brain, that's the important part.
+> <br/>14-02: A lot of these countries make up weird shapes but somehow that gray country in the middle of Europe just seems right, you know?
+> <br/>14-03: God did not take Pharaoh's free will.
+> <br/>14-04: You may say that it is a problem, but I recognize that my own personal views are not what dictate how the world works.
+> <br/>14-05: Sadly they \[are\](http://philpapers.
+> <br/>14-06: No worries, hopefully you can figure out something.
+> <br/>14-07: I'm sorry but you are wrong.
+> <br/>14-08: * Being: a distinct individual.
+> <br/>14-09: Human sexuality isn't a medical diagnosis but a psychological one.
+> <br/>14-10: I am saying that the glory Christ receives in Heaven is not the same glory that is given to mankind in Heaven.
+> <br/>14-11: Exactly and since when is marriage equivalent to life?
+> <br/>14-12: I fail to see how that falls on God.
+> <br/>15-01: Jews and Christians as they exist today, came from the same community.
+> <br/>15-02: So we're supposed to wait until the wedding is already completed before we discover that our significant other is capable of exciting our sexual passions?
+> <br/>15-03: I'm currently dating a woman with a child and I guess that means I should give my perspective on the matter.
+> <br/>15-04: Hence why its a long shot.
+> <br/>15-05: 1.
+> <br/>15-06: So they are sinful for merely existing?
+> <br/>15-07: We can't call it a true genocide because then the international community is obligated to provide military assistance.
+> <br/>15-08: Well in my understanding samsara is the repeating cycle of death and rebirth, where nirvana is being liberated from repeating this cycle.
+> <br/>15-09: You do realize that many Americans are fairly ethnically homogenous, especially in more rural communities.
+> <br/>15-10: None of the marriages she entered into were valid, as they lacked the proper form (Catholics are bound to have sacramental marriages).
+> <br/>15-11: The salt is because we both are nervous about not getting home field in the playoffs.
+> <br/>15-12: What is this game!
+> <br/>16-01: So we basically have an anti-sin repellent shield?
+> <br/>16-02: How is Natural Family Planning open to children?
+> <br/>16-03: Well here's a \[quick video\]\(https://www.
+> <br/>16-04: Let's say the top 3 finalists are Trump, Clinton and Sanders.
+> <br/>16-05: They are functionally the same, what is your solution to fixing an unwilling worker?
+> <br/>16-06: How about we just raise education standards in this country and eliminate the fear of failure.
+> <br/>16-07: Season ticket owners got those tickets included in a package.
+> <br/>16-08: If race is literally class then why shouldn't sex be considered class as well?
+> <br/>16-09: I think her Supreme Court justices would be just as horrible as Trump's though.
+> <br/>16-10: I agree this is actually a pretty good and mostly inoffensive way to get into it with a rival.
+> <br/>16-11: Rand Paul is vehemently against the TPP and will fight against it.
+> <br/>16-12: Planetes is really underrated (or rather unknown).
 
 
 ### [2 pt] Matchmaker
