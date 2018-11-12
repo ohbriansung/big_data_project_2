@@ -1,13 +1,13 @@
 package cs677.readability;
 
 import org.apache.hadoop.io.DoubleWritable;
-import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class FleschWritable implements Writable {
+public class FleschWritable implements WritableComparable<FleschWritable> {
   private DoubleWritable ease = new DoubleWritable();
   private DoubleWritable grade = new DoubleWritable();
 
@@ -19,6 +19,9 @@ public class FleschWritable implements Writable {
   }
 
   public FleschWritable(long sentences, long words, long syllables) {
+    sentences = Math.max(sentences, 1);
+    words = Math.max(words, 1);
+    syllables = Math.max(syllables, 1);
     this.ease.set(easeScore(sentences, words, syllables));
     this.grade.set(gradeScore(sentences, words, syllables));
   }
@@ -46,5 +49,15 @@ public class FleschWritable implements Writable {
   @Override
   public String toString() {
     return String.format("{\"ease\": %f, \"grade\": %f}", ease.get(), grade.get());
+  }
+
+  @Override
+  public int compareTo(FleschWritable other) {
+    if (other == null) return 1;
+    int comp = this.ease.compareTo(other.ease);
+    if (comp == 0) {
+      comp = this.grade.compareTo(other.grade);
+    }
+    return comp;
   }
 }

@@ -11,6 +11,7 @@ public class ReadabilityAvgReducer extends Reducer<Text, SenWorSylWritable, Text
   @Override
   protected void reduce(Text key, Iterable<SenWorSylWritable> values, Context context)
       throws InterruptedException, IOException {
+    try {
     long count = 0;
     BigDecimal grade = BigDecimal.ZERO;
     BigDecimal ease = BigDecimal.ZERO;
@@ -29,5 +30,8 @@ public class ReadabilityAvgReducer extends Reducer<Text, SenWorSylWritable, Text
     ease = ease.divide(new BigDecimal(count), RoundingMode.HALF_EVEN);
     FleschWritable fleschWritable = new FleschWritable(ease.doubleValue(), grade.doubleValue());
     context.write(key, fleschWritable);
+    } catch (NumberFormatException e) {
+      e.printStackTrace();
+    }
   }
 }
