@@ -463,9 +463,13 @@ Using hadoop made it significantly faster by allowing for the use of multiple co
 #### Let’s imagine that your next project was to improve and extend P2. What are the features/functionality you would add, use cases you would support, etc? Are there any weaknesses in your current implementation that you would like to improve upon? This should include at least three areas you would improve/extend.
 
 Find your own data set and try to find three things about it using big data.
+Using a machine learning model to do natural lanagage processing
+Better metric for filtering through data, We mostly did guesses but it would be nice to have a better methodology to filtering what data should be included.
+A more detailed backstory and a better script/ model to create a user backstory rather than doing it by hand. (lots of user information is actually found in the subreddits IN ADDITION TO the scores they have. The meaning of the backstory changes based on the subreddits viewed thus requiring a machine learning model.
 
 #### Give a rough estimate of how long you spent completing this assignment. Additionally, what part of the assignment took the most time?
 
+Timothy: 50 
 Matthew: Well over 40 hours
 
 #### What did you learn from completing this project? Is there anything you would change about the project?
