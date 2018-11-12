@@ -400,12 +400,12 @@ Try to fit a curve to the number of posts per use in a given subreddit. What did
 The graphs below show that trying to fit simple curves to any of the subreddits doesn't not seem possible.
 
 I tried fitting multiple curves, linear,  gaussian, pow2 (a + bx + cx^2), and expontential decay.
-None of them closely fit the line.
+None of them closely fit the line all the way, but it appears the best fit was using a pow2 curve, until a certain point.
 
 I grouped each row by how many posts are in it, in a log scale.
 
 I used reservoir sampling to find which subreddits in each row to use.
 
-![Alt text](images/sub_dist.png?raw=true "sub_dist")
+![Alt text](images/sub_dist2.png?raw=true "sub_dist")
 ## Wrap Up
 ### [1 pt] Project retrospective
