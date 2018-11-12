@@ -1,12 +1,12 @@
 package cs677.UserSimilarity;
 
-import com.google.common.hash.BloomFilter;
-import com.google.common.hash.Funnels;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import cs677.Writables.AuthorWordsWritable;
 import cs677.common.Constants;
+import org.apache.curator.shaded.com.google.common.hash.BloomFilter;
+import org.apache.curator.shaded.com.google.common.hash.Funnels;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -25,6 +25,7 @@ import java.util.List;
 public class UserSimilarityMapper extends Mapper<LongWritable, Text, DoubleWritable, AuthorWordsWritable> {
     BloomFilter<CharSequence> filter;
     String author;
+    int size;
 
     public UserSimilarityMapper() {}
 
@@ -32,6 +33,7 @@ public class UserSimilarityMapper extends Mapper<LongWritable, Text, DoubleWrita
     protected void setup(Context context) {
         Configuration conf = context.getConfiguration();
         author = conf.get(Constants.AUTHOR, "");
+        size = 0;
 
         String directory = conf.get(Constants.ARCHIVED, "out-usersimilarity");
         try {
@@ -63,6 +65,7 @@ public class UserSimilarityMapper extends Mapper<LongWritable, Text, DoubleWrita
         for (JsonElement element : array) {
             String text = element.getAsString();
             filter.put(text);
+            size++;
         }
     }
 
@@ -82,15 +85,18 @@ public class UserSimilarityMapper extends Mapper<LongWritable, Text, DoubleWrita
         List<String> matchList = new ArrayList<>();
         double matched = 0;
         for (JsonElement element : array) {
-            String text = element.getAsString();
+            if (element.isJsonNull()) {
+                continue;
+            }
 
+            String text = element.getAsString();
             if (filter.mightContain(text)) {
                 matchList.add(text);
                 matched++;
             }
         }
 
-        double similarity = matched / filter.approximateElementCount() * 100;
+        double similarity = matched / size * 100;
         context.write(new DoubleWritable(similarity), new AuthorWordsWritable(author, matchList.toArray(new String[0])));
     }
 }
