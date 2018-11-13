@@ -75,7 +75,7 @@ public class UserSimilarityMapper extends Mapper<LongWritable, Text, DoubleWrita
         String _author = split[0];
         String textCountArray = split[1];
 
-        if (_author.equals(author)) {
+        if (_author.equals(author) || _author.equals("[deleted]")) {
             return;  // not matching self
         }
 
@@ -96,7 +96,8 @@ public class UserSimilarityMapper extends Mapper<LongWritable, Text, DoubleWrita
             }
         }
 
-        double similarity = matched / size * 100;
-        context.write(new DoubleWritable(similarity), new AuthorWordsWritable(author, matchList.toArray(new String[0])));
+        int _size = Math.max(size, array.size());
+        double similarity = matched / _size * 100;
+        context.write(new DoubleWritable(similarity), new AuthorWordsWritable(_author, matchList.toString()));
     }
 }
