@@ -28,12 +28,12 @@ public class ComplexSpeakerReducer extends Reducer<Text, Readablity, NullWritabl
       else if (val.getFleschEase() > 0)
         fEaseSum = fEaseSum.add(new BigDecimal(val.getFleschEase()));
 
-      if (val.getGunn() > 20) gunnSum = gunnSum.add(TWENTY);
-      else if (val.getGunn() > 0) gunnSum = gunnSum.add(new BigDecimal(val.getGunn()));
-
       if (val.getFleschGrade() > 20) fGradeSum = fGradeSum.add(TWENTY);
       else if (val.getFleschGrade() > 0)
         fGradeSum = fGradeSum.add(new BigDecimal(val.getFleschGrade()));
+
+      if (val.getGunn() > 20) gunnSum = gunnSum.add(TWENTY);
+      else if (val.getGunn() > 0) gunnSum = gunnSum.add(new BigDecimal(val.getGunn()));
     }
 
     BigDecimal bigCount = new BigDecimal(count);

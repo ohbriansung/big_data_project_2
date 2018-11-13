@@ -33,9 +33,8 @@ public class ComplexSpeakerMapper extends Mapper<LongWritable, Text, Text, Reada
     }
   }
 
-  private Readablity score(String s, String key) {
-
-    StringTokenizer itr = new StringTokenizer(s);
+  private Readablity score(String body, String key) {
+    StringTokenizer itr = new StringTokenizer(body.toLowerCase());
     int words = 0;
     int complexWords = 0;
     int sentences = 0;
@@ -78,30 +77,58 @@ public class ComplexSpeakerMapper extends Mapper<LongWritable, Text, Text, Reada
   private int syllableCount(String s) {
     int sylCount = 0;
     char[] chars = s.toCharArray();
-    for (int i = 0; i < chars.length; i++) {
+    // chars 0 -> n - 1
+    for (int i = 0; i < chars.length - 1; i++) {
       switch (chars[i]) {
         case 'a':
-          if (chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
+          if (chars[i + 1] != 'a' || chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
           break;
         case 'e':
-          if (chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
+          if (chars[i + 1] != 'e' || chars[i + 1] != 'i' || chars[i + 1] != 'y') sylCount += 1;
           break;
         case 'i':
-          sylCount += 1;
+          if (chars[i + 1] != 'i' || chars[i + 1] != 'o') sylCount += 1;
           break;
         case 'o':
-          if (chars[i + 1] != 'i' || chars[i + 1] != 'u' || chars[i + 1] != 'y') sylCount += 1;
+          if (chars[i + 1] != 'i'
+              || chars[i + 1] != 'o'
+              || chars[i + 1] != 'u'
+              || chars[i + 1] != 'y') sylCount += 1;
           break;
         case 'u':
-          sylCount += 1;
+          if (chars[i + 1] != 'u') sylCount += 1;
           break;
         case 'y':
-          sylCount += 1;
+          if (chars[i + 1] != 'y') sylCount += 1;
           break;
         default:
           break;
       }
     }
+    // char n
+    switch (chars[chars.length - 1]) {
+      case 'a':
+        sylCount += 1;
+        break;
+      case 'e':
+        sylCount += 1;
+        break;
+      case 'i':
+        sylCount += 1;
+        break;
+      case 'o':
+        sylCount += 1;
+        break;
+      case 'u':
+        sylCount += 1;
+        break;
+      case 'y':
+        sylCount += 1;
+        break;
+      default:
+        break;
+    }
+    if (sylCount == 0) sylCount = 1;
     return sylCount;
   }
 }
