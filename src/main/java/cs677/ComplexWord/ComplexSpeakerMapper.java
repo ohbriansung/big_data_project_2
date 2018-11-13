@@ -74,9 +74,9 @@ public class ComplexSpeakerMapper extends Mapper<LongWritable, Text, Text, Reada
     return (0.39 * ((double) words) / sentences) + (11.8 * ((double) syllables) / words) - 15.59;
   }
 
-  private int syllableCount(String s) {
+  private int syllableCount(String body) {
     int sylCount = 0;
-    char[] chars = s.toCharArray();
+    char[] chars = body.toLowerCase().toCharArray();
     // chars 0 -> n - 1
     for (int i = 0; i < chars.length - 1; i++) {
       switch (chars[i]) {
