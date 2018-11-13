@@ -433,6 +433,39 @@ The Music recommendation combined two techniques:
 #### Design One: Bloom Filter
 Use a bloom filter to measure users' similarity compare to the input user in a subreddit.
 
+Select one user from a subreddit and created a bloom filter base on terms he/she used with the array size that is 20% of the input size (Pareto Principle). Calculate other users' similarity in that subreddit against the input user.
+
+* When using 20% of the input size to build bloom filter, we got a similarity score of 80.62% between user "10thflrinsanity" and "joshpascual96", which is the most matched one found in subreddit "atheism". However, if increase the size of bloom filter array to 100% of the input size, the score went down to about 60% (still the highest one). The result indicates that even if we are using Pareto Principle, there is still a very large amount of collision. 
+
+||Input user|
+|---|---|
+|Subreddit|atheism|
+|User|10thflrinsanity|
+|Word used|\[glass, not, teacher, and, of, outrageous, just, some, make, on, attended, pretty, living, or, holy, hardcore, again, was, they, surrounding, similar, bible, still, large, in, antiscience, negativity, is, it, testament, junior, scandals, as, at, jesus, enjoyable, stop, left, grade, professors, catholic, brother, college, but, however, very, other, be, young, not, genetics, isnt, fact, church, portion, wake, far, than, presume, up, least, students, covering, symbolically, considered, architect, make, moreso, still, period, studying, business, objects, not, son, of, place, viable, heard, on, a, inanimate, im, last, will, believe, eyes, thinking, moment, yes, one, was, i, them, it, indeed, in, going, change, i, an, wax, but, explanation, major, religions, specifically, text, if, the, zen, read, in, college, very, creationism, accurate, out, mindnumbed, indoctrinate, too, told, are, have, xavier, its, is, plenty, it, check, tough, warner, most, important, as, looking, other, probably, for, masters, introductory, out, youre, worth, not, are, teachers, of, by, have, phony, brad, a, hardcore, buddhism, many, great, really, religion, so, irrational, touch, tough, nice, the, buddhist, there, zazen, to, with, as, mean, blame, to, option, large, considered, seminar, fundamentalist, indoctrinated, about, shouldnt, in, bullshit, when, granted, best, faith, their, critical, theologians, some, behind, these, would, children, cross, is, it, the, sphinx, college, the, new, high, a, people, perhaps, would, best, had, discussion, any, well, heshe, to, arthur, who, dont, parts, were, scientists, museum, most, list, my, time, him, house, into, pete, and, plenty, hes, friend, oh, from, beach, opened, this, goes, like, read, new, all, things, me, find, school, jesuits, high, desert, be, a, aesthetic, over, umbrella, reading, full, abandoned, sensationhttpwwwsensationcom, of, versions, take, the, scene, edm, churches, believe, i, advantage, could, smaller, that, got, experience, had, historical, sometimes, albeit, lights, time, ...\]|
+
+||Top matched user|
+|---|---|
+|Subreddit|atheism|
+|User|joshpascual96|
+|Similarity|80.62 %|
+|Term matched|\["its","is","something","know","catholic","completely","much","other","maybe","faith","believe","we","how","are","of","ive","so","mindless","said","hear","comments","i","also","say","people","off","the","with","what","to","away","thought","cant","believe","youre","that","too","and","does","than","of","have","me","because","everything","presence","if","you","a","chance","in","felt","go","its","i","is","it","the","with","personally","even","mean","ihage","well","fake","completely","to","thing","did","but","very","bad","tell","about","your","when","that","yeshua","ignorant","than","english","me","because","up","if","us","you","which","in","goddess","is","it","my","she","jesus","person","didnt","know","catholic","completely","dont","knock","be","for","faith","believe","youre","can","not","and","does","of","get","by","have","place","so","just","a","or", ...\]|
+
+This is a graph describes distribution of users with more than 50% similarity score against in the subreddit.
+
+* There are large amount of people that are interested in some similar topics within same subreddit.
+
+![User Similarity User Count](images/user_similarity_match.png)
+
+This is the word cloud for terms that matched with input user's terms.
+
+* Most of the frequently used terms are what we expected, such as: "the", "to", "a", "that", "of", "and", ...
+
+* We can observe that the subreddit might be related to "Christian religion" or those users are very into "Christianity". There are some keywords lead to this assumption: "Bible", "religion", "cant" (maybe for "can't understand"? "understand" is next to "cant"), "Jesus", ...
+
+* There are some interesting controversial terms, like: "bullshit" and "knowledge". 
+
+![User Similarity User Count](images/user_similarity_wordcloud.png)
+
 #### Design Two: Distribution
 Time: 6:30:00
 
@@ -466,6 +499,8 @@ Find your own data set and try to find three things about it using big data.
 Using a machine learning model to do natural lanagage processing
 Better metric for filtering through data, We mostly did guesses but it would be nice to have a better methodology to filtering what data should be included.
 A more detailed backstory and a better script/ model to create a user backstory rather than doing it by hand. (lots of user information is actually found in the subreddits IN ADDITION TO the scores they have. The meaning of the backstory changes based on the subreddits viewed thus requiring a machine learning model.
+Do some data mining and get a decent data set for data analysis. For example, get key words for every music genre and that would increase the accuracy of Music Recommendation Job.
+Make a universal 5-10% data sample period to beginning of the implementation.
 
 #### Give a rough estimate of how long you spent completing this assignment. Additionally, what part of the assignment took the most time?
 
@@ -475,3 +510,5 @@ Matthew: Well over 40 hours
 #### What did you learn from completing this project? Is there anything you would change about the project?
 
 Smaller data set or teams from the start. I learned that Hadoop is very finicky and that not all curves can easily be fit to data.
+MapReduce jobs in Hadoop is running in different JVM, so no global variable except in the config. And writing our own writable and serializer is quite interesting.
+Less work on cluster setup, configuration and trouble-shooting, more time on discussing approach. 

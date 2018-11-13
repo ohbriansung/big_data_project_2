@@ -1,6 +1,5 @@
 package cs677.UserSimilarity;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import cs677.Writables.AuthorWordsWritable;
 import org.apache.hadoop.io.DoubleWritable;
@@ -18,12 +17,7 @@ public class UserSimilarityReducer extends Reducer<DoubleWritable, AuthorWordsWr
         for (AuthorWordsWritable val : values) {
             JsonObject obj = new JsonObject();
             obj.addProperty("similarity", key.get());
-
-            JsonArray array = new JsonArray();
-            for (String word : val.getWordList()) {
-                array.add(word);
-            }
-            obj.add("matched", array);
+            obj.add("matched", val.getWordList());
 
             context.write(new Text(val.getAuthor()), new Text(obj.toString()));
         }

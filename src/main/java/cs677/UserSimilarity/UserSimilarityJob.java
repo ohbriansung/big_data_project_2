@@ -25,7 +25,7 @@ public class UserSimilarityJob {
         conf.setStrings(Constants.AUTHOR, args[3]);
 
         /* job 1: author word count in subreddit */
-        // subredditWordCountJob(args, conf);
+        subredditWordCountJob(args, conf);
 
         /* job 2: bloom filter to match users' words */
         bloomFilterJob(args, conf);
