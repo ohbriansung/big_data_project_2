@@ -507,33 +507,4 @@ Each graph is a histogram of number of posts per user, so the bottom axis is the
 
 ![Alt text](images/sub_dist2.png?raw=true "sub_dist")
 
-## Wrap Up
-### [1 pt] Project retrospective
 
-#### Given the same goals, how would you complete the project differently if you didn’t have any restrictions imposed by the instructor?
-
-I wouldn't have changed the project or how I completed the tasks.
-
-#### We are using hadoop instead of regular programming to deal with the data set. Discuss this trade-off.
-
-Using hadoop made it significantly faster by allowing for the use of multiple computers in an easy to program fashion.
-
-#### Let’s imagine that your next project was to improve and extend P2. What are the features/functionality you would add, use cases you would support, etc? Are there any weaknesses in your current implementation that you would like to improve upon? This should include at least three areas you would improve/extend.
-
-Find your own data set and try to find three things about it using big data.
-Using a machine learning model to do natural lanagage processing
-Better metric for filtering through data, We mostly did guesses but it would be nice to have a better methodology to filtering what data should be included.
-A more detailed backstory and a better script/ model to create a user backstory rather than doing it by hand. (lots of user information is actually found in the subreddits IN ADDITION TO the scores they have. The meaning of the backstory changes based on the subreddits viewed thus requiring a machine learning model.
-Do some data mining and get a decent data set for data analysis. For example, get key words for every music genre and that would increase the accuracy of Music Recommendation Job.
-Make a universal 5-10% data sample period to beginning of the implementation.
-
-#### Give a rough estimate of how long you spent completing this assignment. Additionally, what part of the assignment took the most time?
-
-Timothy: 50 
-Matthew: Well over 50 hours
-
-#### What did you learn from completing this project? Is there anything you would change about the project?
-
-Smaller data set or teams from the start. I learned that Hadoop is very finicky and that not all curves can easily be fit to data.
-MapReduce jobs in Hadoop is running in different JVM, so no global variable except in the config. And writing our own writable and serializer is quite interesting.
-Less work on cluster setup, configuration and trouble-shooting, more time on discussing approach. 
