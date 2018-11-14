@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 public class AuthorMapper extends Mapper<LongWritable, Text, Text, TextCountWritable> {
@@ -25,6 +26,10 @@ public class AuthorMapper extends Mapper<LongWritable, Text, Text, TextCountWrit
         JsonParser p = new JsonParser();
         JsonObject o = (JsonObject) p.parse(value.toString());
         String author = o.get(Constants.AUTHOR).getAsString();
+
+        if (author.equals("[deleted]") || skip()) {
+            return;
+        }
 
         // tokenize body words
         String body = o.get(Constants.BODY).getAsString();
@@ -49,6 +54,18 @@ public class AuthorMapper extends Mapper<LongWritable, Text, Text, TextCountWrit
         for (String k : map.keySet()) {
             TextCountWritable w =  new TextCountWritable(k, map.get(k));
             context.write(new Text(author), w);
+        }
+    }
+
+    private boolean skip() {
+        Random r = new Random();
+        int result = r.nextInt(4);
+
+        if (result == 0) {
+            return true;  // skip 25% of the data
+        }
+        else {
+            return false;
         }
     }
 }

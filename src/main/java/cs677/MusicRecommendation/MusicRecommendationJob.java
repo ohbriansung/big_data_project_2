@@ -14,6 +14,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class MusicRecommendationJob {
     public static void main(String[] args) {
         Configuration conf = new Configuration();
+        conf.setStrings("mapreduce.reduce.shuffle.memory.limit.percent", "0.15");
 
         /* Job 1: get word count for author */
         authorJob(args, conf);

@@ -16,10 +16,16 @@ public class AuthorReducer extends Reducer<Text, TextCountWritable, Text, Text> 
     HashMap<String, Integer> map = new HashMap<>();
 
     // sum up value
+    long count = 0;
     for (TextCountWritable val : values) {
       int num = map.getOrDefault(val.getText(), 0);
       num += val.getCount();
       map.put(val.getText(), num);
+      count++;
+    }
+
+    if (count < 100) {
+      return;
     }
 
     TextCountWritable[] array = new TextCountWritable[map.size()];
