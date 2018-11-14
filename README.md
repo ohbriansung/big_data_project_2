@@ -143,7 +143,7 @@ Find three subreddits of inscrutables, with users that write extremely unreadabl
 | Plugit | 20 | 0 |20|
 | NSFW_OFFICIAL_XXX | 20 | 0 |20|
 
->>Somthing to note about the results only about 9 subreddits have results that are this extremely meaning using an absoulte metric without filtering may change the order of the screamer scores.
+>>Somthing to note about the results only about 9 subreddits have results that are very polarizing, meaning using an absoulte metric without filtering may change the order of the screamer scores.
 
 For this impelmentation we filtered out values below 0 and above 20 to be the minimum and maximum values in hopes of reducing the impact of highly unreadable values ( one word or words like (LOL) seems to be treated as highly unreadable even if they are not). In retrospec it seems that leaving them unfiltered would have given more accurate results or even just including comments with a certain number of comments. Despite this further testing has shown some critial limitation of the readabilty algorithms we used. From our understanding both these algorithms require a certain number of words to be effective, but on the internet comments are likely not to be longer than 100 words making these algorithms potentially inaccurate.
 
