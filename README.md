@@ -504,9 +504,11 @@ Multiple curves were tried:
 
 None of them closely fit the line all the way, but it appears the best fit was using a pol2 curve for subreddits with less than 10 thousand posts and a pow curve for subreddts with more than 10 thousands posts (until you hit sqrt(n)).
 
+I used reservoir sampling to decided which graphs to plot.
+
 I grouped each row by how many posts are in it. For example, Science_Tech, DiabloUIUC and farmjournal has between 0 and 9 posts each, whereas elsyewillems, Sawnic and Moore1994 have between 10 and 100 posts.
 
-I used reservoir sampling to decided which graphs to plot.
+Each graph is a histogram of number of posts per user, so the bottom axis is the number of posts per user and the vertical axis is the count of users who post that much.
 
 ![Alt text](images/sub_dist2.png?raw=true "sub_dist")
 
