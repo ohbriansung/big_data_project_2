@@ -190,6 +190,27 @@ Even the most negative subreddit has a lower absolute value than the 5th postive
   It is ressuring that the subreddits listed seem to correctate to the topic. It does make sence that politics and news would have on average a negative sentiment score as those topics are highly polarized. While both trees and MensRights are clearly satirical (I hope), it is obvious that trees would have less offensive or negative content than MensRights. While I believe the sentiment of MensRights is most likely negative (but in a joking way?).  
   For the positive subreddits, I expect that those who comment on my little pony are probably fans of the show and would comment positive things about it. This also applies to funny and aw which also seem like subreddits that would not have upsetting content in contrast to somthing that can be potentially offensive. 
 
+When Back an ran against the whole data set
+
+|Pos Subreddit|Sentiment Score |Neg Subreddit | Sentiment Score|
+|------- |--------------- |--------|-----------------|
+|RandomActsOfPolish| 52455.52644769372| angry |-30481.471592720998|
+|XMenRP |29556.540593803882   |RusherArmy2b2t| -7355.633770498682  |
+|tf2trade |26903.774613497986  | SRSsucks| -6734.336193613602  |
+|RateMyMayor |25334.415771556352  | conspiro |-5440.301571511907| 
+|PotterPlayRP| 24449.421378759424   |  straya |-5391.570869786074 |   
+
+   
+     
+      
+
+
+   
+  
+   
+
+
+
 
 ### [3 pt] Backstory
 
