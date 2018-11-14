@@ -401,7 +401,7 @@ Note: remember to explain your methodology in your report.
 The Music recommendation combined two techniques:
 
 1. Measuring users' sentiment score (+5 ~ -5) and tell users to "try" some genres of music. If a user has a -5 sentiment score, we would tell him/her to try "Comedy" music because he/she needs it! And we will tell a "always-excited" user with +5 sentiment score to listen to "Blues" to chill a little bit. 
-    * You can see in the graph that we tell most of the users to listen to "Pop" music since they have almost 0 sentiment score, which is expected. Like Youtube, if you are a completely new user to them, they probably will recommend you some pop (hit) music or news.
+    * You can see in the graph that we tell most of the users to listen to "Pop" music since they have almost 0 sentiment score, which is expected. Like Youtube, if you are a completely new user to them, they probably will recommend you some pop (hit) music.
     * Some users have sentiment score between -1 and +1.
     * We tell user "zwizard666" to try "Classical" and "Inspirational" music since this guy is very negative.
 1. Parse users' words frequency and match with music genre key word database. We basically recommend user to listen to a specific genre of music based on what they said. For instance, we receommend "Country" music to those use "howdy" a lot!
@@ -419,7 +419,7 @@ The Music recommendation combined two techniques:
 | |User's word list and count|
 |------------|------------|
 |User|yoni491|
-|Word|\[{"count":"1","text":"now"}, **{"count":"1","text":"funny"}**, {"count":"1","text":"kids"}, {"count":"1","text":"thats"}\]|
+|Word|\[{"count":"1","text":"now"}, {"count":"1","text":"funny"}, {"count":"1","text":"kids"}, {"count":"1","text":"thats"}\]|
 |Result|\[try:hip-hop/rap, recommended:comedy\]|
 
 | |User's word list and count|
@@ -448,8 +448,8 @@ Select one user from a subreddit and created a bloom filter base on terms he/she
 |---|---|
 |Subreddit|atheism|
 |User|joshpascual96|
-|Similarity|80.62%|
-|Term matched|\["its", "is", "something", "know", "catholic", "completely", "much", "other", "maybe", "faith", "believe", "we", "how", "are", "of", "ive", "so", "mindless", "said", "hear", "comments", "i", "also", "say", "people", "off", "the", "with", "what", "to", "away", "thought", "cant", "believe", "youre", "that", "too", "and", "does", "than", "of", "have", "me", "because", "everything", "presence", "if", "you", "a", "chance", "in", "felt", "go", "its", "i", "is", "it", "the", "with", "personally", "even", "mean", "ihage", "well", "fake", "completely", "to", "thing", "did", "but", "very", "bad", "tell", "about", "your", "when", "that", "yeshua", "ignorant", "than", "english", "me", "because", "up", "if", "us", "you", "which", "in", "goddess", "is", "it", "my", "she", "jesus", "person", "didnt", "know", "catholic", "completely", "dont", "knock", "be", "for", "faith", "believe", "youre", "can", "not", "and", "does", "of", "get", "by", "have", "place", "so", "just", "a", "or", ...\]|
+|Similarity|80.62 %|
+|Term matched|\["its","is","something","know","catholic","completely","much","other","maybe","faith","believe","we","how","are","of","ive","so","mindless","said","hear","comments","i","also","say","people","off","the","with","what","to","away","thought","cant","believe","youre","that","too","and","does","than","of","have","me","because","everything","presence","if","you","a","chance","in","felt","go","its","i","is","it","the","with","personally","even","mean","ihage","well","fake","completely","to","thing","did","but","very","bad","tell","about","your","when","that","yeshua","ignorant","than","english","me","because","up","if","us","you","which","in","goddess","is","it","my","she","jesus","person","didnt","know","catholic","completely","dont","knock","be","for","faith","believe","youre","can","not","and","does","of","get","by","have","place","so","just","a","or", ...\]|
 
 This is a graph describes distribution of users with more than 50% similarity score against in the subreddit.
 
@@ -482,71 +482,3 @@ I grouped each row by how many posts are in it, in a log scale.
 I used reservoir sampling to find which subreddits in each row to use.
 
 ![Alt text](images/sub_dist2.png?raw=true "sub_dist")
-
-#### Design Three: Unique term per subreddit (2016)
-
-Try to figure out some unique terms that are only been used in single subreddit.
-
-Pre-filtering, there are a lot of weird stuffs or noises like urls. Example for weird stuff, there is a subreddit called "NO_COUNTING_ALLOWED" that people threw a bunch zeros and I don't even know what's happening. I guess they were increasing the amount of zeros by one without counting.
-
-```
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000	NO_COUNTING_ALLOWED
-000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000	NO_COUNTING_ALLOWED
-0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000	NO_COUNTING_ALLOWED
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000	NO_COUNTING_ALLOWED
-000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000	NO_COUNTING_ALLOWED
-httpsyoutubeoroqn7iax4  DeepIntoYouTube
-httpswwwyoutubecomwatchvntgk7suek   AskReddit
-httpswwwyoutubecomwatchvjcov0afsfw	dogs
-httpswwwyoutubecomwatchvg1qsbwbl9ea	Monstercat
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  leagueoflegends
-```
-
-Post-filtering, we started to see some interesting terms and subreddit combination.
-
-* There are still a lot of junks because it's Reddit!
-
-```
-heapples        apple       (don't google this one!)
-cassandraql     bigdata     (CassandraQL?)
-boooooooooooooooooooooooorrrrrrrrrrrrrrrrrrrrrriiiiiiiiiiiiiiiiiiiiiiiinnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnngggggggggggggggggggggggggg politics
-homelessdivision        sanfrancisco
-rednecktrump    AskReddit
-stratahadoop    datascience (WooHoo!)
-catgopher       cats        (https://youtu.be/2aHA4AY9628)
-```
-
-## Wrap Up
-### [1 pt] Project retrospective
-
-#### Given the same goals, how would you complete the project differently if you didn’t have any restrictions imposed by the instructor?
-
-I wouldn't have changed the project or how I completed the tasks.
-
-#### We are using hadoop instead of regular programming to deal with the data set. Discuss this trade-off.
-
-Using hadoop made it significantly faster by allowing for the use of multiple computers in an easy to program fashion.
-Although it states that it's fault tolerance, well it is, when it fails, the job continue, and it crash in the end, which is kind of time wasting.
-
-#### Let’s imagine that your next project was to improve and extend P2. What are the features/functionality you would add, use cases you would support, etc? Are there any weaknesses in your current implementation that you would like to improve upon? This should include at least three areas you would improve/extend.
-
-Find your own data set and try to find three things about it using big data.
-Using a machine learning model to do natural lanagage processing
-Better metric for filtering through data, We mostly did guesses but it would be nice to have a better methodology to filtering what data should be included.
-A more detailed backstory and a better script/ model to create a user backstory rather than doing it by hand. (lots of user information is actually found in the subreddits IN ADDITION TO the scores they have. The meaning of the backstory changes based on the subreddits viewed thus requiring a machine learning model.
-Do some data mining and get a decent data set for data analysis. For example, get key words for every music genre and that would increase the accuracy of Music Recommendation Job.
-Make a universal 5-10% data sample period to beginning of the implementation.
-
-#### Give a rough estimate of how long you spent completing this assignment. Additionally, what part of the assignment took the most time?
-
-Timothy: 50
-
-Matthew: Well over 40 hours
-
-Brian: More than 100 hours, including setup, copying files (and recopying files), load balancing, OOM fails, etc.
-
-#### What did you learn from completing this project? Is there anything you would change about the project?
-
-Smaller data set or teams from the start. I learned that Hadoop is very finicky and that not all curves can easily be fit to data.
-MapReduce jobs in Hadoop is running in different JVM, so no global variable except in the config. And writing our own writable and serializer is quite interesting.
-Less work on cluster setup, configuration and trouble-shooting, more time on discussing approach. 

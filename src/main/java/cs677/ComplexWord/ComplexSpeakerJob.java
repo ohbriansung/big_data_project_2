@@ -17,6 +17,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 // yarn jar P2-1.0.jar cs677.ComplexWord.ComplexSpeakerJob rarepuppers /data/2012/*-01* /test/rare_pups
+// yarn jar P2-1.0.jar cs677.ComplexWord.ComplexSpeakerJob all /data/* /out/readability_all
 public class ComplexSpeakerJob {
 
   public static void main(String[] args) {
