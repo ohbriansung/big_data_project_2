@@ -142,6 +142,11 @@ Find three subreddits of inscrutables, with users that write extremely unreadabl
 | playmates |20  | 0 |20|
 | Plugit | 20 | 0 |20|
 | NSFW_OFFICIAL_XXX | 20 | 0 |20|
+
+>>Somthing to note about the results only about 9 subreddits have results that are this extremely meaning using an absoulte metric without filtering may change the order of the screamer scores.
+
+For this impelmentation we filtered out values below 0 and above 20 to be the minimum and maximum values in hopes of reducing the impact of highly unreadable values ( one word or words like (LOL) seems to be treated as highly unreadable even if they are not). In retrospec it seems that leaving them unfiltered would have given more accurate results or even just including comments with a certain number of comments. Despite this further testing has shown some critial limitation of the readabilty algorithms we used. From our understanding both these algorithms require a certain number of words to be effective, but on the internet comments are likely not to be longer than 100 words making these algorithms potentially inaccurate.
+
 ##### Limitation
 On the internet many comments and typing style can lead to inconsistent results when using the Flesch-Kincaid Algorithm. Internet slang such as "lol" or "rotfl" can result in null values for this algorithm as well as comments being on average shorter than the posts themselves. Because of the lengh of the comments readablity can somtimes not be accuratly judged. In addition mispelled words or gibberish often get an extremely low readabilty score with is not useful for analysis and very very short comments also have a extremely high readability score also skewing the data (however these can be filtered out).
 
@@ -166,13 +171,13 @@ Our original approach to the sentiment analysis was to use the Standford NLP lib
 
 As using the library has failed we approached the problem from a different perspective. Instead of using a machine learning model to determine sentiment, we decided to use a word list the consisted of a word and a value, the value being a positive or negative score based on the sentiment. Then we simply added up all the sentiment values to get an absolute value for negativity. An alternative was to use relative scores in order to normalize the data set. However using an absolute value seems to create the most readable results as we should not weigh a small subreddit the same as a large one. This is mostly because using a relative scale would acutally allow the subreddits with less comments to skew the data ( since one positive comment would automatically make them the most positive sub reddit ). 
 
-*Both these approaches fall short when looking at context of the comments. While you can see the sentiment of the sentence as a whole you cannot see the context of the comment which at times is very important to determining if a sentence is truly negative or not. Also both versions of sentiment analysis cannot detect satire very well possibly give "dark humour" a negative sentiment score when in reality it may not be the case. 
-
 | Pros                    | Cons         	              |
 |-------------------      |------------	                |
 | Easy to implement       | Accuracy is questionable    |
 | Faster Computations     | Wordlist is much smaller     |
 | Flexable word list      | Does Not handle Many Edge cases |
+
+*Both these approaches fall short when looking at context of the comments. While you can see the sentiment of the sentence as a whole you cannot see the context of the comment which at times is very important to determining if a sentence is truly negative or not. Also both versions of sentiment analysis cannot detect satire very well possibly give "dark humour" a negative sentiment score when in reality it may not be the case. 
 
 #### Absolute Sentiment Score (2012, 5% sample)
 |Pos Subreddit|Sentiment Score |Neg Subreddit | Sentiment Score|
@@ -199,21 +204,11 @@ When Back an ran against the whole data set
 |RateMyMayor |25334.415771556352  | conspiro |-5440.301571511907| 
 |PotterPlayRP| 24449.421378759424   |  straya |-5391.570869786074 |   
 
-   
-     
-      
-
-
-   
-  
-   
-
-
-
+These newer results seem to show a shift in content. This seems to show a flaw in our approach from before weighing based on popularity and sentiment score rather than just raw sentiment. Previously we identified the flaw in using an average ( giving extremely small subreddits an unfair advantage ) but using this method the opposite is true where more popular subreddits have the advantage. For this I propose a balance between them using averages on subreddits with more than X comments.
 
 ### [3 pt] Backstory
 
-  The Backstory generator will not nessessary produce a backstory instance, but instead it will produce a range of metrics that can be reused in future jobs. Instead for this question we will simply be constructing a story these metrics to produce a backstory for a use. Since there are not many backstories to analysis in this particualar case (we are only analysis three) We can do this by hand but in the future if we were to implement this on a larger scale to get backstories for more users, we would use a machine learning model to generate a back story. While a script could also work to find a backstory, it would not be very detailed since much of a users personality and traits are actually found my looking into the subreddits that they visit rather than the raw metrics we have defined below.. Below we have inclulded a human analyed backstory with detailed analysis and methodologies.
+  The Backstory generator will not nessessary produce a backstory instance, but instead it will produce a range of metrics that can be reused in future jobs. Instead for this question we will simply be constructing a story these metrics to produce a backstory for a use. Since there are not many backstories to analysis in this particualar case (we are only analysis three) We can do this by hand but in the future if we were to implement this on a larger scale, we would use a machine learning model to generate a back story. While a script could also work to find a backstory, it would not be very detailed since much of a users personality and traits are actually found by looking into the subreddits that they visit rather than the raw metrics we have defined. In the documentation belowwe have included a human analyed backstory with detailed analysis and methodologies.
 
 |Trait | Description| Implementation summary|
 |------|------------|-----------------------|
@@ -375,7 +370,7 @@ While you work on your hit movie script, you need to pay the bills. Use your ana
 
   The matchmaker algorithm involved grouping user that have the similar readabilty scores and similar toxicity levels then sorting these user by thier average upvotes. While this was effective, the sample size that was obtained was too broad and had too many users with little or no information used make an effective match. First part of matching would require the removal of outliers in the data set. For this particular job the outliers would be users that do not comment enough, spam bots, and those with very large or very low readabilty scores. 
   
-  We will use hadoop automatic sort to our advantage by automatically grouping users that are similar together. This allows for easier post processing after as to get users that have similiar reading and toxicity levels are a must before matching thier common interest. If a user is more educated and less toxic we can be a bit less strict with matching subreddits in contrast to the more toxic demographic which would require more similar interest. For simplicty our script will try to find the best match within 1000 users (500 upward and 500 downwards) and return the users with the most similiar interest (subreddits).
+  We will use hadoop automatic sort to our advantage by automatically grouping users that are similar together. This allows for easier post processing after as to get users that have similiar reading and toxicity levels should be proiritized before matching thier common interest. If a user is more educated and less toxic we can be a bit less strict with matching subreddits in contrast to the more toxic demographic which would require more similar interest. For simplicty our script will try to find the best match within 1000 users (500 upward and 500 downwards) and return the users with the most similiar interest (subreddits).
   
 
 #### trinkalkohol
