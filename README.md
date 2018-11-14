@@ -470,11 +470,17 @@ This is the word cloud for terms that matched with input user's terms.
 #### Design Two: Distribution
 Time: 6:30:00
 
-Try to fit a curve to the number of posts per use in a given subreddit. What did you find?
+Try to fit a curve to the number of posts per user in a given subreddit. What did you find?
 
 The graphs below show that trying to fit simple curves to any of the subreddits doesn't not seem possible.
 
-I tried fitting multiple curves, linear,  gaussian, pow (a + bx^c), pol2 (a + bx + cx^2), and expontential decay.
+Multiple curves were tried:
+* linear
+* gaussian
+* pow (a + bx^c)
+* pol2 (a + bx + cx^2)
+* expontential decay
+
 None of them closely fit the line all the way, but it appears the best fit was using a pol2 curve for subreddits with less than 10 thousand posts and a pow curve for subreddts with more than 10 thousands posts (until you hit sqrt(n)).
 
 I grouped each row by how many posts are in it, in a log scale.
@@ -506,7 +512,7 @@ Make a universal 5-10% data sample period to beginning of the implementation.
 #### Give a rough estimate of how long you spent completing this assignment. Additionally, what part of the assignment took the most time?
 
 Timothy: 50 
-Matthew: Well over 40 hours
+Matthew: Well over 50 hours
 
 #### What did you learn from completing this project? Is there anything you would change about the project?
 
