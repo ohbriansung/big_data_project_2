@@ -102,6 +102,7 @@ Elapsed Time: ~5:22:00
 |Users and subreddits with low comments tend to skew the data| To fix this we simply add a minimum number of comments required to actually be included into the results|
 |Averages vs Absolute values | Averages are better for when we need equal representation between larger and smaller data sets otherwise we will use absolute values|
 |Machine Learning vs Human Analysis| Overall for this project adding machine learning models add significant overhead to the data collection and for now we have decided to use human analysis replace the models in exchange for a performance increase| 
+|Different jobs require different methods of cleaning| Much of our results gave us unhelpful information the first pass due to including all the data in the analysis. We had to spend time after removing deciding how to filter out certain outliers to get an accurate analysis|
 
 ### [1 pt] Screamers
 It is well known that WRITING IN ALL CAPS ONLINE IS A SUBSTITUTE FOR SCREAMING… OR YELLING. *cough!* Write a job to find users that scream a lot, and provide a screamer score (a highly-technical metric expressed as the percentage of uppercase letters used in their comments).
