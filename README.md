@@ -135,14 +135,13 @@ Choose a subreddit and plot the distribution of these scores using a histogram.
 Time: ~6:00:00
 Find three subreddits of inscrutables, with users that write extremely unreadable comments.
 
-| Sub | Ease | Grade |
-| --- | --- | --- |
-| MinerApCirclejerk | -879.369443 | 136.364095 |
-| wat | -586.803437 | 263.770335 |
-| gats | -551.45335 | 92.341296 |
-| JapanesePornIdols | -485.618217 | 81.270601 |
-| merlinbbc | -480.360309 | 82.825974 |
-
+| Sub |FleschGrade| FleschEase | GunnGrade |
+| --- | --- | --- |--- |
+| weheartgossip | 20 | 0| 20
+| gracit3 | 20 | 0 | 20|
+| playmates |20  | 0 |20|
+| Plugit | 20 | 0 |20|
+| NSFW_OFFICIAL_XXX | 20 | 0 |20|
 ##### Limitation
 On the internet many comments and typing style can lead to inconsistent results when using the Flesch-Kincaid Algorithm. Internet slang such as "lol" or "rotfl" can result in null values for this algorithm as well as comments being on average shorter than the posts themselves. Because of the lengh of the comments readablity can somtimes not be accuratly judged. In addition mispelled words or gibberish often get an extremely low readabilty score with is not useful for analysis and very very short comments also have a extremely high readability score also skewing the data (however these can be filtered out).
 
