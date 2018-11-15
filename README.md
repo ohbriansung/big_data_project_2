@@ -515,3 +515,9 @@ rednecktrump    AskReddit
 stratahadoop    datascience (WooHoo!)
 catgopher       cats        (https://youtu.be/2aHA4AY9628)
 ```
+
+After MapReduce, the result is a gigantic file, I used following command to look for interesting patterns:
+
+```
+cat unique | grep <term_or_subreddit> > out; less out;
+```
